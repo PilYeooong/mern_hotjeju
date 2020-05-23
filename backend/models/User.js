@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     trim: true,
-    unique: 1,
+    unique: true,
   },
   password: {
     type: String,
@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema({
   tokenExp: {
     type: Number,
   },
+  places: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Place"
+    },
+  ],
 });
 
 userSchema.pre("save", function (next) {

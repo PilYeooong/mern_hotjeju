@@ -8,7 +8,7 @@ export const isAuthenticated = (req, res, next) => {
       throw Error(err);
     }
     if(!user) {
-      return res.json({ isAuth: false, error: true });
+      return res.json({ isAuth: false, error: true, message: "인증되지 않은 접근입니다." });
     }
     req.token = token;
     req.user = user;

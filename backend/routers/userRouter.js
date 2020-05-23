@@ -9,9 +9,7 @@ const userRouter = express.Router();
 
 userRouter.post(routes.signUp, signUp);
 userRouter.post(routes.login, login);
-
-
-userRouter.get(routes.authenticate, isAuthenticated, authenticate);
 userRouter.get(routes.logout, isAuthenticated, logOut);
+userRouter.get(routes.authenticate, isAuthenticated, authenticate);
 
 export default userRouter;

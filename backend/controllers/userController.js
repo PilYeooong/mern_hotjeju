@@ -1,8 +1,8 @@
 
 import { User } from "../models/User";
 
-export const signUp = (req, res) => {
-  const user = new User(req.body);
+export const signUp = async (req, res) => {
+  const user = await new User(req.body);
   user.save((err, userInfo) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
@@ -12,8 +12,8 @@ export const signUp = (req, res) => {
   });
 };
 
-export const login = (req, res) => {
-  User.findOne({ email: req.body.email }, (err, user) => {
+export const login = async (req, res) => {
+  const user = await User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       return res.json({
         loginSuccess: false,
