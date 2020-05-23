@@ -44,7 +44,7 @@ export const placeDetail = async (req, res) => {
     res.status(200).json({ success: true, place });
   } catch (error) {
     console.log(error);
-    res
+    return res
       .status(404)
       .json({ success: false, message: "유효하지 않은 접근입니다.", error });
   }
@@ -53,7 +53,7 @@ export const placeDetail = async (req, res) => {
 export const editPlace = async (req, res) => {
   const {
     params: { id },
-    body: { name, description, address }
+    body: { name, description, address },
   } = req;
   try {
     const place = await Place.findById(id);
@@ -62,7 +62,7 @@ export const editPlace = async (req, res) => {
         .status(401)
         .json({ success: false, message: "권한이 없습니다." });
     }
-    const editedPlace = await Place.updateOne({ name, description, address })
+    const editedPlace = await Place.updateOne({ name, description, address });
     return res.status(200).json({ success: true, place: editedPlace });
   } catch (error) {
     console.log(error);
@@ -71,20 +71,24 @@ export const editPlace = async (req, res) => {
 };
 
 export const deletePlace = async (req, res) => {
-  const { 
-    params: { id }
+  const {
+    params: { id },
   } = req;
   try {
     const place = await Place.findById(id);
     if (String(req.user._id) !== String(place.creator)) {
-      return res.status(401).json({ success: false, message: "권한이 없습니다. "});
+      return res
+        .status(401)
+        .json({ success: false, message: "권한이 없습니다. " });
     } else {
       await Place.findOneAndRemove({ _id: id });
       req.user.places.pull(place);
       req.user.save();
-      return res.status(200).json({ success: true, message: "삭제 완료 "});
+      return res.status(200).json({ success: true, message: "삭제 완료 " });
     }
   } catch (error) {
-    return res.status(404).json({ success: false, message: "유효한 주소가 아닙니다."})
+    return res
+      .status(404)
+      .json({ success: false, message: "유효한 주소가 아닙니다." });
   }
-}
+};

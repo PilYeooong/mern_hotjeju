@@ -119,5 +119,6 @@ temp/
 .history
 
 .DS_Store
+media/
 
 # End of https://www.gitignore.io/api/node,visualstudiocode

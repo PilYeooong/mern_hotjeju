@@ -1,4 +1,5 @@
 import multer from "multer";
+import { validationResult } from "express-validator";
 
 let storage = multer.diskStorage({
   destination: (req, res, cb) => {
@@ -17,4 +18,3 @@ let storage = multer.diskStorage({
 });
 
 export const uploadPlace = multer({ storage }).single("image"); // 기입한 문자열대로 request륿 받아야함
-
