@@ -19,6 +19,13 @@ const PLACES = `${API}/places`;
 const PLACE_DETAIL = "/:id";
 const PLACE_EDIT = "/:id/edit";
 const PLACE_DELETE = "/:id/delete";
+// Comment
+const NEW_COMMENT = "/:id/comment";
+const COMMENT_LIST = "/:id/comments";
+// Like
+const GET_LIKES = "/:id/likes"
+const TOGGLE_LIKE = "/:id/togglelike";
+
 
 const routes = {
   home: HOME,
@@ -49,7 +56,35 @@ const routes = {
     } else {
       return PLACE_DELETE;
     }
-  } 
+  },
+  newComment: id => {
+    if(id){
+      return `/${id}/comment`
+    } else {
+      return NEW_COMMENT;
+    }
+  },
+  commentList: id => {
+    if(id){
+      return `/${id}/comments`
+    } else {
+      return COMMENT_LIST;
+    }
+  },
+  likes: id => {
+    if(id){
+      return `/${id}/likes`
+    } else {
+      return GET_LIKES;
+    }
+  },
+  toggleLike: id => {
+    if(id){
+      return `/${id}/togglelike`
+    } else {
+      return TOGGLE_LIKE;
+    }
+  }
 };
 
 export default routes;

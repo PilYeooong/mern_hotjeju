@@ -1,7 +1,7 @@
 // name, description, address, image, --- creator, comments, Likes
 import mongoose from "mongoose";
 
-const placeSchma = new mongoose.Schema({
+const placeSchema = new mongoose.Schema({
   name: {
     type: String,
     maxlength: 50,
@@ -26,4 +26,4 @@ const placeSchma = new mongoose.Schema({
   }
 })
 
-export const Place = mongoose.model("Place", placeSchma);
+export const Place = mongoose.model("Place", placeSchema);
