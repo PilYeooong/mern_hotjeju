@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
@@ -18,6 +18,18 @@ const Wrapper = styled.div`
 
 const LoginForm = styled(Form)`
   width: 60%;
+`;
+const SignupBox = styled.div`
+  width: 75%;
+  display:flex;
+  justify-content: flex-end;
+
+`;
+
+const Signup = styled.h5``;
+
+const SignupLink = styled(Link)`
+  margin-left: 5px;
 `;
 
 function Login(props) {
@@ -75,6 +87,9 @@ function Login(props) {
             로그인
           </Button>
         </Form.Item>
+        <SignupBox>
+          <Signup>아이디가 없으신가요? <SignupLink to="/signup">회원가입</SignupLink></Signup>
+        </SignupBox>
       </LoginForm>
     </Wrapper>
   );

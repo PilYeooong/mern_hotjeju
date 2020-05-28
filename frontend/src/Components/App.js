@@ -5,8 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import GlobalStyles from "../Styles/GlobalStyles";
 import Theme from "../Styles/Theme"
-
-import Header from "../Components/Header";
+import Auth from "../hoc/Auth";
 import Home from "../Pages/Home";
 import AuthRoutes from "../Pages/Auth"
 
@@ -16,9 +15,8 @@ function App() {
       <>
       <GlobalStyles />
       <Router>
-        <Header />
         <Switch>
-          <Route exact path="/" component={Home}/>
+          <Route exact path="/" component={Auth(Home, null)} />
           <Route path="/" component={AuthRoutes}/>
         </Switch>
       </Router>

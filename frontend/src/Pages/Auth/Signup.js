@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
@@ -20,33 +20,45 @@ const SignupForm = styled(Form)`
   width: 60%;
 `;
 
+const HaveAccountBox = styled.div`
+  width: 75%;
+  display:flex;
+  justify-content: flex-end;
+
+`;
+
+const HaveAccount = styled.h5``;
+
+const LoginLink = styled(Link)`
+  margin-left: 5px;
+`;
+
 function Signup(props) {
   const dispatch = useDispatch();
   const onFinish = async (values) => {
     const { email, username, password } = values;
     const data = { email, username, password };
-    
+
     await dispatch(registerUser(data)).then((response) => {
       if (response.payload.success) {
         notification.open({
           message: "회원가입 성공",
           description: "로그인 페이지로 이동합니다.",
-          icon: <SmileOutlined style={{ color: "#108ee9" }} />
+          icon: <SmileOutlined style={{ color: "#108ee9" }} />,
         });
         props.history.push("/login");
-      } else if(response.payload.message){
+      } else if (response.payload.message) {
         const error = response.payload.message;
         notification.open({
           message: "회원가입 실패",
           description: `${error}`,
-          icon: <FrownOutlined style={{ color: "#ff3333" }} />
+          icon: <FrownOutlined style={{ color: "#ff3333" }} />,
         });
-      }
-      else {
+      } else {
         notification.open({
           message: "회원가입 실패",
           description: "이메일/암호를 확인해주세요.",
-          icon: <FrownOutlined style={{ color: "#ff3333" }} />
+          icon: <FrownOutlined style={{ color: "#ff3333" }} />,
         });
       }
     });
@@ -116,6 +128,12 @@ function Signup(props) {
             회원가입
           </Button>
         </Form.Item>
+        <HaveAccountBox>
+          <HaveAccount>
+            이미 아이디가 있으신가요?
+            <LoginLink to="/login"> 로그인</LoginLink>
+          </HaveAccount>
+        </HaveAccountBox>
       </SignupForm>
     </Wrapper>
   );
