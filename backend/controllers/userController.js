@@ -54,8 +54,9 @@ export const logOut = (req, res) => {
       return res.json({ success: false, err });
     }
     res.cookie("x_auth", "");
-    return res.status(200).send({
-      success: true
+    return res.status(200).json({
+      success: true,
+      isAuth: false
     });
   });
 };
