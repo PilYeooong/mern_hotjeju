@@ -34,7 +34,15 @@ function Signup(props) {
           icon: <SmileOutlined style={{ color: "#108ee9" }} />
         });
         props.history.push("/login");
-      } else {
+      } else if(response.payload.message){
+        const error = response.payload.message;
+        notification.open({
+          message: "회원가입 실패",
+          description: `${error}`,
+          icon: <FrownOutlined style={{ color: "#ff3333" }} />
+        });
+      }
+      else {
         notification.open({
           message: "회원가입 실패",
           description: "이메일/암호를 확인해주세요.",

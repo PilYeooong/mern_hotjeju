@@ -2,14 +2,22 @@
 import { User } from "../models/User";
 
 export const signUp = async (req, res) => {
-  const user = await new User(req.body);
-  user.save((err, userInfo) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).json({
-      success: true,
-      userInfo,
-    });
-  });
+  await User.findOne({ email: req.body.email }).exec((err, userExist) => {
+    if(err){
+      return res.status(400).json({ err });
+    } else if(userExist){
+      return res.status(409).json({ success: false, message: "이미 사용중인 이메일입니다." })
+    } else {
+      const user = new User(req.body);
+      user.save((err, userInfo) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+          success: true,
+          userInfo,
+        });
+      });
+    }
+  })
 };
 
 export const login = async (req, res) => {
