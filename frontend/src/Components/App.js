@@ -6,7 +6,10 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import GlobalStyles from "../Styles/GlobalStyles";
 import Theme from "../Styles/Theme"
 import Auth from "../hoc/Auth";
+
 import Home from "../Pages/Home";
+import AddPlace from "../Pages/AddPlace";
+import PlaceDetail from "../Pages/PlaceDetail";
 import AuthRoutes from "../Pages/Auth"
 
 function App() {
@@ -17,6 +20,8 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={Auth(Home, null)} />
+          <Route exact path="/place/new" component={Auth(AddPlace, true)} />
+          <Route exact path="/place/:placeId" component={Auth(PlaceDetail, null)} />
           <Route path="/" component={AuthRoutes}/>
         </Switch>
       </Router>

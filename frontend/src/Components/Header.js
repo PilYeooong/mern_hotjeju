@@ -35,17 +35,28 @@ const SiteName = styled(Link)`
 const BigFireFilled = styled(FireFilled)`
   font-size: 4rem;
 `;
-const ProfileLink = styled(Link)``;
-const LogoutLink = styled(Link)``;
+const ProfileLink = styled(Link)`
+  margin-left: 1rem;
+`;
+
+const LogoutLink = styled(Link)`
+  margin-left: 1rem;
+`;
+
+const LoginLink = styled(Link)`
+  margin-left: 1rem;
+`;
+
+const PlaceNewLink = styled(Link)`
+`;
 
 export default withRouter((props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const LogOut = () => {
     dispatch(logoutUser()).then((response) => {
-      if (response.payload.success) {
+      if (response.payload.logoutSuccess) {
         notification.open({
           message: "로그아웃 완료",
           icon: <SmileOutlined style={{ color: "#108ee9" }} />,
@@ -72,13 +83,14 @@ export default withRouter((props) => {
         <HeaderColumn>
           {user.userData && user.userData.isAuth ? (
             <>
+              <PlaceNewLink to="/place/new">핫플 추가</PlaceNewLink>
               <ProfileLink to="/profile">프로필</ProfileLink>
-              <LogoutLink onClick={LogOut}>로그아웃</LogoutLink>
+              <LogoutLink to="/" onClick={LogOut}>로그아웃</LogoutLink>
             </>
           ) : (
             <>
               <ProfileLink to="/signup">회원가입</ProfileLink>
-              <Link to="/login">로그인</Link>
+              <LoginLink to="/login">로그인</LoginLink>
             </>
           )}
         </HeaderColumn>

@@ -16,8 +16,8 @@ const Container = styled.div`
 function Home() {
   const [places, setPlaces] = useState([]);
 
-  useEffect( async () => {
-    await Axios.get('api/places').then(response => {
+  useEffect(() => {
+    Axios.get('api/places').then(response => {
       console.log(response.data.places);
       setPlaces(response.data.places);
     })
@@ -27,7 +27,7 @@ function Home() {
     <div>
       <Header />
       <Container>
-      {places && places.map((place, idx) => <Place name={place.name} image={place.image} />)}
+      {places && places.map((place, idx) => <Place key={idx} id={place._id} name={place.name} image={place.images[0]} />)}
       </Container>
     </div>
   );

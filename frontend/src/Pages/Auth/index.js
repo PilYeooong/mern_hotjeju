@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import Profile from "./Profile";
 import Login from "./Login";
 import Signup from "./Signup";
+import Auth from "../../hoc/Auth";
 
 function Routes() {
   return (

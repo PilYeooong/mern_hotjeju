@@ -1,16 +1,21 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import { Card } from "antd";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 30%;
   height: 330px;
-  /* border: 1px solid black; */
   border-radius: 10%;
 `;
 
-const ImageBox = styled.div`
+const PlaceBox = styled.div`
   width: 100%;
   height: 70%;
+`;
+
+const PlaceLink = styled(Link)`
 `;
 
 const Image = styled.img`
@@ -19,18 +24,25 @@ const Image = styled.img`
   border-radius: 10%;
 `;
 
-const Description = styled.div`
+const Description = styled.div``;
 
-`;
-
-function Place({ name, image }) {
+function Place({ id, name, image }) {
   return (
     <Container>
-      <ImageBox>
-        <Image src={`http://localhost:5000/${image}`} />
-      </ImageBox>
+      <PlaceBox>
+        <PlaceLink to={`/place/${id}`} params={{ placeId: 1 }}>
+          <Image src={`http://localhost:5000/${image}`} />
+        </PlaceLink>
+        <Description>{name}</Description>
+      </PlaceBox>
     </Container>
-  )
+  );
 }
 
-export default Place
+Place.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+};
+
+export default Place;
