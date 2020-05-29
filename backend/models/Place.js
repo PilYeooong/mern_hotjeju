@@ -12,9 +12,9 @@ const placeSchema = new mongoose.Schema({
     maxlength: 100,
     required: true
   },
-  image: {
+  images: [{
     type: String,
-  },
+  }],
   address: {
     type: String,
     maxlength: 50,

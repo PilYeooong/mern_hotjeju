@@ -2,19 +2,22 @@ import { Place } from "../models/Place";
 import { validationResult } from "express-validator";
 
 export const addPlace = async (req, res, next) => {
+  console.log(req);
   const {
     body: { name, description, address },
-    file: { path },
+    files
   } = req;
   const place = await new Place({
     name,
-    image: path,
     description,
     address,
     creator: req.user._id,
   });
   req.user.places.push(place.id);
   req.user.save();
+  files.map((file) => {
+    place.images.push(file.path);
+  })
   place.save((err, placeInfo) => {
     if (err) {
       return res.json({ success: false, err });
