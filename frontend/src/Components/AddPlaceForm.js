@@ -32,9 +32,6 @@ function AddPlaceForm() {
   },[fileList]);
 
   const handleUploadChange = ({ fileList }) => {
-    // fileList.map((file) => {
-    //   setFileList(file.originFileObj);
-    // })
     setFileList(fileList);
   };
 

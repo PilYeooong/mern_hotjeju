@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import Header from "../Components/Header";
 import Axios from "axios";
@@ -36,12 +37,11 @@ function PlaceDetail(props) {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(placeInfo);
-  }, [placeInfo]);
-
   return (
-    <div>
+    <>
+      <Helmet>
+        <title>Hot Jeju</title>
+      </Helmet>
       <Header />
       {placeInfo && placeInfo.images && (
         <Wrapper>
@@ -59,7 +59,7 @@ function PlaceDetail(props) {
           </Container>
         </Wrapper>
       )}
-    </div>
+    </>
   );
 }
 
