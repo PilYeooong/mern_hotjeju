@@ -16,7 +16,6 @@ import Header from "../Components/Header";
 function App() {
   return (
     <ThemeProvider theme={Theme}>
-      <>
       <GlobalStyles />
       <Router>
       <Header />
@@ -27,7 +26,6 @@ function App() {
           <Route path="/" component={AuthRoutes}/>
         </Switch>
       </Router>
-      </>
     </ThemeProvider>
   );
 }

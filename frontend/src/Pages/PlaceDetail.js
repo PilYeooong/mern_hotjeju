@@ -36,7 +36,6 @@ function PlaceDetail(props) {
   useEffect(() => {
     Axios.get(`/api/places/${placeId}`).then((response) => {
       if (response.data.success) {
-        console.log(response.data);
         setPlaceInfo(response.data.place);
       } else {
         console.log("fail to load");

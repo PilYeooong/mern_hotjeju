@@ -63,7 +63,8 @@ function AddPlaceForm() {
       // await Axios.post('/api/places/new', formData);
       // history.push("/");
       dispatch({
-        type: ADD_PLACE_REQUEST
+        type: ADD_PLACE_REQUEST,
+        data: formData
       })
     } catch (error) {
         console.log("error");

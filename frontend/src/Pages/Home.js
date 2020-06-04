@@ -5,6 +5,8 @@ import Axios from "axios";
 
 import Header from "../Components/Header";
 import Place from "../Components/Place";
+import { useDispatch, useSelector } from "react-redux";
+import { LOAD_MAIN_PLACES_REQUEST } from "../_Actions/types";
 
 const Container = styled.div`
   width: 80%;
@@ -16,12 +18,13 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 function Home() {
-  const [places, setPlaces] = useState([]);
+  const dispatch = useDispatch();
+  const { places } = useSelector(state => state.place);
 
   useEffect(() => {
-    Axios.get("api/places").then((response) => {
-      setPlaces(response.data.places);
-    });
+    dispatch({
+      type: LOAD_MAIN_PLACES_REQUEST
+    })
   }, []);
 
   return (
