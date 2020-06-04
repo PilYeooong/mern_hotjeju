@@ -12,6 +12,7 @@ const Container = styled.div`
   margin: 0 auto;
   padding-top: 3rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 `;
 function Home() {
@@ -19,7 +20,6 @@ function Home() {
 
   useEffect(() => {
     Axios.get("api/places").then((response) => {
-      console.log(response.data.places);
       setPlaces(response.data.places);
     });
   }, []);
@@ -29,7 +29,6 @@ function Home() {
       <Helmet>
         <title>핫 제주 | Hot Jeju</title>
       </Helmet>
-      <Header />
       <Container>
         {places &&
           places.map((place, idx) => (

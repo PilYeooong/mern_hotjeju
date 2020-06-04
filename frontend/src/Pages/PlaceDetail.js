@@ -10,12 +10,18 @@ const Wrapper = styled.div`
   padding-top: 3rem;
 `;
 const Container = styled.div`
-  width: 50%;
+  width: 80%;
   height: 70%;
   margin: 0 auto;
 `;
 const PlaceName = styled.h5``;
-const PlaceImage = styled.img``;
+const PlaceImageBox = styled.div`
+  width: 100%;
+`;
+const PlaceImage = styled.img`
+  width: 350px;
+  height: 350px;
+`;
 const PlaceDescription = styled.div``;
 const PlaceAddress = styled.div``;
 
@@ -30,6 +36,7 @@ function PlaceDetail(props) {
   useEffect(() => {
     Axios.get(`/api/places/${placeId}`).then((response) => {
       if (response.data.success) {
+        console.log(response.data);
         setPlaceInfo(response.data.place);
       } else {
         console.log("fail to load");
@@ -42,18 +49,15 @@ function PlaceDetail(props) {
       <Helmet>
         <title>Hot Jeju</title>
       </Helmet>
-      <Header />
       {placeInfo && placeInfo.images && (
         <Wrapper>
           <Container>
+            <PlaceImageBox>
+              {placeInfo.images.map((image, idx) => (
+                <PlaceImage key={idx} src={`http://localhost:5000/${image}`} />
+              ))}
+            </PlaceImageBox>
             <PlaceName>{placeInfo.name}</PlaceName>
-            {placeInfo.images.map((image, idx) => (
-              <PlaceImage
-                key={idx}
-                src={`http://localhost:5000/${image}`}
-                style={{ width: "100px", height: "100px" }}
-              />
-            ))}
             <PlaceDescription>{placeInfo.description}</PlaceDescription>
             <PlaceAddress>{placeInfo.address}</PlaceAddress>
           </Container>

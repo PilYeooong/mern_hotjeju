@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 import { Form, Input, Button, Upload, Modal, notification } from "antd";
 import { FrownOutlined, PlusOutlined } from "@ant-design/icons";
 import Axios from "axios";
+import { useDispatch } from "react-redux";
+import { ADD_PLACE_REQUEST } from "../_Actions/types";
 
 const Wrapper = styled.div`
   height: 80vh;
@@ -21,15 +23,12 @@ const PlaceForm = styled(Form)`
 `;
 function AddPlaceForm() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [fileList, setFileList] = useState([]);
   const [previewPhoto, setPreviewPhoto] = useState({
     visible: false,
     base64: null,
   });
-
-  useEffect(() => {
-    console.log(fileList);
-  },[fileList]);
 
   const handleUploadChange = ({ fileList }) => {
     setFileList(fileList);
@@ -61,8 +60,11 @@ function AddPlaceForm() {
       formData.append("images", file.originFileObj);
     });
     try {
-      await Axios.post('/api/places/new', formData);
-      history.push("/");
+      // await Axios.post('/api/places/new', formData);
+      // history.push("/");
+      dispatch({
+        type: ADD_PLACE_REQUEST
+      })
     } catch (error) {
         console.log("error");
       }

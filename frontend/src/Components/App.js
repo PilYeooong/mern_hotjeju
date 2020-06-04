@@ -11,6 +11,7 @@ import Home from "../Pages/Home";
 import AddPlace from "../Pages/AddPlace";
 import PlaceDetail from "../Pages/PlaceDetail";
 import AuthRoutes from "../Pages/Auth"
+import Header from "../Components/Header";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <>
       <GlobalStyles />
       <Router>
+      <Header />
         <Switch>
           <Route exact path="/" component={Auth(Home, null)} />
           <Route exact path="/place/new" component={Auth(AddPlace, true)} />
