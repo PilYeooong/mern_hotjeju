@@ -7,6 +7,7 @@ import "./db";
 import routes from "./routes";
 import userRouter from "./routers/userRouter";
 import placeRouter from "./routers/placeRouter";
+import morgan from "morgan";
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ const port = 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+app.use(morgan("dev"));
 app.use('/media', express.static('media'));
 
 app.use(routes.users, userRouter);
