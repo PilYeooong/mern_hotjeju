@@ -2,6 +2,10 @@
 import mongoose from "mongoose";
 
 const placeSchema = new mongoose.Schema({
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category"
+  },
   name: {
     type: String,
     maxlength: 50,

@@ -7,6 +7,7 @@ import "./db";
 import routes from "./routes";
 import userRouter from "./routers/userRouter";
 import placeRouter from "./routers/placeRouter";
+import categoryRouter from "./routers/categoryRouter";
 import morgan from "morgan";
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use('/media', express.static('media'));
 
 app.use(routes.users, userRouter);
 app.use(routes.places, placeRouter);
+app.use('/api/category/', categoryRouter);
 
 app.listen(port, () =>
   console.log(`Example app listening at http://localhost:${port}`)
