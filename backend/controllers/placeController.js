@@ -103,3 +103,17 @@ export const deletePlace = async (req, res) => {
       .json({ success: false, message: "유효한 주소가 아닙니다." });
   }
 };
+
+export const categorizedPlace = async (req, res, next) => {
+  const {
+    params: { category },
+  } = req;
+  try {
+    const categorized = await Category.findOne({ name: category }).populate('places')
+    const places = categorized.places;
+    return res.status(200).json({ places });
+  } catch(e){
+    console.error(e);
+    return res.status(404).json({ success: false, e });
+  }
+}

@@ -19,6 +19,7 @@ const PLACES = `${API}/places`;
 const PLACE_DETAIL = "/:id";
 const PLACE_EDIT = "/:id/edit";
 const PLACE_DELETE = "/:id/delete";
+const CATEGORIZED_PLACE = "/:category";
 // Comment
 const NEW_COMMENT = "/:id/comment";
 const COMMENT_LIST = "/:id/comments";
@@ -57,6 +58,7 @@ const routes = {
       return PLACE_DELETE;
     }
   },
+  categorizedPlace: CATEGORIZED_PLACE,
   newComment: id => {
     if(id){
       return `/${id}/comment`

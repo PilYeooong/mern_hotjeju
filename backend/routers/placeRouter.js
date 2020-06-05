@@ -8,6 +8,7 @@ import {
   placeDetail,
   editPlace,
   deletePlace,
+  categorizedPlace,
 } from "../controllers/placeController";
 import {
   newComment, getComments
@@ -20,6 +21,9 @@ placeRouter.get(routes.placeDetail(), placeDetail);
 placeRouter.post(routes.addPlace, isAuthenticated, uploadPlace, addPlace);
 placeRouter.post(routes.editPlace(), isAuthenticated, editPlace);
 placeRouter.post(routes.deletePlace(), isAuthenticated, deletePlace);
+
+// Category
+placeRouter.post(routes.categorizedPlace, categorizedPlace);
 
 // Comment
 placeRouter.post(routes.newComment(), isAuthenticated, newComment);
