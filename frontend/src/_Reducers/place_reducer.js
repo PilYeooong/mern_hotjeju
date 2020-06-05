@@ -7,11 +7,15 @@ import {
   LOAD_CATEGORIZED_PLACES_REQUEST,
   LOAD_CATEGORIZED_PLACES_SUCCESS,
   LOAD_CATEGORIZED_PLACES_FAILURE,
+  LOAD_PLACE_DETAIL_REQUEST,
+  LOAD_PLACE_DETAIL_SUCCESS,
+  LOAD_PLACE_DETAIL_FAILURE,
 } from "../_Actions/types";
 
 const initialState = {
   places: [],
   isAddingPost: false,
+  placeDetail: null,
 };
 
 export default function (state = initialState, action) {
@@ -28,6 +32,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         places: action.data,
+        placeDetail: null,
       };
     }
     case LOAD_CATEGORIZED_PLACES_FAILURE:
@@ -49,6 +54,24 @@ export default function (state = initialState, action) {
         isAddingPost: false,
         places: [action.data, ...state.places],
       };
+    }
+    case LOAD_PLACE_DETAIL_REQUEST: {
+      return {
+        ...state,
+        placeDetail: null,
+      }
+    }
+    case LOAD_PLACE_DETAIL_SUCCESS: {
+      return {
+        ...state,
+        placeDetail: action.data
+      }
+    }
+    case LOAD_PLACE_DETAIL_FAILURE: {
+      return {
+        ...state,
+        placeDetail: null,
+      }
     }
     default: {
       return {

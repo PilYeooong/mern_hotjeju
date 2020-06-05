@@ -10,6 +10,9 @@ import {
   LOAD_CATEGORIZED_PLACES_REQUEST,
   LOAD_CATEGORIZED_PLACES_SUCCESS,
   LOAD_CATEGORIZED_PLACES_FAILURE,
+  LOAD_PLACE_DETAIL_REQUEST,
+  LOAD_PLACE_DETAIL_SUCCESS,
+  LOAD_PLACE_DETAIL_FAILURE,
 } from "../_Actions/types";
 import Axios from "axios";
 
@@ -90,10 +93,36 @@ function* watchAddPlace() {
 
 // -----------------------------------------------------------------------
 
+function loadPlaceDetailAPI(placeId){
+  return Axios.get(`/api/places/${placeId}/`)
+}
+
+function* loadPlaceDetail(action){
+  try {
+    const result = yield call(loadPlaceDetailAPI, action.data);
+    yield put({
+      type: LOAD_PLACE_DETAIL_SUCCESS,
+      data: result.data.place
+    })
+  } catch(e){
+    console.error(e);
+    yield put({
+      type: LOAD_PLACE_DETAIL_FAILURE,
+      error: e
+    })
+  }
+}
+
+function* watchLoadPlaceDetail(){
+  yield takeLatest(LOAD_PLACE_DETAIL_REQUEST, loadPlaceDetail);
+}
+// -----------------------------------------------------------------------
+
 export default function* placeSaga() {
   yield all([
     fork(watchLoadPlaces),
     fork(watchAddPlace),
     fork(watchCategorizedPlace),
+    fork(watchLoadPlaceDetail),
   ]);
 }
