@@ -4,9 +4,8 @@ import styled from "styled-components";
 import { getBase64FromFile } from "../Utils/base64";
 import { useHistory } from "react-router-dom";
 
-import { Form, Input, Button, Upload, Modal, notification } from "antd";
+import { Form, Input, Button, Upload, Modal, Select, notification } from "antd";
 import { FrownOutlined, PlusOutlined } from "@ant-design/icons";
-import Axios from "axios";
 import { useDispatch } from "react-redux";
 import { ADD_PLACE_REQUEST } from "../_Actions/types";
 
@@ -17,10 +16,12 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-
 const PlaceForm = styled(Form)`
   width: 100%;
 `;
+
+const { Option } = Select;
+
 function AddPlaceForm() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -44,15 +45,24 @@ function AddPlaceForm() {
       base64: file.url || file.preview,
     });
   };
+  // const onCategoryChange = value => {
+  //   switch(value){
+  //     case 'ocean': {
+
+  //     }
+  //   }
+  // }
 
   const onFinish = async (values) => {
     const {
+      category,
       name,
       description,
       images: { fileList },
-      address
+      address,
     } = values;
     const formData = new FormData();
+    formData.append("category", category);
     formData.append("name", name);
     formData.append("description", description);
     formData.append("address", address);
@@ -60,16 +70,15 @@ function AddPlaceForm() {
       formData.append("images", file.originFileObj);
     });
     try {
-      // await Axios.post('/api/places/new', formData);
-      // history.push("/");
       dispatch({
         type: ADD_PLACE_REQUEST,
-        data: formData
-      })
+        data: formData,
+      });
+      history.push("/");
     } catch (error) {
-        console.log("error");
-      }
+      console.log("error");
     }
+  };
 
   return (
     <Wrapper>
@@ -77,6 +86,26 @@ function AddPlaceForm() {
         <title>핫플 추가하기 | Hot Jeju</title>
       </Helmet>
       <PlaceForm {...layout} onFinish={onFinish}>
+        <Form.Item
+          name="category"
+          label="Category"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Select
+            placeholder="카테고리"
+            // onChange={onCategoryChange}
+            allowClear
+          >
+            <Option value="ocean">바다</Option>
+            <Option value="cafe">카페</Option>
+            <Option value="restaurant">식당</Option>
+            <Option value="museum">박물관</Option>
+          </Select>
+        </Form.Item>
         <Form.Item
           label="Name"
           name="name"
@@ -127,7 +156,6 @@ function AddPlaceForm() {
         >
           <Input />
         </Form.Item>
-
 
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">

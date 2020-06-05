@@ -8,6 +8,7 @@ const Container = styled.div`
   width: 30%;
   height: 330px;
   border-radius: 10%;
+  margin-right: 3rem;
 `;
 
 const PlaceBox = styled.div`

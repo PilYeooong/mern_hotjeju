@@ -15,7 +15,6 @@ const Container = styled.div`
   padding-top: 3rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 `;
 function Home() {
   const dispatch = useDispatch();
