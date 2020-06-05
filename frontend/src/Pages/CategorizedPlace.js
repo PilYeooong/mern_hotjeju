@@ -3,27 +3,31 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 
 import Place from "../Components/Place";
-import ImageSlide from "../Components/ImageSlide";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_MAIN_PLACES_REQUEST } from "../_Actions/types";
+import { LOAD_CATEGORIZED_PLACES_REQUEST } from "../_Actions/types";
 
 const Container = styled.div`
   width: 80%;
-  height: 100vh;
+  height: 80vh;
   margin: 0 auto;
   padding-top: 3rem;
   display: flex;
   flex-wrap: wrap;
 `;
 
-function Home() {
+function CategorizedPlace(props) {
   const dispatch = useDispatch();
-  const { places } = useSelector(state => state.place);
-
+  const { places } = useSelector((state) => state.place);
+  const {
+    match: {
+      params: { category },
+    },
+  } = props;
   useEffect(() => {
     dispatch({
-      type: LOAD_MAIN_PLACES_REQUEST
-    })
+      type: LOAD_CATEGORIZED_PLACES_REQUEST,
+      data: category,
+    });
   }, []);
 
   return (
@@ -31,7 +35,6 @@ function Home() {
       <Helmet>
         <title>핫 제주 | Hot Jeju</title>
       </Helmet>
-      <ImageSlide />
       <Container>
         {places &&
           places.map((place, idx) => (
@@ -47,4 +50,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default CategorizedPlace;

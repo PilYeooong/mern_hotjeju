@@ -3,9 +3,8 @@ import { Link, withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import styled from "styled-components";
-import { Logo } from "./Icons";
 import { logoutUser } from "../_Actions/user_action";
-import { notification } from "antd";
+import { Input, notification } from "antd";
 import { SmileOutlined, FireFilled } from "@ant-design/icons";
 
 const Header = styled.header`
@@ -64,6 +63,10 @@ export default withRouter((props) => {
       }
     });
   };
+  const onSubmitSearch = (e) => {
+    e.preventDefault();
+
+  }
 
   return (
     <Header>
@@ -75,8 +78,8 @@ export default withRouter((props) => {
           <BigFireFilled />
         </HeaderColumn>
         <HeaderColumn>
-          <form action="">
-            <input type="text" />
+          <form action="" onSubmit={onSubmitSearch}>
+            <Input />
           </form>
           
         </HeaderColumn>

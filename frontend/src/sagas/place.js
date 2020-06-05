@@ -1,65 +1,99 @@
-import {
-  all,
-  fork,
-  takeLatest,
-  call,
-  put,
-} from "redux-saga/effects";
+import { all, fork, takeLatest, call, put } from "redux-saga/effects";
 
-import { ADD_PLACE_REQUEST, ADD_PLACE_SUCCESS, ADD_PLACE_FAILURE, LOAD_MAIN_PLACES_REQUEST, LOAD_MAIN_PLACES_FAILURE, LOAD_MAIN_PLACES_SUCCESS } from "../_Actions/types";
+import {
+  ADD_PLACE_REQUEST,
+  ADD_PLACE_SUCCESS,
+  ADD_PLACE_FAILURE,
+  LOAD_MAIN_PLACES_REQUEST,
+  LOAD_MAIN_PLACES_FAILURE,
+  LOAD_MAIN_PLACES_SUCCESS,
+  LOAD_CATEGORIZED_PLACES_REQUEST,
+  LOAD_CATEGORIZED_PLACES_SUCCESS,
+  LOAD_CATEGORIZED_PLACES_FAILURE,
+} from "../_Actions/types";
 import Axios from "axios";
 
-function loadPlacesAPI(){
-  return Axios.get('/api/places/');
+function loadPlacesAPI() {
+  return Axios.get("/api/places/");
 }
 
-function* loadPlaces(action){
+function* loadPlaces(action) {
   try {
     const result = yield call(loadPlacesAPI, action.data);
     yield put({
       type: LOAD_MAIN_PLACES_SUCCESS,
-      data: result.data.places
-    })
+      data: result.data.places,
+    });
   } catch (e) {
     console.error(e);
     yield put({
       type: LOAD_MAIN_PLACES_FAILURE,
-      error: e
-    })
+      error: e,
+    });
   }
 }
 
-function* watchLoadPlaces(){
+function* watchLoadPlaces() {
   yield takeLatest(LOAD_MAIN_PLACES_REQUEST, loadPlaces);
 }
 
-function addPlaceAPI(placeData){
-  return Axios.post('/api/places/new/', placeData);
+// -----------------------------------------------------------------------
+
+function categorizedPlaceAPI(category) {
+  return Axios.post(`/api/places/${category}/`);
 }
 
-function* addPlace(action){
-  try{
-    const result = yield call(addPlaceAPI, action.data);
+function* categorizedPlace(action) {
+  try {
+    const result = yield call(categorizedPlaceAPI, action.data);
     yield put({
-      type: ADD_PLACE_SUCCESS,
-      data: result.data.placeInfo
-    })
-  } catch(e) {
+      type: LOAD_CATEGORIZED_PLACES_SUCCESS,
+      data: result.data.places,
+    });
+  } catch (e) {
     console.error(e);
     yield put({
-      type: ADD_PLACE_FAILURE,
-      error: e
-    })
+      type: LOAD_CATEGORIZED_PLACES_FAILURE,
+      error: e,
+    });
   }
 }
 
-function* watchAddPlace(){
+function* watchCategorizedPlace() {
+  yield takeLatest(LOAD_CATEGORIZED_PLACES_REQUEST, categorizedPlace);
+}
+// -----------------------------------------------------------------------
+
+function addPlaceAPI(placeData) {
+  return Axios.post("/api/places/new/", placeData);
+}
+
+function* addPlace(action) {
+  try {
+    const result = yield call(addPlaceAPI, action.data);
+    yield put({
+      type: ADD_PLACE_SUCCESS,
+      data: result.data.placeInfo,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: ADD_PLACE_FAILURE,
+      error: e,
+    });
+  }
+}
+
+function* watchAddPlace() {
   yield takeLatest(ADD_PLACE_REQUEST, addPlace);
 }
+
+// -----------------------------------------------------------------------
 
 export default function* placeSaga() {
   yield all([
     fork(watchLoadPlaces),
     fork(watchAddPlace),
+    fork(watchCategorizedPlace),
   ]);
 }
