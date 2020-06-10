@@ -1,5 +1,4 @@
 import multer from "multer";
-import { validationResult } from "express-validator";
 
 let storage = multer.diskStorage({
   destination: (req, res, cb) => {

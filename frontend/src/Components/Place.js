@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { Card } from "antd";
 import { Link } from "react-router-dom";
+import { SERVER } from "../Utils/api";
 
 const Container = styled.div`
   width: 30%;
@@ -32,7 +32,7 @@ function Place({ id, name, image }) {
     <Container>
       <PlaceBox>
         <PlaceLink to={`/place/${id}`} params={{ placeId: 1 }}>
-          <Image src={`http://localhost:5000/${image}`} />
+          <Image src={`${SERVER}/${image}`} />
         </PlaceLink>
         <Description>{name}</Description>
       </PlaceBox>

@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_PLACE_DETAIL_REQUEST } from "../_Actions/types";
 import { Card, Comment, Tooltip } from "antd";
+import { SERVER } from "../Utils/api";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -57,31 +58,10 @@ function PlaceDetail(props) {
       {placeDetail && placeDetail.images && (
         <Wrapper>
           <Container>
-            <PlaceCard cover={<PlaceImage src={`http://localhost:5000/${placeDetail.images[0]}`} />}>
-              {/* <PlaceImageBox>
-                {placeDetail.images.map((image, idx) => (
-                  <PlaceImage key={idx} src={`http://localhost:5000/${image}`} />
-                ))}
-              </PlaceImageBox> */}
+            <PlaceCard cover={<PlaceImage src={`${SERVER}/${placeDetail.images[0]}`} />}>
               <Card.Meta title={placeDetail.name} description={placeDetail.description} />
               <PlaceAddress>주소 - {placeDetail.address}</PlaceAddress>
             </PlaceCard>
-            <Comment
-            // actions={actions}
-            author={<a>Han Solo</a>}
-            content={
-              <p>
-                We supply a series of design principles, practical patterns and high quality design
-                resources (Sketch and Axure), to help people create their product prototypes beautifully
-                and efficiently.
-              </p>
-            }
-            datetime={
-              <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-                <span>{moment().fromNow()}</span>
-              </Tooltip>
-            }
-          />
           </Container>
         </Wrapper>
       )}
