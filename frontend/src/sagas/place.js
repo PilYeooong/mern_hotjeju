@@ -13,6 +13,12 @@ import {
   LOAD_PLACE_DETAIL_REQUEST,
   LOAD_PLACE_DETAIL_SUCCESS,
   LOAD_PLACE_DETAIL_FAILURE,
+  LOAD_COMMENTS_REQUEST,
+  LOAD_COMMENTS_SUCCESS,
+  LOAD_COMMENTS_FAILURE,
+  ADD_COMMENT_REQUEST,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAILURE,
 } from "../_Actions/types";
 import Axios from "axios";
 
@@ -116,7 +122,58 @@ function* loadPlaceDetail(action){
 function* watchLoadPlaceDetail(){
   yield takeLatest(LOAD_PLACE_DETAIL_REQUEST, loadPlaceDetail);
 }
+
 // -----------------------------------------------------------------------
+
+function loadCommentsAPI(placeId, offset=0){
+  return Axios.get(`/api/places/${placeId}/comments?offset=${offset}`)
+}
+
+function* loadComments(action){
+  try {
+    const result = yield call(loadCommentsAPI, action.data, action.offset);
+    yield put({
+      type: LOAD_COMMENTS_SUCCESS,
+      data: result.data
+    })
+  } catch(e){
+    console.error(e);
+    yield put({
+      type: LOAD_COMMENTS_FAILURE,
+      error: e
+    })
+  }
+}
+
+function* watchLoadComments(){
+  yield takeLatest(LOAD_COMMENTS_REQUEST, loadComments);
+}
+
+// -----------------------------------------------------------------------
+
+function addCommnetAPI(data){
+  return Axios.post(`/api/places/${data.placeId}/comment`, { text: data.comment });
+}
+
+function* addComment(action){
+  try {
+    const result = yield call(addCommnetAPI, action.data);
+    yield put({
+      type: ADD_COMMENT_SUCCESS,
+      data: result.data
+    })
+  } catch(e){
+    console.error(e);
+    yield put({
+      type: ADD_COMMENT_FAILURE,
+      error: e
+    })
+  }
+}
+
+function* watchAddComment(){
+  yield takeLatest(ADD_COMMENT_REQUEST, addComment);
+}
 
 export default function* placeSaga() {
   yield all([
@@ -124,5 +181,7 @@ export default function* placeSaga() {
     fork(watchAddPlace),
     fork(watchCategorizedPlace),
     fork(watchLoadPlaceDetail),
+    fork(watchLoadComments),
+    fork(watchAddComment),
   ]);
 }

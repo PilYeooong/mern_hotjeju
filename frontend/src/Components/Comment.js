@@ -1,25 +1,24 @@
-import React from 'react'
-import { Card, Comment, Tooltip } from "antd";
+import React from "react";
+import { Button, Comment as AntdComment, Tooltip } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { LOAD_COMMENTS_REQUEST } from "../_Actions/types";
+import moment from "moment";
 
-function Comment() {
+function Comment({ comment }) {
   return (
-    <Comment
-    // actions={actions}
-    author={<a>Han Solo</a>}
-    content={
-      <p>
-        We supply a series of design principles, practical patterns and high quality design
-        resources (Sketch and Axure), to help people create their product prototypes beautifully
-        and efficiently.
-      </p>
-    }
-    datetime={
-      <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-        <span>{moment().fromNow()}</span>
-      </Tooltip>
-    }
-  />
-  )
+    <>
+      <AntdComment
+        // actions={actions}
+        author={<a>{comment && comment.creator && comment.creator.nickname}</a>}
+        content={<p>{comment.text}</p>}
+        datetime={
+          <Tooltip title={moment().format(comment.createdAt)}>
+            <span>{moment().fromNow()}</span>
+          </Tooltip>
+        }
+      />
+    </>
+  );
 }
 
-export default Comment
+export default Comment;

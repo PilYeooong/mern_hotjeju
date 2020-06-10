@@ -10,12 +10,20 @@ import {
   LOAD_PLACE_DETAIL_REQUEST,
   LOAD_PLACE_DETAIL_SUCCESS,
   LOAD_PLACE_DETAIL_FAILURE,
+  LOAD_COMMENTS_REQUEST,
+  LOAD_COMMENTS_SUCCESS,
+  LOAD_COMMENTS_FAILURE,
+  ADD_COMMENT_REQUEST,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAILURE,
 } from "../_Actions/types";
 
 const initialState = {
   places: [],
   isAddingPost: false,
   placeDetail: null,
+  comments: null,
+  hasMoreComments: false,
 };
 
 export default function (state = initialState, action) {
@@ -33,6 +41,7 @@ export default function (state = initialState, action) {
         ...state,
         places: action.data,
         placeDetail: null,
+        comments: null,
       };
     }
     case LOAD_CATEGORIZED_PLACES_FAILURE:
@@ -71,6 +80,41 @@ export default function (state = initialState, action) {
       return {
         ...state,
         placeDetail: null,
+      }
+    }
+    case ADD_COMMENT_REQUEST: {
+      return {
+        ...state,
+      }
+    }
+    case ADD_COMMENT_SUCCESS: {
+      return {
+        ...state,
+        comments: [action.data, ...state.comments]
+      }
+    }
+    case ADD_COMMENT_FAILURE: {
+      return {
+        ...state,
+      }
+    }
+    case LOAD_COMMENTS_REQUEST: {
+      return {
+        ...state,
+        comments: action.offset === 0 ? [] : state.comments,
+        hasMoreComments: action.offset ? state.hasMoreComment : true,
+      }
+    }
+    case LOAD_COMMENTS_SUCCESS: {
+      return {
+        ...state,
+        comments: state.comments.concat(action.data),
+        hasMoreComments: action.data.length === 3,
+      }
+    }
+    case LOAD_COMMENTS_FAILURE: {
+      return {
+        ...state,
       }
     }
     default: {
