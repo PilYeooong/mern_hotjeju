@@ -6,7 +6,7 @@ import moment from "moment";
 const saltRounds = 10;
 
 const userSchema = new mongoose.Schema({
-  name: {
+  nickname: {
     type: String,
     maxlength: 50,
   },
