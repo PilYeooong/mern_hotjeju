@@ -36,8 +36,8 @@ const LoginLink = styled(Link)`
 function Signup(props) {
   const dispatch = useDispatch();
   const onFinish = async (values) => {
-    const { email, username, password } = values;
-    const data = { email, username, password };
+    const { email, nickname, password } = values;
+    const data = { email, nickname, password };
 
     await dispatch(registerUser(data)).then((response) => {
       if (response.payload.success) {
@@ -80,10 +80,10 @@ function Signup(props) {
           <Input />
         </Form.Item>
         <Form.Item
-          label="이름"
-          name="username"
+          label="닉네임"
+          name="nickname"
           rules={[
-            { required: true, message: "이름을 작성하여 주세요." },
+            { required: true, message: "닉네임을 작성하여 주세요." },
             { min: 2, message: "2글자 이상을 입력해 주세요." },
           ]}
         >
