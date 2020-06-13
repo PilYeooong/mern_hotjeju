@@ -1,18 +1,21 @@
 import { Like } from "../models/Like";
+import { Place } from "../models/Place";
 
-export const getLikes = (req, res) => {
+export const getLikes = async (req, res) => {
   const {
     params: { id },
   } = req;
   try {
-    Like.find({ placeId: id }).exec((err, likes) => {
-      if (err) {
-        return res.status(400).json({ success: false, err });
-      }
-      return res.status(200).json({ success: true, likes });
-    });
-  } catch(err) {
-    return res.status(400).json({ success: false, err });
+    const place = await Place.findById(id);
+    if(!place){
+      return res.status(400).send("존재하지 않는 페이지입니다.");
+    }
+    if(place.likers.includes(req.user._id)){
+      return res.status(200).send(true);
+    }
+    return res.status(200).send(false);
+  } catch (e) {
+    console.error(e);
   }
 };
 

@@ -6,11 +6,10 @@ export const getComments = (req, res) => {
     params: { id },
     query: { offset },
   } = req;
-  console.log(offset);
   try {
     Comment.find({ placeId: id })
       .skip(parseInt(offset, 10))
-      .limit(3)
+      .limit(5)
       .populate("creator", "nickname")
       .sort({ _id: -1 })
       .exec((err, comments) => {
@@ -24,12 +23,12 @@ export const getComments = (req, res) => {
   }
 };
 
-export const newComment = (req, res) => {
+export const newComment = async (req, res) => {
   const {
     params: { id },
     body: { text },
   } = req;
-  const comment = new Comment({ creator: req.user._id, placeId: id, text });
+  const comment = await new Comment({ creator: req.user._id, placeId: id, text });
   comment.save( async (err, comment) => {
     if (err) {
       return res.status(400).json({ success: false, err });
