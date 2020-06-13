@@ -23,6 +23,10 @@ const placeSchema = new mongoose.Schema({
     type: String,
     maxlength: 50,
   },
+  likers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  }],
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     required:true,
