@@ -8,12 +8,11 @@ function Comment({ comment }) {
   return (
     <>
       <AntdComment
-        // actions={actions}
         author={<a>{comment && comment.creator && comment.creator.nickname}</a>}
         content={<p>{comment.text}</p>}
         datetime={
           <Tooltip title={moment().format(comment.createdAt)}>
-            <span>{moment().fromNow()}</span>
+            <span>{moment(comment.createdAt).fromNow()}</span>
           </Tooltip>
         }
       />

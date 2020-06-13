@@ -19,14 +19,14 @@ const SubmitButton = styled(Button)`
 
 const CommentList = () => {
   const dispatch = useDispatch();
-  const { placeDetail, comments, hasMoreComments } = useSelector(state => state.place);
+  const { placeDetail, hasMoreComments } = useSelector(state => state.place);
   const [comment, setComment] = useState('');
 
   const loadMoreComments = () => {
     dispatch({
       type: LOAD_COMMENTS_REQUEST,
       data: placeDetail._id,
-      offset: comments.length,
+      offset: placeDetail.Comments.length,
     })
   }
 
@@ -46,10 +46,10 @@ const CommentList = () => {
   }
   return (
     <div>
-      {comments.map(comment => (
+      {placeDetail.Comments && placeDetail.Comments.map(comment => (
         <Comment comment={comment} />
       ))}
-      {hasMoreComments && <MoreButton type="default" onClick={loadMoreComments}>더 보기</MoreButton>}
+      {placeDetail.hasMoreComments && <MoreButton type="default" onClick={loadMoreComments}>더 보기</MoreButton>}
       <Input.TextArea value={comment} onChange={onChangeComment} />
       <ButtonBox>
         <SubmitButton type="primary" onClick={onSubmitComment}>댓글 작성</SubmitButton>

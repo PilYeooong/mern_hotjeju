@@ -19,6 +19,13 @@ import {
   ADD_COMMENT_REQUEST,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAILURE,
+  TOGGLE_LIKE_SUCCESS,
+  TOGGLE_LIKE_FAILURE,
+  TOGGLE_LIKE_REQUEST,
+  LOAD_IS_LIKED_REQUEST,
+  LOAD_IS_LIKED_SUCCESS,
+  LOAD_IS_LIKED_FAILURE,
+  LOAD_MORE_COMMENTS_SUCCESS
 } from "../_Actions/types";
 import Axios from "axios";
 
@@ -99,32 +106,6 @@ function* watchAddPlace() {
 
 // -----------------------------------------------------------------------
 
-function loadPlaceDetailAPI(placeId){
-  return Axios.get(`/api/places/${placeId}/`)
-}
-
-function* loadPlaceDetail(action){
-  try {
-    const result = yield call(loadPlaceDetailAPI, action.data);
-    yield put({
-      type: LOAD_PLACE_DETAIL_SUCCESS,
-      data: result.data.place
-    })
-  } catch(e){
-    console.error(e);
-    yield put({
-      type: LOAD_PLACE_DETAIL_FAILURE,
-      error: e
-    })
-  }
-}
-
-function* watchLoadPlaceDetail(){
-  yield takeLatest(LOAD_PLACE_DETAIL_REQUEST, loadPlaceDetail);
-}
-
-// -----------------------------------------------------------------------
-
 function loadCommentsAPI(placeId, offset=0){
   return Axios.get(`/api/places/${placeId}/comments?offset=${offset}`)
 }
@@ -132,8 +113,10 @@ function loadCommentsAPI(placeId, offset=0){
 function* loadComments(action){
   try {
     const result = yield call(loadCommentsAPI, action.data, action.offset);
+    console.log(result);
     yield put({
-      type: LOAD_COMMENTS_SUCCESS,
+      // type: LOAD_COMMENTS_SUCCESS,
+      type: LOAD_MORE_COMMENTS_SUCCESS,
       data: result.data
     })
   } catch(e){
@@ -148,6 +131,39 @@ function* loadComments(action){
 function* watchLoadComments(){
   yield takeLatest(LOAD_COMMENTS_REQUEST, loadComments);
 }
+
+
+// -----------------------------------------------------------------------
+
+function loadPlaceDetailAPI(placeId){
+  return Axios.get(`/api/places/${placeId}/`)
+}
+
+function* loadPlaceDetail(action){
+  try {
+    const result = yield call(loadPlaceDetailAPI, action.data);
+    const comments = yield call(loadCommentsAPI, action.data);
+    yield put({
+      type: LOAD_PLACE_DETAIL_SUCCESS,
+      data: result.data
+    })
+    yield put({
+      type: LOAD_COMMENTS_SUCCESS,
+      data: comments.data,
+    })
+  } catch(e){
+    console.error(e);
+    yield put({
+      type: LOAD_PLACE_DETAIL_FAILURE,
+      error: e
+    })
+  }
+}
+
+function* watchLoadPlaceDetail(){
+  yield takeLatest(LOAD_PLACE_DETAIL_REQUEST, loadPlaceDetail);
+}
+
 
 // -----------------------------------------------------------------------
 
@@ -175,6 +191,32 @@ function* watchAddComment(){
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
 
+// -----------------------------------------------------------------------
+
+function toggleLikeAPI(data){
+  return Axios.post(`/api/places/${data.placeId}/togglelike`, { isLiked: data.isLiked });
+}
+
+function* toggleLike(action){
+  try {
+    const result = yield call(toggleLikeAPI, action.data);
+    yield put({
+      type: TOGGLE_LIKE_SUCCESS,
+      data: result.data
+    })
+  } catch(e){
+    console.error(e);
+    yield put({
+      type: TOGGLE_LIKE_FAILURE,
+      error: e
+    })
+  }
+}
+
+function* watchToggleLike(){
+  yield takeLatest(TOGGLE_LIKE_REQUEST, toggleLike);
+}
+
 export default function* placeSaga() {
   yield all([
     fork(watchLoadPlaces),
@@ -183,5 +225,6 @@ export default function* placeSaga() {
     fork(watchLoadPlaceDetail),
     fork(watchLoadComments),
     fork(watchAddComment),
+    fork(watchToggleLike),
   ]);
 }

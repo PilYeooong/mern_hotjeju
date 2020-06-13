@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_PLACE_DETAIL_REQUEST, LOAD_COMMENTS_REQUEST } from "../_Actions/types";
 import { Button, Card } from "antd";
+import { LikeOutlined, LikeFilled, HeartOutlined } from '@ant-design/icons';
 import { SERVER } from "../Utils/api";
 
 import CommentList from "../Components/CommentList";
@@ -19,7 +20,7 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const PlaceCard = styled(Card)`
-  width: 100%;
+  width: 50%;
 `;
 const PlaceImageBox = styled.div`
   width: 100%;
@@ -43,18 +44,13 @@ function PlaceDetail(props) {
     },
   } = props;
   const dispatch = useDispatch();
-  const { placeDetail, comments } = useSelector((state) => state.place);
+  const { placeDetail, isLiked } = useSelector((state) => state.place);
 
   useEffect(() => {
     dispatch({
       type: LOAD_PLACE_DETAIL_REQUEST,
       data: placeId,
     });
-    dispatch({
-      type: LOAD_COMMENTS_REQUEST,
-      data: placeId,
-      offset: 0,
-    })
   }, []);
 
   return (
@@ -65,7 +61,7 @@ function PlaceDetail(props) {
       {placeDetail && placeDetail.images && (
         <Wrapper>
           <Container>
-            <PlaceCard cover={<PlaceImage src={`${SERVER}/${placeDetail.images[0]}`} />}>
+            <PlaceCard cover={<PlaceImage src={`${SERVER}/${placeDetail.images[0]}`} />} actions={[ isLiked ? <LikeFilled key="like" /> : <LikeOutlined key="unlike" />, <HeartOutlined key="wishlist"/>]} >
               <Card.Meta title={placeDetail.name} description={placeDetail.description} />
               <PlaceAddress>주소 - {placeDetail.address}</PlaceAddress>
             </PlaceCard>
