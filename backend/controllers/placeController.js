@@ -36,7 +36,8 @@ export const addPlace = async (req, res, next) => {
 
 export const allPlaces = async (req, res) => {
   try {
-    const places = await Place.find({}, { name: true, images: true }).sort({ _id: -1 }); // 최신순 배치
+    // const places = await Place.find({}, { name: true, images: true }).sort({ _id: -1 }); // 최신순 배치
+    const places = await Place.find({}).select("name images").sort({ _id: -1 }); // 최신순 배치
     return res.json({ places });
   } catch (error) {
     return res.json({ success: false, error });
