@@ -1,7 +1,5 @@
 import React from "react";
-import { Button, Comment as AntdComment, Tooltip } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { LOAD_COMMENTS_REQUEST } from "../_Actions/types";
+import { Comment as AntdComment, Tooltip } from "antd";
 import moment from "moment";
 
 function Comment({ comment }) {

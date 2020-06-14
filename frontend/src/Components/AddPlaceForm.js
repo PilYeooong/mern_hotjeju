@@ -45,13 +45,6 @@ function AddPlaceForm() {
       base64: file.url || file.preview,
     });
   };
-  // const onCategoryChange = value => {
-  //   switch(value){
-  //     case 'ocean': {
-
-  //     }
-  //   }
-  // }
 
   const onFinish = async (values) => {
     const {

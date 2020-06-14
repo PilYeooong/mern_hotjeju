@@ -11,7 +11,7 @@ import { Button, Card } from "antd";
 import { LikeOutlined, LikeFilled, HeartOutlined } from "@ant-design/icons";
 import { SERVER } from "../Utils/api";
 
-import CommentList from "../Components/CommentList";
+import CommentList from "../Components/Comment/CommentList";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -91,7 +91,7 @@ function PlaceDetail(props) {
               />
               <PlaceAddress>주소 - {placeDetail.address}</PlaceAddress>
             </PlaceCard>
-            <CommentList comments={placeDetail.Comments} />
+            <CommentList />
           </Container>
         </Wrapper>
       )}
