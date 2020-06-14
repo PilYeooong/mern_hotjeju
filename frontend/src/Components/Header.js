@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, withRouter } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../_Actions/user_action";
 
 import styled from "styled-components";
-import { logoutUser } from "../_Actions/user_action";
-import { Input, notification } from "antd";
+
+import { notification } from "antd";
 import { SmileOutlined, FireFilled } from "@ant-design/icons";
+
+import SearchForm from "./SearchForm";
 
 const Header = styled.header`
   width: 100%;
@@ -46,8 +50,7 @@ const LoginLink = styled(Link)`
   margin-left: 1rem;
 `;
 
-const PlaceNewLink = styled(Link)`
-`;
+const PlaceNewLink = styled(Link)``;
 
 export default withRouter((props) => {
   const dispatch = useDispatch();
@@ -63,10 +66,6 @@ export default withRouter((props) => {
       }
     });
   };
-  const onSubmitSearch = (e) => {
-    e.preventDefault();
-
-  }
 
   return (
     <Header>
@@ -78,17 +77,16 @@ export default withRouter((props) => {
           <BigFireFilled />
         </HeaderColumn>
         <HeaderColumn>
-          <form action="" onSubmit={onSubmitSearch}>
-            <Input />
-          </form>
-          
+          <SearchForm history={props.history} />
         </HeaderColumn>
         <HeaderColumn>
           {user.userData && user.userData.isAuth ? (
             <>
               <PlaceNewLink to="/place/new">핫플 추가</PlaceNewLink>
               <ProfileLink to="/profile">프로필</ProfileLink>
-              <LogoutLink to="/" onClick={LogOut}>로그아웃</LogoutLink>
+              <LogoutLink to="/" onClick={LogOut}>
+                로그아웃
+              </LogoutLink>
             </>
           ) : (
             <>

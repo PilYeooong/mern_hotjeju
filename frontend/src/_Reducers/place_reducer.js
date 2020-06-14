@@ -22,6 +22,9 @@ import {
   TOGGLE_LIKE_REQUEST,
   TOGGLE_LIKE_SUCCESS,
   TOGGLE_LIKE_FAILURE,
+  SEARCH_PLACE_REQUEST,
+  SEARCH_PLACE_SUCCESS,
+  SEARCH_PLACE_FAILURE,
 } from "../_Actions/types";
 
 const initialState = {
@@ -88,6 +91,17 @@ export default function (state = initialState, action) {
           ...state,
           placeDetail: null,
         };
+      }
+      case SEARCH_PLACE_REQUEST: {
+        break;
+      }
+      case SEARCH_PLACE_SUCCESS: {
+        draft.places = action.data;
+        draft.placeDetail = null;
+        break;
+      }
+      case SEARCH_PLACE_FAILURE: {
+        break;
       }
       case ADD_COMMENT_REQUEST: {
         return {

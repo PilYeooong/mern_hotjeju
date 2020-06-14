@@ -22,10 +22,10 @@ import {
   TOGGLE_LIKE_SUCCESS,
   TOGGLE_LIKE_FAILURE,
   TOGGLE_LIKE_REQUEST,
-  LOAD_IS_LIKED_REQUEST,
-  LOAD_IS_LIKED_SUCCESS,
-  LOAD_IS_LIKED_FAILURE,
-  LOAD_MORE_COMMENTS_SUCCESS
+  LOAD_MORE_COMMENTS_SUCCESS,
+  SEARCH_PLACE_REQUEST,
+  SEARCH_PLACE_SUCCESS,
+  SEARCH_PLACE_FAILURE
 } from "../_Actions/types";
 import Axios from "axios";
 
@@ -219,6 +219,33 @@ function* watchToggleLike(){
   yield takeLatest(TOGGLE_LIKE_REQUEST, toggleLike);
 }
 
+// -----------------------------------------------------------------------
+
+function searchPlaceAPI(place){
+  return Axios.get(`/search/${place}/`);
+}
+
+function* searchPlace(action){
+  try {
+    const result = yield call(searchPlaceAPI, action.data);
+    console.log(result);
+    yield put({
+      type: SEARCH_PLACE_SUCCESS,
+      data: result.data
+    })
+  } catch(e){
+    console.error(e);
+    yield put({
+      type: SEARCH_PLACE_FAILURE,
+      error: e
+    })
+  }
+}
+
+function* watchSearchPlace(){
+  yield takeLatest(SEARCH_PLACE_REQUEST, searchPlace);
+}
+
 export default function* placeSaga() {
   yield all([
     fork(watchLoadPlaces),
@@ -228,5 +255,6 @@ export default function* placeSaga() {
     fork(watchLoadComments),
     fork(watchAddComment),
     fork(watchToggleLike),
+    fork(watchSearchPlace),
   ]);
 }

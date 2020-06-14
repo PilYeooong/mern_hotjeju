@@ -8,6 +8,7 @@ import Theme from "../Styles/Theme"
 import Auth from "../hoc/Auth";
 
 import Home from "../Pages/Home";
+import Search from "../Pages/Search";
 import AddPlace from "../Pages/AddPlace";
 import PlaceDetail from "../Pages/PlaceDetail";
 import Profile from "../Pages/Auth/Profile";
@@ -24,6 +25,7 @@ function App() {
       <Header />
         <Switch>
           <Route exact path="/" component={Auth(Home, null)} />
+          <Route exact path="/:place" component={Auth(Search, null)} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/signup" component={Signup} />
