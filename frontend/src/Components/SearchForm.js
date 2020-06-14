@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import PropTypes from "prop-types";
 
 import { useDispatch } from "react-redux";
 import { SEARCH_PLACE_REQUEST } from "../_Actions/types";
@@ -21,6 +22,7 @@ const SearchForm = ({ history }) => {
       data: encodeURIComponent(searchValue),
     });
     history.push(`/${searchValue}`);
+    SetSearchValue('');
   }, [searchValue]);
 
   return (
@@ -29,5 +31,10 @@ const SearchForm = ({ history }) => {
     </form>
   );
 };
+
+SearchForm.propTypes = {
+  history: PropTypes.object.isRequired,
+}
+
 
 export default SearchForm;

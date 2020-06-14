@@ -19,7 +19,6 @@ const CommentList = () => {
   const { placeDetail } = useSelector((state) => state.place);
   const { userData } = useSelector((state) => state.user);
 
-
   const loadMoreComments = useCallback(() => {
     dispatch({
       type: LOAD_COMMENTS_REQUEST,

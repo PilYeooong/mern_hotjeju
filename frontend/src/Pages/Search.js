@@ -3,8 +3,7 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 
 import Place from "../Components/Place";
-import { useDispatch, useSelector } from "react-redux";
-// import { LOAD_MAIN_PLACES_REQUEST } from "../_Actions/types";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   width: 80%;
@@ -15,18 +14,29 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
+const SearchResult = styled.div`
+  width: 100%;
+  height: 10%;
+  font-size: 2em;
+  text-align: center;
+`;
+
 function Search() {
-  const dispatch = useDispatch();
-  const { places } = useSelector(state => state.place);
+  const { places } = useSelector((state) => state.place);
+
+  useEffect(() => {
+    if (places) {
+      console.log(places.length);
+    }
+  }, [places]);
 
   return (
     <div>
       <Helmet>
         <title>검색 결과 | Hot Jeju</title>
       </Helmet>
-      {/* <ImageSlide /> */}
       <Container>
-        {places &&
+        {places && places.length !== 0 ? (
           places.map((place, idx) => (
             <Place
               key={idx}
@@ -34,7 +44,10 @@ function Search() {
               name={place.name}
               image={place.images[0]}
             />
-          ))}
+          ))
+        ) : (
+          <SearchResult>검색결과가 존재하지 않습니다.</SearchResult>
+        )}
       </Container>
     </div>
   );

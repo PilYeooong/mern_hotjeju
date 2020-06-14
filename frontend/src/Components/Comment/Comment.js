@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { Comment as AntdComment, Tooltip } from "antd";
 import moment from "moment";
 
@@ -16,6 +18,10 @@ function Comment({ comment }) {
       />
     </>
   );
+}
+
+Comment.propTypes = {
+  comment: PropTypes.object.isRequired,
 }
 
 export default Comment;

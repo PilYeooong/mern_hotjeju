@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import PropTypes from "prop-types";
 
 import { useDispatch } from "react-redux";
 import { ADD_COMMENT_REQUEST } from "../../_Actions/types";
@@ -46,5 +47,9 @@ const CommentForm = ({ placeId }) => {
     </>
   );
 };
+
+CommentForm.propTypes = {
+  placeId: PropTypes.string.isRequired,
+}
 
 export default CommentForm;
