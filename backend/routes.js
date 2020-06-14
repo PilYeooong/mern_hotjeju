@@ -20,11 +20,17 @@ const PLACE_DETAIL = "/:id";
 const PLACE_EDIT = "/:id/edit";
 const PLACE_DELETE = "/:id/delete";
 
+// Search
+const SEARCH = `${API}/search`;
+const SEARCH_PLACE = "/:place";
+
 const CATEGORY = `${API}/category`;
 const CATEGORIZED_PLACE = "/:category";
+
 // Comment
 const NEW_COMMENT = "/:id/comment";
 const COMMENT_LIST = "/:id/comments";
+
 // Like
 const GET_LIKES = "/:id/likes"
 const TOGGLE_LIKE = "/:id/togglelike";
@@ -88,6 +94,14 @@ const routes = {
       return `/${id}/togglelike`
     } else {
       return TOGGLE_LIKE;
+    }
+  },
+  search: SEARCH,
+  searchPlace: place => {
+    if(place){
+      return `/${place}`;
+    } else {
+      return SEARCH_PLACE;
     }
   }
 };
