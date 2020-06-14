@@ -29,7 +29,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/:category" component={Auth(CategorizedPlace, null)} />
+          <Route exact path="/category/:category" component={Auth(CategorizedPlace, null)} />
           <Route exact path="/place/new" component={Auth(AddPlace, true)} />
           <Route exact path="/place/:placeId" component={Auth(PlaceDetail, null)} />
         </Switch>
