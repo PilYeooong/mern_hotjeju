@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 import Comment from "../Components/Comment";
-import { useDispatch, useSelector } from 'react-redux';
-import {LOAD_COMMENTS_REQUEST, ADD_COMMENT_REQUEST} from "../_Actions/types";
-import { Button, Input } from 'antd';
-import styled from 'styled-components';
+import { useDispatch, useSelector } from "react-redux";
+import { LOAD_COMMENTS_REQUEST, ADD_COMMENT_REQUEST } from "../_Actions/types";
+import { Button, Input } from "antd";
+import styled from "styled-components";
 
 const MoreButton = styled(Button)`
-  margin-bottom : 1rem;
+  margin-bottom: 1rem;
 `;
 const ButtonBox = styled.div`
   display: flex;
@@ -17,22 +17,23 @@ const SubmitButton = styled(Button)`
   margin-top: 1rem;
 `;
 
-const CommentList = () => {
+const CommentList = ({ comments }) => {
   const dispatch = useDispatch();
-  const { placeDetail, hasMoreComments } = useSelector(state => state.place);
-  const [comment, setComment] = useState('');
+  const { placeDetail } = useSelector((state) => state.place);
+  const { userData } = useSelector((state) => state.user);
+  const [comment, setComment] = useState("");
 
   const loadMoreComments = () => {
     dispatch({
       type: LOAD_COMMENTS_REQUEST,
       data: placeDetail._id,
       offset: placeDetail.Comments.length,
-    })
-  }
+    });
+  };
 
-  const onChangeComment = e => {
+  const onChangeComment = (e) => {
     setComment(e.target.value);
-  }
+  };
 
   const onSubmitComment = () => {
     dispatch({
@@ -40,22 +41,32 @@ const CommentList = () => {
       data: {
         placeId: placeDetail._id,
         comment,
-      }
-    })
-    setComment('');
-  }
+      },
+    });
+    setComment("");
+  };
   return (
     <div>
-      {placeDetail.Comments && placeDetail.Comments.map(comment => (
-        <Comment comment={comment} />
-      ))}
-      {placeDetail.hasMoreComments && <MoreButton type="default" onClick={loadMoreComments}>더 보기</MoreButton>}
-      <Input.TextArea value={comment} onChange={onChangeComment} />
-      <ButtonBox>
-        <SubmitButton type="primary" onClick={onSubmitComment}>댓글 작성</SubmitButton>
-      </ButtonBox>
+      {placeDetail &&
+        placeDetail.Comments &&
+        placeDetail.Comments.map((comment) => <Comment comment={comment} />)}
+      {placeDetail.hasMoreComments && (
+        <MoreButton type="default" onClick={loadMoreComments}>
+          더 보기
+        </MoreButton>
+      )}
+      {userData && userData.isAuth && (
+        <>
+          <Input.TextArea value={comment} onChange={onChangeComment} />
+          <ButtonBox>
+            <SubmitButton type="primary" onClick={onSubmitComment}>
+              댓글 작성
+            </SubmitButton>
+          </ButtonBox>
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default CommentList
+export default CommentList;

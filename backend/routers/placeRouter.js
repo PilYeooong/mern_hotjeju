@@ -1,6 +1,6 @@
 import express from "express";
 import routes from "../routes";
-import { isAuthenticated } from "../middlewares/isAuthenticated";
+import { isAuthenticated, checkAuth } from "../middlewares/isAuthenticated";
 import { uploadPlace } from "../middlewares/uploadPlace";
 import {
   addPlace,
@@ -17,7 +17,7 @@ import { toggleLike, getLikes } from "../controllers/likeController";
 const placeRouter = express.Router();
 
 placeRouter.get(routes.home, allPlaces);
-placeRouter.get(routes.placeDetail(), placeDetail);
+placeRouter.get(routes.placeDetail(), checkAuth, placeDetail);
 placeRouter.post(routes.addPlace, isAuthenticated, uploadPlace, addPlace);
 placeRouter.post(routes.editPlace(), isAuthenticated, editPlace);
 placeRouter.post(routes.deletePlace(), isAuthenticated, deletePlace);
@@ -27,10 +27,10 @@ placeRouter.post(routes.categorizedPlace, categorizedPlace);
 
 // Comment
 placeRouter.post(routes.newComment(), isAuthenticated, newComment);
-placeRouter.get(routes.commentList(), isAuthenticated, getComments);
+placeRouter.get(routes.commentList(), getComments);
 
 // Like
-placeRouter.post(routes.likes(), isAuthenticated, getLikes);
+placeRouter.post(routes.likes(), checkAuth, getLikes);
 placeRouter.post(routes.toggleLike(), isAuthenticated, toggleLike);
 
 export default placeRouter;

@@ -48,7 +48,7 @@ export const placeDetail = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const isLiked = false;
+    let isLiked = false;
     const place = await Place.findById(id).populate("creator", "name"); // creator의 name만 리턴
     if(!place){
       return res.status(404).send("존재하지 않는 페이지 입니다.")

@@ -19,6 +19,9 @@ import {
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAILURE,
   LOAD_MORE_COMMENTS_SUCCESS,
+  TOGGLE_LIKE_REQUEST,
+  TOGGLE_LIKE_SUCCESS,
+  TOGGLE_LIKE_FAILURE,
 } from "../_Actions/types";
 
 const initialState = {
@@ -138,6 +141,16 @@ export default function (state = initialState, action) {
         return {
           ...state,
         };
+      }
+      case TOGGLE_LIKE_REQUEST: {
+        break;
+      }
+      case TOGGLE_LIKE_SUCCESS: {
+        draft.placeDetail.isLiked = action.data;
+        break;
+      }
+      case TOGGLE_LIKE_FAILURE: {
+        break;
       }
       default: {
         return {

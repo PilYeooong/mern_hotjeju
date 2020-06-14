@@ -2,9 +2,13 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_PLACE_DETAIL_REQUEST, LOAD_COMMENTS_REQUEST } from "../_Actions/types";
+import {
+  LOAD_PLACE_DETAIL_REQUEST,
+  LOAD_COMMENTS_REQUEST,
+  TOGGLE_LIKE_REQUEST,
+} from "../_Actions/types";
 import { Button, Card } from "antd";
-import { LikeOutlined, LikeFilled, HeartOutlined } from '@ant-design/icons';
+import { LikeOutlined, LikeFilled, HeartOutlined } from "@ant-design/icons";
 import { SERVER } from "../Utils/api";
 
 import CommentList from "../Components/CommentList";
@@ -45,13 +49,22 @@ function PlaceDetail(props) {
   } = props;
   const dispatch = useDispatch();
   const { placeDetail } = useSelector((state) => state.place);
-  const isLiked = false;
   useEffect(() => {
     dispatch({
       type: LOAD_PLACE_DETAIL_REQUEST,
       data: placeId,
     });
   }, []);
+
+  const toggleLike = () => {
+    dispatch({
+      type: TOGGLE_LIKE_REQUEST,
+      data: {
+        placeId: placeId,
+        isLiked: placeDetail.isLiked,
+      }
+    });
+  };
 
   return (
     <>
@@ -61,11 +74,24 @@ function PlaceDetail(props) {
       {placeDetail && placeDetail.images && (
         <Wrapper>
           <Container>
-            <PlaceCard cover={<PlaceImage src={`${SERVER}/${placeDetail.images[0]}`} />} actions={[ isLiked ? <LikeFilled key="like" /> : <LikeOutlined key="unlike" />, <HeartOutlined key="wishlist"/>]} >
-              <Card.Meta title={placeDetail.name} description={placeDetail.description} />
+            <PlaceCard
+              cover={<PlaceImage src={`${SERVER}/${placeDetail.images[0]}`} />}
+              actions={[
+                placeDetail.isLiked ? (
+                  <LikeFilled key="unlike" onClick={toggleLike} />
+                ) : (
+                  <LikeOutlined key="like" onClick={toggleLike} />
+                ),
+                <HeartOutlined key="wishlist" />,
+              ]}
+            >
+              <Card.Meta
+                title={placeDetail.name}
+                description={placeDetail.description}
+              />
               <PlaceAddress>주소 - {placeDetail.address}</PlaceAddress>
             </PlaceCard>
-            <CommentList />
+            <CommentList comments={placeDetail.Comments} />
           </Container>
         </Wrapper>
       )}

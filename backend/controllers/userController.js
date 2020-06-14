@@ -39,10 +39,11 @@ export const login = async (req, res) => {
         if (err) {
           return res.status(400).send(err);
         }
+        console.log(user.token);
         res
           .cookie("x_auth", user.token)
           .status(200)
-          .json({ loginSuccess: true, userId: user._id, user });
+          .json({ loginSuccess: true, userId: user._id, user, });
       });
     });
   });

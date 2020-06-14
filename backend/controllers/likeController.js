@@ -7,10 +7,10 @@ export const getLikes = async (req, res) => {
   } = req;
   try {
     const place = await Place.findById(id);
-    if(!place){
+    if (!place) {
       return res.status(400).send("존재하지 않는 페이지입니다.");
     }
-    if(place.likers.includes(req.user._id)){
+    if (place.likers.includes(req.user._id)) {
       return res.status(200).send(true);
     }
     return res.status(200).send(false);
@@ -19,18 +19,21 @@ export const getLikes = async (req, res) => {
   }
 };
 
-export const toggleLike = (req, res) => {
+export const toggleLike = async (req, res) => {
   const {
     params: { id },
     body: { isLiked },
   } = req;
+  const place = await Place.findById(id);
   if (isLiked) {
     Like.findOneAndDelete({ placeId: id, userId: req.user._id }).exec(
       (err, result) => {
         if (err) {
           return res.status(400).json({ success: false, err });
         }
-        return res.status(200).json({ success: true });
+        place.likers.remove(req.user._id);
+        place.save();
+        return res.status(200).json({ likeResult: false });
       }
     );
   } else {
@@ -39,7 +42,9 @@ export const toggleLike = (req, res) => {
       if (err) {
         return res.status(400).json({ success: false, err });
       }
-      return res.status(200).json({ success: true, like });
+      place.likers.push(req.user._id);
+      place.save();
+      return res.status(200).json({ likeResult: true });
     });
   }
 };

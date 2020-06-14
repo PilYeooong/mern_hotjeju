@@ -29,7 +29,7 @@ import {
 } from "../_Actions/types";
 import Axios from "axios";
 
-Axios.defaults.baseURL = "http://localhost:5000/api/";
+Axios.defaults.baseURL = "http://localhost:3000/api/";
 function loadPlacesAPI() {
   return Axios.get("/places");
 }
@@ -201,9 +201,10 @@ function toggleLikeAPI(data){
 function* toggleLike(action){
   try {
     const result = yield call(toggleLikeAPI, action.data);
+    console.log(result);
     yield put({
       type: TOGGLE_LIKE_SUCCESS,
-      data: result.data
+      data: result.data.likeResult,
     })
   } catch(e){
     console.error(e);
