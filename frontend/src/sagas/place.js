@@ -29,8 +29,9 @@ import {
 } from "../_Actions/types";
 import Axios from "axios";
 
+Axios.defaults.baseURL = "http://localhost:5000/api/";
 function loadPlacesAPI() {
-  return Axios.get("/api/places/");
+  return Axios.get("/places");
 }
 
 function* loadPlaces(action) {
@@ -56,7 +57,7 @@ function* watchLoadPlaces() {
 // -----------------------------------------------------------------------
 
 function categorizedPlaceAPI(category) {
-  return Axios.post(`/api/places/${category}/`);
+  return Axios.post(`/places/${category}/`);
 }
 
 function* categorizedPlace(action) {
@@ -81,7 +82,7 @@ function* watchCategorizedPlace() {
 // -----------------------------------------------------------------------
 
 function addPlaceAPI(placeData) {
-  return Axios.post("/api/places/new/", placeData);
+  return Axios.post("/places/new/", placeData);
 }
 
 function* addPlace(action) {
@@ -107,7 +108,7 @@ function* watchAddPlace() {
 // -----------------------------------------------------------------------
 
 function loadCommentsAPI(placeId, offset=0){
-  return Axios.get(`/api/places/${placeId}/comments?offset=${offset}`)
+  return Axios.get(`/places/${placeId}/comments?offset=${offset}`)
 }
 
 function* loadComments(action){
@@ -136,7 +137,7 @@ function* watchLoadComments(){
 // -----------------------------------------------------------------------
 
 function loadPlaceDetailAPI(placeId){
-  return Axios.get(`/api/places/${placeId}/`)
+  return Axios.get(`/places/${placeId}/`)
 }
 
 function* loadPlaceDetail(action){
@@ -168,7 +169,7 @@ function* watchLoadPlaceDetail(){
 // -----------------------------------------------------------------------
 
 function addCommnetAPI(data){
-  return Axios.post(`/api/places/${data.placeId}/comment`, { text: data.comment });
+  return Axios.post(`/places/${data.placeId}/comment`, { text: data.comment });
 }
 
 function* addComment(action){
@@ -194,7 +195,7 @@ function* watchAddComment(){
 // -----------------------------------------------------------------------
 
 function toggleLikeAPI(data){
-  return Axios.post(`/api/places/${data.placeId}/togglelike`, { isLiked: data.isLiked });
+  return Axios.post(`/places/${data.placeId}/togglelike`, { isLiked: data.isLiked });
 }
 
 function* toggleLike(action){

@@ -44,8 +44,8 @@ function PlaceDetail(props) {
     },
   } = props;
   const dispatch = useDispatch();
-  const { placeDetail, isLiked } = useSelector((state) => state.place);
-
+  const { placeDetail } = useSelector((state) => state.place);
+  const isLiked = false;
   useEffect(() => {
     dispatch({
       type: LOAD_PLACE_DETAIL_REQUEST,
