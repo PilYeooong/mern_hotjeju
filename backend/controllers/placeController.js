@@ -36,7 +36,7 @@ export const addPlace = async (req, res, next) => {
 
 export const allPlaces = async (req, res) => {
   try {
-    const places = await Place.find({}).sort({ _id: -1 }); // 최신순 배치
+    const places = await Place.find({}, { name: true, images: true }).sort({ _id: -1 }); // 최신순 배치
     return res.json({ places });
   } catch (error) {
     return res.json({ success: false, error });
@@ -116,7 +116,7 @@ export const categorizedPlace = async (req, res, next) => {
     params: { category },
   } = req;
   try {
-    const categorized = await Category.findOne({ name: category }).populate('places')
+    const categorized = await Category.findOne({ name: category }).populate('places', "name images")
     const places = categorized.places;
     return res.status(200).json({ places });
   } catch(e){

@@ -4,10 +4,13 @@ export const searchPlace = async (req, res, next) => {
   const {
     params: { place },
   } = req;
-  try { 
-    const result = await Place.find({ name : { $regex : decodeURIComponent(place) }})
+  try {
+    const result = await Place.find(
+      { name: { $regex: decodeURIComponent(place) } },
+      { name: true, images: true }
+    );
     return res.status(200).send(result);
-  } catch(e) {
+  } catch (e) {
     console.error(e);
   }
 };
