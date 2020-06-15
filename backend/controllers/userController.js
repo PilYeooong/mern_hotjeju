@@ -39,7 +39,7 @@ export const login = async (req, res) => {
         if (err) {
           return res.status(400).send(err);
         }
-        console.log(user.token);
+        console.log(user);
         res
           .cookie("x_auth", user.token)
           .status(200)
@@ -70,3 +70,16 @@ export const authenticate = (req, res) => {
     name: req.user.name,
   });
 };
+
+export const loadUser = async (req, res, next) => {
+  const { params: { id } } = req;
+  try {
+    const user = await User.findById(id).select("places wishList email nickname").populate("places", "name images");
+    if(!user){
+      res.status(400).json({ message: "존재하지 않는 사용자입니다. "});
+    }
+    res.status(200).send(user);
+  } catch (e) {
+    console.error(e);
+  }
+}
