@@ -26,6 +26,7 @@ function* loadUser(action){
 function* watchLoadUser(){
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
+
 export default function* userSaga() {
   yield all([
     fork(watchLoadUser),
