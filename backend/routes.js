@@ -36,6 +36,9 @@ const COMMENT_LIST = "/:id/comments";
 const GET_LIKES = "/:id/likes";
 const TOGGLE_LIKE = "/:id/togglelike";
 
+// Image
+const IMAGES = `${API}/images`;
+
 const routes = {
   home: HOME,
   users: USERS,
@@ -50,6 +53,7 @@ const routes = {
       return LOAD_USER;
     }
   },
+  images: IMAGES,
   places: PLACES,
   addPlace: ADD,
   placeDetail: (id) => {

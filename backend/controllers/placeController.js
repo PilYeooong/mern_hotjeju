@@ -1,5 +1,7 @@
 import { Place } from "../models/Place";
 import { Category } from "../models/Category";
+import { Image } from "../models/Image";
+
 export const addPlace = async (req, res, next) => {
   const {
     body: { category, name, description, address },
@@ -18,9 +20,10 @@ export const addPlace = async (req, res, next) => {
   });
   req.user.places.push(place.id);
   req.user.save();
-  files.map((file) => {
+  files.map(async (file) => {
     place.images.push(file.path);
-  })
+    await new Image({ src: file.path }).save();
+  });
   place.save((err, placeInfo) => {
     if (err) {
       return res.json({ success: false, err });

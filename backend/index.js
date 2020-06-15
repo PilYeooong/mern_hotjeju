@@ -9,6 +9,7 @@ import userRouter from "./routers/userRouter";
 import placeRouter from "./routers/placeRouter";
 import categoryRouter from "./routers/categoryRouter";
 import searchRouter from "./routers/searchRouter";
+import imageRouter from "./routers/imageRouter";
 import morgan from "morgan";
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(routes.users, userRouter);
 app.use(routes.places, placeRouter);
 app.use(routes.category, categoryRouter);
 app.use(routes.search, searchRouter);
+app.use(routes.images, imageRouter);
 
 app.listen(port, () =>
   console.log(`Example app listening at http://localhost:${port}`)
