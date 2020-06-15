@@ -46,7 +46,7 @@ function Signup(props) {
           description: "로그인 페이지로 이동합니다.",
           icon: <SmileOutlined style={{ color: "#108ee9" }} />,
         });
-        props.history.push("/login");
+        props.history.push("/accounts/login");
       } else if (response.payload.message) {
         const error = response.payload.message;
         notification.open({

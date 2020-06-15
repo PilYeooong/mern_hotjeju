@@ -3,6 +3,10 @@ export const REGISTER_USER = "register_user";
 export const AUTH_USER = "auth_user";
 export const LOGOUT_USER = "logout_user";
 
+export const LOAD_USER_REQUEST = "LOAD_USER_REQUEST";
+export const LOAD_USER_SUCCESS = "LOAD_USER_SUCCESS";
+export const LOAD_USER_FAILURE = "LOAD_USER_FAILURE";
+
 // Places
 export const LOAD_MAIN_PLACES_REQUEST = "LOAD_MAIN_PLACES_REQUEST";
 export const LOAD_MAIN_PLACES_SUCCESS = "LOAD_MAIN_PLACES_SUCCESS";

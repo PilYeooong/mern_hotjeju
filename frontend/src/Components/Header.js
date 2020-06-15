@@ -41,6 +41,9 @@ const BigFireFilled = styled(FireFilled)`
 const ProfileLink = styled(Link)`
   margin-left: 1rem;
 `;
+const SignUpLink = styled(Link)`
+  margin-left: 1rem;
+`;
 
 const LogoutLink = styled(Link)`
   margin-left: 1rem;
@@ -54,7 +57,7 @@ const PlaceNewLink = styled(Link)``;
 
 export default withRouter((props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const { userData } = useSelector((state) => state.user);
 
   const LogOut = () => {
     dispatch(logoutUser()).then((response) => {
@@ -80,7 +83,7 @@ export default withRouter((props) => {
           <SearchForm history={props.history} />
         </HeaderColumn>
         <HeaderColumn>
-          {user.userData && user.userData.isAuth ? (
+          {userData && userData.isAuth ? (
             <>
               <PlaceNewLink to="/place/new">핫플 추가</PlaceNewLink>
               <ProfileLink to="/profile">프로필</ProfileLink>
@@ -90,8 +93,8 @@ export default withRouter((props) => {
             </>
           ) : (
             <>
-              <ProfileLink to="/signup">회원가입</ProfileLink>
-              <LoginLink to="/login">로그인</LoginLink>
+              <SignUpLink to="/accounts/signup">회원가입</SignUpLink>
+              <LoginLink to="/accounts/login">로그인</LoginLink>
             </>
           )}
         </HeaderColumn>

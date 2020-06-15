@@ -21,7 +21,7 @@ const SearchForm = ({ history }) => {
       type: SEARCH_PLACE_REQUEST,
       data: encodeURIComponent(searchValue),
     });
-    history.push(`/${searchValue}`);
+    history.push(`/search/${searchValue}`);
     SetSearchValue('');
   }, [searchValue]);
 

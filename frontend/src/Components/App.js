@@ -25,10 +25,10 @@ function App() {
       <Header />
         <Switch>
           <Route exact path="/" component={Auth(Home, null)} />
-          <Route exact path="/:place" component={Auth(Search, null)} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/profile" component={Profile} />
-          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/search/:place" component={Auth(Search, null)} />
+          <Route exact path="/profile" component={Auth(Profile, null)} />
+          <Route exact path="/accounts/login" component={Login} />
+          <Route exact path="/accounts/signup" component={Signup} />
           <Route exact path="/category/:category" component={Auth(CategorizedPlace, null)} />
           <Route exact path="/place/new" component={Auth(AddPlace, true)} />
           <Route exact path="/place/:placeId" component={Auth(PlaceDetail, null)} />

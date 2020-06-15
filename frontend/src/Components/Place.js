@@ -8,7 +8,7 @@ const Container = styled.div`
   width: 30%;
   height: 330px;
   border-radius: 10%;
-  margin-right: 2rem;
+  margin-right: 1rem;
 `;
 
 const PlaceBox = styled.div`
@@ -22,10 +22,11 @@ const PlaceLink = styled(Link)`
 const Image = styled.img`
   width: 100%;
   height: 100%;
-  border-radius: 10%;
+
+  /* border-radius: 10%; */
 `;
 
-const Description = styled.div``;
+const Description = styled.h4``;
 
 function Place({ id, name, image }) {
   return (

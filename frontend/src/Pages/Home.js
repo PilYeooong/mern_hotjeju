@@ -31,7 +31,7 @@ function Home() {
       <Helmet>
         <title>핫 제주 | Hot Jeju</title>
       </Helmet>
-      <ImageSlide />
+      {places && <ImageSlide places={places} />}
       <Container>
         {places &&
           places.map((place, idx) => (
