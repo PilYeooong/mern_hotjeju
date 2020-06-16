@@ -11,8 +11,9 @@ const Container = styled.div`
   width: 80%;
   height: 100vh;
   margin: 0 auto;
-  padding-top: 3rem;
+  padding: 3rem 0 0 5rem;
   display: flex;
+  /* justify-content: space-around; */
   flex-wrap: wrap;
 `;
 
@@ -35,7 +36,7 @@ function Home() {
       <Helmet>
         <title>핫 제주 | Hot Jeju</title>
       </Helmet>
-      {images && <ImageSlide images={images} />}
+      {images && <ImageSlide images={images}/>}
       <Container>
         {places &&
           places.map((place, idx) => (
