@@ -4,14 +4,14 @@ import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import {
   LOAD_PLACE_DETAIL_REQUEST,
-  LOAD_COMMENTS_REQUEST,
   TOGGLE_LIKE_REQUEST,
 } from "../_Actions/types";
-import { Button, Card } from "antd";
+import { Card } from "antd";
 import { LikeOutlined, LikeFilled, HeartOutlined } from "@ant-design/icons";
 import { SERVER } from "../Utils/api";
 
 import CommentList from "../Components/Comment/CommentList";
+import Map from "../Components/Map";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -23,13 +23,13 @@ const Container = styled.div`
   height: 100%;
   margin: 0 auto;
 `;
-const PlaceCard = styled(Card)`
-  width: 50%;
-`;
-const PlaceImageBox = styled.div`
-  width: 100%;
+
+const PlaceInfo = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+ `;
+const PlaceCard = styled(Card)`
+  width: 45%;
 `;
 
 const PlaceImage = styled.img`
@@ -62,7 +62,7 @@ function PlaceDetail(props) {
       data: {
         placeId: placeId,
         isLiked: placeDetail.isLiked,
-      }
+      },
     });
   };
 
@@ -74,23 +74,28 @@ function PlaceDetail(props) {
       {placeDetail && placeDetail.images && (
         <Wrapper>
           <Container>
-            <PlaceCard
-              cover={<PlaceImage src={`${SERVER}/${placeDetail.images[0]}`} />}
-              actions={[
-                placeDetail.isLiked ? (
-                  <LikeFilled key="unlike" onClick={toggleLike} />
-                ) : (
-                  <LikeOutlined key="like" onClick={toggleLike} />
-                ),
-                <HeartOutlined key="wishlist" />,
-              ]}
-            >
-              <Card.Meta
-                title={placeDetail.name}
-                description={placeDetail.description}
-              />
-              <PlaceAddress>주소 - {placeDetail.address}</PlaceAddress>
-            </PlaceCard>
+            <PlaceInfo>
+              <PlaceCard
+                cover={
+                  <PlaceImage src={`${SERVER}/${placeDetail.images[0]}`} />
+                }
+                actions={[
+                  placeDetail.isLiked ? (
+                    <LikeFilled key="unlike" onClick={toggleLike} />
+                  ) : (
+                    <LikeOutlined key="like" onClick={toggleLike} />
+                  ),
+                  <HeartOutlined key="wishlist" />,
+                ]}
+              >
+                <Card.Meta
+                  title={placeDetail.name}
+                  description={placeDetail.description}
+                />
+                <PlaceAddress>주소 - {placeDetail.address}</PlaceAddress>
+              </PlaceCard>
+              <Map name={placeDetail.name} address={placeDetail.address} />
+            </PlaceInfo>
             <CommentList />
           </Container>
         </Wrapper>

@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import GlobalStyles from "../Styles/GlobalStyles";
-import Theme from "../Styles/Theme"
+import Theme from "../Styles/Theme";
 import Auth from "../hoc/Auth";
 
 import Home from "../Pages/Home";
@@ -18,20 +18,29 @@ import Header from "../Components/Header";
 import CategorizedPlace from "../Pages/CategorizedPlace";
 
 function App() {
+
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyles />
       <Router>
-      <Header />
+        <Header />
         <Switch>
           <Route exact path="/" component={Auth(Home, null)} />
           <Route exact path="/search/:place" component={Auth(Search, null)} />
           <Route exact path="/profile" component={Auth(Profile, null)} />
           <Route exact path="/accounts/login" component={Login} />
           <Route exact path="/accounts/signup" component={Signup} />
-          <Route exact path="/category/:category" component={Auth(CategorizedPlace, null)} />
+          <Route
+            exact
+            path="/category/:category"
+            component={Auth(CategorizedPlace, null)}
+          />
           <Route exact path="/place/new" component={Auth(AddPlace, true)} />
-          <Route exact path="/place/:placeId" component={Auth(PlaceDetail, null)} />
+          <Route
+            exact
+            path="/place/:placeId"
+            component={Auth(PlaceDetail, null)}
+          />
         </Switch>
       </Router>
     </ThemeProvider>

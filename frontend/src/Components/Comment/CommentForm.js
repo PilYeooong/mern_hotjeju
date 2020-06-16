@@ -16,6 +16,10 @@ const SubmitButton = styled(Button)`
   margin-top: 1rem;
 `;
 
+const InputArea = styled(Input.TextArea)`
+  margin-top: 1rem;
+`;
+
 const CommentForm = ({ placeId }) => {
   const dispatch = useDispatch();
   const [comment, setComment] = useState("");
@@ -38,7 +42,7 @@ const CommentForm = ({ placeId }) => {
 
   return (
     <>
-      <Input.TextArea value={comment} onChange={onChangeComment} />
+      <InputArea value={comment} onChange={onChangeComment} />
       <ButtonBox>
         <SubmitButton type="primary" onClick={onSubmitComment}>
           댓글 작성
