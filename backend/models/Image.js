@@ -4,6 +4,9 @@ const imageSchema = new mongoose.Schema({
   src: {
     type: String,
     required: true,
+  },
+  placeId: {
+    type: String,
   }
 })
 
