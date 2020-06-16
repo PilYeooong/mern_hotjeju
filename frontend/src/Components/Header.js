@@ -75,7 +75,7 @@ export default withRouter((props) => {
       <HeaderWrapper>
         <HeaderColumn>
           <SiteName to="/" className>
-            HotJeju
+            Hot Jeju
           </SiteName>
           <BigFireFilled />
         </HeaderColumn>

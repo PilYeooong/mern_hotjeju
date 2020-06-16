@@ -9,6 +9,11 @@ import { Button } from "antd";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 
+const CommentBox = styled.div`
+  width: 70%;
+  margin: 2rem auto 0;
+`;
+
 const MoreButton = styled(Button)`
   margin-bottom: 1rem;
 `;
@@ -28,7 +33,7 @@ const CommentList = () => {
   }, [placeDetail && placeDetail._id && placeDetail.Comments]);
 
   return (
-    <>
+    <CommentBox>
       {placeDetail &&
         placeDetail.Comments &&
         placeDetail.Comments.map((comment) => <Comment comment={comment} />)}
@@ -38,7 +43,7 @@ const CommentList = () => {
         </MoreButton>
       )}
       {userData && userData.isAuth && <CommentForm placeId={placeDetail._id} />}
-    </>
+    </CommentBox>
   );
 };
 

@@ -14,9 +14,11 @@ const Container = styled.div`
   margin: 0 auto;
   padding-top: 3rem;
 `;
+
 const UserInfo = styled.div`
   height: 30%;
 `;
+
 const PlaceList = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -45,6 +47,7 @@ function Profile() {
           </>
         )}
       </UserInfo>
+      <h4>업로드한 핫플</h4>
       <PlaceList>
         {userInfo &&
           userInfo.places.map((place) => (

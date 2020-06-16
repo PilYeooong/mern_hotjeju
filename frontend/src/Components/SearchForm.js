@@ -4,7 +4,16 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { SEARCH_PLACE_REQUEST } from "../_Actions/types";
 
+import styled from "styled-components";
 import { Input } from "antd";
+
+const Form = styled.form`
+  width: 50%;
+`;
+
+const SearchInput = styled(Input)`
+  width: 100%;
+`;
 
 const SearchForm = ({ history }) => {
   const dispatch = useDispatch();
@@ -26,9 +35,9 @@ const SearchForm = ({ history }) => {
   }, [searchValue]);
 
   return (
-    <form action="" onSubmit={onSubmitSearch}>
-      <Input value={searchValue} onChange={onChangeSearchValue} />
-    </form>
+    <Form action="" onSubmit={onSubmitSearch}>
+      <SearchInput placeholder="Search Hot Place" type="text" value={searchValue} onChange={onChangeSearchValue} />
+    </Form>
   );
 };
 

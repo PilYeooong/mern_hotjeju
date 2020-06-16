@@ -42,7 +42,7 @@ const CommentForm = ({ placeId }) => {
 
   return (
     <>
-      <InputArea value={comment} onChange={onChangeComment} />
+      <InputArea placeholder="Write your comment"value={comment} onChange={onChangeComment} />
       <ButtonBox>
         <SubmitButton type="primary" onClick={onSubmitComment}>
           댓글 작성
