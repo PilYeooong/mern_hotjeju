@@ -120,7 +120,7 @@ export const categorizedPlace = async (req, res, next) => {
     params: { category },
   } = req;
   try {
-    const categorized = await Category.findOne({ name: category }).populate('places', "name images")
+    const categorized = await Category.findOne({ name: category }).populate('places', "name images likers")
     const places = categorized.places;
     return res.status(200).json({ places });
   } catch(e){
