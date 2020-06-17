@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   LOAD_PLACE_DETAIL_REQUEST,
   TOGGLE_LIKE_REQUEST,
+  TOGGLE_WISH_REQUEST,
 } from "../_Actions/types";
 import { Card } from "antd";
-import { LikeOutlined, LikeFilled, HeartOutlined } from "@ant-design/icons";
+import { LikeOutlined, LikeFilled, HeartOutlined, HeartTwoTone } from "@ant-design/icons";
 import { SERVER } from "../Utils/api";
 
 import CommentList from "../Components/Comment/CommentList";
@@ -66,6 +67,16 @@ function PlaceDetail(props) {
     });
   };
 
+  const toggleWish = () => {
+    dispatch({
+      type: TOGGLE_WISH_REQUEST,
+      data: {
+        placeId: placeId,
+        isWished: placeDetail.isWished,
+      }
+    })
+  }
+
   return (
     <>
       <Helmet>
@@ -85,7 +96,11 @@ function PlaceDetail(props) {
                   ) : (
                     <LikeOutlined key="like" onClick={toggleLike} />
                   ),
-                  <HeartOutlined key="wishlist" />,
+                  placeDetail.isWished ? ( 
+                    <HeartTwoTone key="unwish" twoToneColor="#eb2f96" onClick={toggleWish}/> 
+                    ) : (
+                      <HeartOutlined key="wish" onClick={toggleWish} />
+                    ),
                 ]}
               >
                 <Card.Meta

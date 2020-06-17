@@ -7,6 +7,7 @@ import { LOAD_USER_REQUEST } from "../../_Actions/types";
 import styled from "styled-components";
 
 import Place from "../../Components/Place";
+import WishList from "../../Components/WishList";
 
 const Container = styled.div`
   width: 80%;
@@ -48,11 +49,18 @@ function Profile() {
           </>
         )}
       </UserInfo>
+      <h4>찜한 핫플</h4>
+      <PlaceList>
+        {userInfo &&
+          userInfo.wishList.map((place) => (
+            <WishList id={place._id} name={place.name} image={place.images[0]}/>
+          ))}
+      </PlaceList>
       <h4>업로드한 핫플</h4>
       <PlaceList>
         {userInfo &&
           userInfo.places.map((place) => (
-            <Place id={place._id} name={place.name} image={place.images[0]} />
+            <Place id={place._id} name={place.name} image={place.images[0]} likeCount={place.likers.length} />
           ))}
       </PlaceList>
     </Container>

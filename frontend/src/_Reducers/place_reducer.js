@@ -22,6 +22,9 @@ import {
   TOGGLE_LIKE_REQUEST,
   TOGGLE_LIKE_SUCCESS,
   TOGGLE_LIKE_FAILURE,
+  TOGGLE_WISH_REQUEST,
+  TOGGLE_WISH_SUCCESS,
+  TOGGLE_WISH_FAILURE,
   SEARCH_PLACE_REQUEST,
   SEARCH_PLACE_SUCCESS,
   SEARCH_PLACE_FAILURE,
@@ -83,7 +86,7 @@ export default function (state = initialState, action) {
       case LOAD_PLACE_DETAIL_SUCCESS: {
         return {
           ...state,
-          placeDetail: { ...action.data.place, isLiked: action.data.isLiked },
+          placeDetail: { ...action.data.place, isLiked: action.data.isLiked, isWished: action.data.isWished },
         };
       }
       case LOAD_PLACE_DETAIL_FAILURE: {
@@ -164,6 +167,16 @@ export default function (state = initialState, action) {
         break;
       }
       case TOGGLE_LIKE_FAILURE: {
+        break;
+      }
+      case TOGGLE_WISH_REQUEST: {
+        break;
+      }
+      case TOGGLE_WISH_SUCCESS: {
+        draft.placeDetail.isWished = action.data.wishResult;
+        break;
+      }
+      case TOGGLE_WISH_FAILURE: {
         break;
       }
       default: {

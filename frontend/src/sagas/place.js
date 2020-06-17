@@ -25,7 +25,10 @@ import {
   LOAD_MORE_COMMENTS_SUCCESS,
   SEARCH_PLACE_REQUEST,
   SEARCH_PLACE_SUCCESS,
-  SEARCH_PLACE_FAILURE
+  SEARCH_PLACE_FAILURE,
+  TOGGLE_WISH_REQUEST,
+  TOGGLE_WISH_SUCCESS,
+  TOGGLE_WISH_FAILURE
 } from "../_Actions/types";
 import Axios from "axios";
 
@@ -246,6 +249,33 @@ function* watchSearchPlace(){
   yield takeLatest(SEARCH_PLACE_REQUEST, searchPlace);
 }
 
+// -----------------------------------------------------------------------
+
+function toggleWishAPI(data){
+  return Axios.post(`/places/${data.placeId}/togglewish/`, { isWished: data.isWished });
+}
+
+function* toggleWish(action){
+  try {
+    const result = yield call(toggleWishAPI, action.data);
+    console.log(result);
+    yield put({
+      type: TOGGLE_WISH_SUCCESS,
+      data: result.data
+    })
+  } catch(e){
+    console.error(e);
+    yield put({
+      type: TOGGLE_WISH_FAILURE,
+      error: e
+    })
+  }
+}
+
+function* watchToggleWish(){
+  yield takeLatest(TOGGLE_WISH_REQUEST, toggleWish);
+}
+
 export default function* placeSaga() {
   yield all([
     fork(watchLoadPlaces),
@@ -255,6 +285,7 @@ export default function* placeSaga() {
     fork(watchLoadComments),
     fork(watchAddComment),
     fork(watchToggleLike),
+    fork(watchToggleWish),
     fork(watchSearchPlace),
   ]);
 }
