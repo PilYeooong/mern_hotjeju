@@ -22,6 +22,7 @@ const UserInfo = styled.div`
 const PlaceList = styled.div`
   display: flex;
   flex-wrap: wrap;
+  padding-top: 1rem;
 `;
 
 function Profile() {

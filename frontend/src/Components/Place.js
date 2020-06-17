@@ -12,6 +12,7 @@ const Container = styled.div`
   height: 330px;
   border-radius: 5%;
   margin-right: 1.5rem;
+  margin-bottom: 2rem;
   border: 1px solid #dbdbdb;
 `;
 
@@ -32,7 +33,6 @@ const Description = styled.div`
   padding: 1em;
   font-size: 20px;
   display: flex;
-  /* justify-content: center; */
 `;
 
 const Name = styled.div`

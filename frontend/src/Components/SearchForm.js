@@ -6,6 +6,7 @@ import { SEARCH_PLACE_REQUEST } from "../_Actions/types";
 
 import styled from "styled-components";
 import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
 const Form = styled.form`
   width: 50%;
@@ -24,26 +25,34 @@ const SearchForm = ({ history }) => {
     SetSearchValue(e.target.value);
   }, []);
 
-  const onSubmitSearch = useCallback((e) => {
-    e.preventDefault();
-    dispatch({
-      type: SEARCH_PLACE_REQUEST,
-      data: encodeURIComponent(searchValue),
-    });
-    history.push(`/search/${searchValue}`);
-    SetSearchValue('');
-  }, [searchValue]);
+  const onSubmitSearch = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch({
+        type: SEARCH_PLACE_REQUEST,
+        data: encodeURIComponent(searchValue),
+      });
+      history.push(`/search/${searchValue}`);
+      SetSearchValue("");
+    },
+    [searchValue]
+  );
 
   return (
     <Form action="" onSubmit={onSubmitSearch}>
-      <SearchInput placeholder="Search Hot Place" type="text" value={searchValue} onChange={onChangeSearchValue} />
+      <SearchInput
+        placeholder="Search Hot Place"
+        prefix={<SearchOutlined />}
+        type="text"
+        value={searchValue}
+        onChange={onChangeSearchValue}
+      />
     </Form>
   );
 };
 
 SearchForm.propTypes = {
   history: PropTypes.object.isRequired,
-}
-
+};
 
 export default SearchForm;

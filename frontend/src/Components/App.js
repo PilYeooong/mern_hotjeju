@@ -15,7 +15,6 @@ import Profile from "../Pages/Auth/Profile";
 import Login from "../Pages/Auth/Login";
 import Signup from "../Pages/Auth/Signup";
 import Header from "../Components/Header";
-import CategorizedPlace from "../Pages/CategorizedPlace";
 
 const Wrapper = styled.div`
 `;
@@ -33,11 +32,6 @@ function App() {
             <Route exact path="/profile" component={Auth(Profile, null)} />
             <Route exact path="/accounts/login" component={Login} />
             <Route exact path="/accounts/signup" component={Signup} />
-            <Route
-              exact
-              path="/category/:category"
-              component={Auth(CategorizedPlace, null)}
-            />
             <Route exact path="/place/new" component={Auth(AddPlace, true)} />
             <Route
               exact

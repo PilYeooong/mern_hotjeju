@@ -41,25 +41,25 @@ const BigFireFilled = styled(FireFilled)`
 `;
 const ProfileLink = styled(Link)`
   margin-left: 1rem;
-  font-size: 20px;
+  font-size: 18px;
 `;
 const SignUpLink = styled(Link)`
   margin-left: 1rem;
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const LogoutLink = styled(Link)`
   margin-left: 1rem;
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const LoginLink = styled(Link)`
   margin-left: 1rem;
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const PlaceNewLink = styled(Link)`
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const LoggedInMenu = styled.div`

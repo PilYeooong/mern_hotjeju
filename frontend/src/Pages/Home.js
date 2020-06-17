@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import Place from "../Components/Place";
 import ImageSlide from "../Components/ImageSlide";
+import Category from "../Components/Category";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_MAIN_PLACES_REQUEST, LOAD_IMAGES_REQUEST } from "../_Actions/types";
 
@@ -36,6 +37,7 @@ function Home() {
         <title>핫 제주 | Hot Jeju</title>
       </Helmet>
       {images && <ImageSlide images={images}/>}
+        <Category />
       <Container>
         {places &&
           places.map((place, idx) => (
