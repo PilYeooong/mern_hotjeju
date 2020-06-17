@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import GlobalStyles from "../Styles/GlobalStyles";
@@ -17,31 +17,35 @@ import Signup from "../Pages/Auth/Signup";
 import Header from "../Components/Header";
 import CategorizedPlace from "../Pages/CategorizedPlace";
 
-function App() {
+const Wrapper = styled.div`
+`;
 
+function App() {
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyles />
       <Router>
         <Header />
-        <Switch>
-          <Route exact path="/" component={Auth(Home, null)} />
-          <Route exact path="/search/:place" component={Auth(Search, null)} />
-          <Route exact path="/profile" component={Auth(Profile, null)} />
-          <Route exact path="/accounts/login" component={Login} />
-          <Route exact path="/accounts/signup" component={Signup} />
-          <Route
-            exact
-            path="/category/:category"
-            component={Auth(CategorizedPlace, null)}
-          />
-          <Route exact path="/place/new" component={Auth(AddPlace, true)} />
-          <Route
-            exact
-            path="/place/:placeId"
-            component={Auth(PlaceDetail, null)}
-          />
-        </Switch>
+        <Wrapper>
+          <Switch>
+            <Route exact path="/" component={Auth(Home, null)} />
+            <Route exact path="/search/:place" component={Auth(Search, null)} />
+            <Route exact path="/profile" component={Auth(Profile, null)} />
+            <Route exact path="/accounts/login" component={Login} />
+            <Route exact path="/accounts/signup" component={Signup} />
+            <Route
+              exact
+              path="/category/:category"
+              component={Auth(CategorizedPlace, null)}
+            />
+            <Route exact path="/place/new" component={Auth(AddPlace, true)} />
+            <Route
+              exact
+              path="/place/:placeId"
+              component={Auth(PlaceDetail, null)}
+            />
+          </Switch>
+        </Wrapper>
       </Router>
     </ThemeProvider>
   );

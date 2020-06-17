@@ -13,7 +13,6 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 3rem 0 0 5rem;
   display: flex;
-  /* justify-content: space-around; */
   flex-wrap: wrap;
 `;
 
@@ -45,6 +44,7 @@ function Home() {
               id={place._id}
               name={place.name}
               image={place.images[0]}
+              likeCount={place.likers.length}
             />
           ))}
       </Container>

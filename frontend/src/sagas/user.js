@@ -1,4 +1,4 @@
-import { all, fork, takeLatest, call, put, throttle } from "redux-saga/effects";
+import { all, fork, takeLatest, call, put } from "redux-saga/effects";
 import { LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE } from "../_Actions/types";
 import Axios from "axios";
 

@@ -37,23 +37,40 @@ const SiteName = styled(Link)`
 
 const BigFireFilled = styled(FireFilled)`
   font-size: 4rem;
+  color: red;
 `;
 const ProfileLink = styled(Link)`
   margin-left: 1rem;
+  font-size: 20px;
 `;
 const SignUpLink = styled(Link)`
   margin-left: 1rem;
+  font-size: 20px;
 `;
 
 const LogoutLink = styled(Link)`
   margin-left: 1rem;
+  font-size: 20px;
 `;
 
 const LoginLink = styled(Link)`
   margin-left: 1rem;
+  font-size: 20px;
 `;
 
-const PlaceNewLink = styled(Link)``;
+const PlaceNewLink = styled(Link)`
+  font-size: 20px;
+`;
+
+const LoggedInMenu = styled.div`
+   display: flex;
+`;
+
+const LoggedOutMenu = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+`;
 
 export default withRouter((props) => {
   const dispatch = useDispatch();
@@ -84,18 +101,18 @@ export default withRouter((props) => {
         </HeaderColumn>
         <HeaderColumn>
           {userData && userData.isAuth ? (
-            <>
+            <LoggedInMenu>
               <PlaceNewLink to="/place/new">핫플 추가</PlaceNewLink>
               <ProfileLink to="/profile">프로필</ProfileLink>
               <LogoutLink to="/" onClick={LogOut}>
                 로그아웃
               </LogoutLink>
-            </>
+            </LoggedInMenu>
           ) : (
-            <>
+            <LoggedOutMenu>
               <SignUpLink to="/accounts/signup">회원가입</SignUpLink>
               <LoginLink to="/accounts/login">로그인</LoginLink>
-            </>
+            </LoggedOutMenu>
           )}
         </HeaderColumn>
       </HeaderWrapper>

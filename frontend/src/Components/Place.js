@@ -10,8 +10,9 @@ import { StarTwoTone } from "@ant-design/icons";
 const Container = styled.div`
   width: 30%;
   height: 330px;
-  border-radius: 10%;
+  border-radius: 5%;
   margin-right: 1.5rem;
+  border: 1px solid #dbdbdb;
 `;
 
 const PlaceBox = styled.div`
@@ -51,7 +52,7 @@ const Star = styled(StarTwoTone)`
 `;
 const LikeCount = styled.div``;
 
-function Place({ id, name, image }) {
+function Place({ id, name, image, likeCount }) {
   return (
     <Container>
       <PlaceBox>
@@ -62,7 +63,7 @@ function Place({ id, name, image }) {
           <Name>{name}</Name>
           <Grade>
             <Star twoToneColor="#eb2f96" />
-            <LikeCount>12</LikeCount>
+            <LikeCount>{likeCount}</LikeCount>
           </Grade>
         </Description>
       </PlaceBox>
@@ -74,6 +75,7 @@ Place.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
+  likeCount: PropTypes.number.isRequired,
 };
 
 export default Place;

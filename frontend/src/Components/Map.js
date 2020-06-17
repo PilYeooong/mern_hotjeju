@@ -10,13 +10,12 @@ const Map = ({ name, address }) => {
   useEffect(() => {
     const script = document.createElement("script");
     script.async = true;
-    script.src =
-      `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP}&libraries=services,clusterer&autoload=false`;
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP}&libraries=services,clusterer&autoload=false`;
     document.head.appendChild(script);
-    // kakao.maps.load(() => {
-      script.onload = () => {
-        const { kakao } = window;
-        kakao.maps.load(() => {
+    
+    script.onload = () => {
+      const { kakao } = window;
+      kakao.maps.load(() => {
         let container = document.getElementById("map");
         let options = {
           center: new kakao.maps.LatLng(37.506502, 127.053617),
