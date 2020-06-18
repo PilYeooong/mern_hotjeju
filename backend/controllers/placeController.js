@@ -39,7 +39,7 @@ export const addPlace = async (req, res, next) => {
 };
 
 export const allPlaces = async (req, res) => {
-  console.log(req.body);
+  console.log(req);
   let term = req.body.term;
 
   try {
