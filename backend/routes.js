@@ -36,6 +36,9 @@ const COMMENT_LIST = "/:id/comments";
 const GET_LIKES = "/:id/likes";
 const TOGGLE_LIKE = "/:id/togglelike";
 
+// WishList
+const TOGGLE_WISH = "/:placeId/togglewish";
+
 // Image
 const IMAGES = `${API}/images`;
 
@@ -105,6 +108,13 @@ const routes = {
       return `/${id}/togglelike`;
     } else {
       return TOGGLE_LIKE;
+    }
+  },
+  toggleWish: id => {
+    if(id) {
+      return `/${placeId}/togglewish`;
+    } else {
+      return TOGGLE_WISH;
     }
   },
   search: SEARCH,
