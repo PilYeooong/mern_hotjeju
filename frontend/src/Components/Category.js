@@ -55,6 +55,7 @@ const Category = () => {
       type: LOAD_MAIN_PLACES_REQUEST,
     });
   };
+
   const onClickCategory = (category) => () => {
     dispatch({
       type: LOAD_CATEGORIZED_PLACES_REQUEST,

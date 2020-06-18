@@ -28,6 +28,7 @@ import {
   SEARCH_PLACE_REQUEST,
   SEARCH_PLACE_SUCCESS,
   SEARCH_PLACE_FAILURE,
+  SORT_BY_LIKES,
 } from "../_Actions/types";
 
 const initialState = {
@@ -63,6 +64,13 @@ export default function (state = initialState, action) {
           ...state,
           places: [],
         };
+      }
+      case SORT_BY_LIKES: {
+        const sortedPlace = draft.places.sort(function (one, other) {
+          return other.likers.length - one.likers.length;
+        });
+        draft.places = sortedPlace;
+        break;
       }
       case ADD_PLACE_REQUEST: {
         return {

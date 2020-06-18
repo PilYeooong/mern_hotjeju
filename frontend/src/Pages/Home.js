@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { LOAD_MAIN_PLACES_REQUEST, LOAD_IMAGES_REQUEST, SORT_BY_LIKES } from "../_Actions/types";
+
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
+import { Button } from "antd";
 
 import Place from "../Components/Place";
 import ImageSlide from "../Components/ImageSlide";
 import Category from "../Components/Category";
-import { useDispatch, useSelector } from "react-redux";
-import { LOAD_MAIN_PLACES_REQUEST, LOAD_IMAGES_REQUEST } from "../_Actions/types";
 
 const Container = styled.div`
   width: 80%;
@@ -17,6 +19,8 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
+const OrderByRank = styled(Button)``;
+
 function Home() {
   const dispatch = useDispatch();
   const { places } = useSelector(state => state.place);
@@ -24,12 +28,18 @@ function Home() {
 
   useEffect(() => {
     dispatch({
-      type: LOAD_MAIN_PLACES_REQUEST
+      type: LOAD_MAIN_PLACES_REQUEST,
     })
     dispatch({
       type: LOAD_IMAGES_REQUEST
     })
   }, []);
+
+  const orderByRank = () => {
+    dispatch({
+      type: SORT_BY_LIKES,
+    })
+  }
 
   return (
     <div>
@@ -38,6 +48,7 @@ function Home() {
       </Helmet>
       {images && <ImageSlide images={images}/>}
         <Category />
+        <OrderByRank onClick={orderByRank}>평점순</OrderByRank>
       <Container>
         {places &&
           places.map((place, idx) => (

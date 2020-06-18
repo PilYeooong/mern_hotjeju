@@ -33,13 +33,13 @@ import {
 import Axios from "axios";
 
 Axios.defaults.baseURL = "http://localhost:3000/api/";
-function loadPlacesAPI() {
-  return Axios.get("/places");
+function loadPlacesAPI(term = false) {
+  return Axios.post("/places", { term });
 }
 
 function* loadPlaces(action) {
   try {
-    const result = yield call(loadPlacesAPI, action.data);
+    const result = yield call(loadPlacesAPI, action.term);
     yield put({
       type: LOAD_MAIN_PLACES_SUCCESS,
       data: result.data.places,
@@ -171,13 +171,13 @@ function* watchLoadPlaceDetail(){
 
 // -----------------------------------------------------------------------
 
-function addCommnetAPI(data){
+function addCommentAPI(data){
   return Axios.post(`/places/${data.placeId}/comment`, { text: data.comment });
 }
 
 function* addComment(action){
   try {
-    const result = yield call(addCommnetAPI, action.data);
+    const result = yield call(addCommentAPI, action.data);
     yield put({
       type: ADD_COMMENT_SUCCESS,
       data: result.data
