@@ -9,6 +9,7 @@ import {
   editPlace,
   deletePlace,
   categorizedPlace,
+  toggleWish,
 } from "../controllers/placeController";
 import {
   newComment, getComments
@@ -16,7 +17,7 @@ import {
 import { toggleLike, getLikes } from "../controllers/likeController";
 const placeRouter = express.Router();
 
-placeRouter.get(routes.home, allPlaces);
+placeRouter.post(routes.home, allPlaces);
 placeRouter.get(routes.placeDetail(), checkAuth, placeDetail);
 placeRouter.post(routes.addPlace, isAuthenticated, uploadPlace, addPlace);
 placeRouter.post(routes.editPlace(), isAuthenticated, editPlace);
@@ -33,4 +34,6 @@ placeRouter.get(routes.commentList(), getComments);
 placeRouter.post(routes.likes(), checkAuth, getLikes);
 placeRouter.post(routes.toggleLike(), isAuthenticated, toggleLike);
 
+//Wish
+placeRouter.post(routes.toggleWish(), isAuthenticated, toggleWish);
 export default placeRouter;

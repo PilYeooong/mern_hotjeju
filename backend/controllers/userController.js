@@ -74,7 +74,7 @@ export const authenticate = (req, res) => {
 export const loadUser = async (req, res, next) => {
   const { params: { id } } = req;
   try {
-    const user = await User.findById(id).select("places wishList email nickname").populate("places", "name images");
+    const user = await User.findById(id).select("places wishList email nickname").populate("places", "name images likers").populate("wishList", "name images likers");
     if(!user){
       res.status(400).json({ message: "존재하지 않는 사용자입니다. "});
     }
