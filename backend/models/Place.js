@@ -27,11 +27,19 @@ const placeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   }],
+  likersLength: {
+    type: Number,
+    default: 0,
+  },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     required:true,
     ref: "User"
   }
 })
+
+// placeSchema.query.sortByLikes = function(order){
+//   return this.sort({ likers: order });
+// }
 
 export const Place = mongoose.model("Place", placeSchema);

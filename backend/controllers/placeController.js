@@ -12,6 +12,7 @@ export const addPlace = async (req, res, next) => {
   if(!placeCategory){
     return res.status(400).json({ success: false, message: "존재하지 않는 카테고리입니다. "})
   }
+  console.log(placeCategory);
   const place = await new Place({
     category: placeCategory._id,
     name,
@@ -39,33 +40,18 @@ export const addPlace = async (req, res, next) => {
 };
 
 export const allPlaces = async (req, res) => {
-  console.log(req);
   let term = req.body.term;
 
   try {
     if(term){
-      const places = await Place.aggregate([
-        {
-          $addFields: { likers_count: { $size: { "$ifNull": [ "$likers", []]}}}
-        },
-        {
-          $project: {
-            "name": 1,
-            "images": 1,
-            "likers": 1,
-            "likers_count": 1,
-          }
-        },
-        {
-          $sort: { "likers_count": -1 }
-        }
-      ])
+      const places = await Place.find({}).select("name images likers likersLength").sort({ likersLength : -1 });
       return res.json({ places });
     } else {
       const places = await Place.find({}).select("name images likers").sort({ _id: -1 }); // 최신순 배치
       return res.json({ places });
     }
   } catch (error) {
+    console.error(error);
     return res.json({ success: false, error });
   }
 };

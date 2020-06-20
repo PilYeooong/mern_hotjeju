@@ -24,26 +24,29 @@ export const toggleLike = async (req, res) => {
     params: { id },
     body: { isLiked },
   } = req;
-  const place = await Place.findById(id);
   if (isLiked) {
     Like.findOneAndDelete({ placeId: id, userId: req.user._id }).exec(
-      (err, result) => {
+      async (err, result) => {
         if (err) {
           return res.status(400).json({ success: false, err });
         }
-        place.likers.remove(req.user._id);
-        place.save();
+        await Place.findByIdAndUpdate(id, {
+          $pull: { likers: req.user._id },
+          $inc: { likersLength: -1 },
+        });
         return res.status(200).json({ likeResult: false });
       }
     );
   } else {
     const like = new Like({ placeId: id, userId: req.user._id });
-    like.save((err, like) => {
+    like.save(async (err, like) => {
       if (err) {
         return res.status(400).json({ success: false, err });
       }
-      place.likers.push(req.user._id);
-      place.save();
+      await Place.findByIdAndUpdate(id, {
+        $push: { likers: req.user._id },
+        $inc: { likersLength: 1 },
+      });
       return res.status(200).json({ likeResult: true });
     });
   }
