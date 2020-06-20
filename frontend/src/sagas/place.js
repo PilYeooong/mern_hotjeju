@@ -28,18 +28,21 @@ import {
   SEARCH_PLACE_FAILURE,
   TOGGLE_WISH_REQUEST,
   TOGGLE_WISH_SUCCESS,
-  TOGGLE_WISH_FAILURE
+  TOGGLE_WISH_FAILURE,
+  EDIT_PLACE_FAILURE,
+  EDIT_PLACE_SUCCESS,
+  EDIT_PLACE_REQUEST,
 } from "../_Actions/types";
 import Axios from "axios";
 
 Axios.defaults.baseURL = "http://localhost:3000/api/";
-function loadPlacesAPI(term = false) {
-  return Axios.post("/places", { term });
+function loadPlacesAPI() {
+  return Axios.get("/places");
 }
 
 function* loadPlaces(action) {
   try {
-    const result = yield call(loadPlacesAPI, action.term);
+    const result = yield call(loadPlacesAPI);
     yield put({
       type: LOAD_MAIN_PLACES_SUCCESS,
       data: result.data.places,
@@ -110,170 +113,199 @@ function* watchAddPlace() {
 
 // -----------------------------------------------------------------------
 
-function loadCommentsAPI(placeId, offset=0){
-  return Axios.get(`/places/${placeId}/comments?offset=${offset}`)
+function loadCommentsAPI(placeId, offset = 0) {
+  return Axios.get(`/places/${placeId}/comments?offset=${offset}`);
 }
 
-function* loadComments(action){
+function* loadComments(action) {
   try {
     const result = yield call(loadCommentsAPI, action.data, action.offset);
     console.log(result);
     yield put({
       // type: LOAD_COMMENTS_SUCCESS,
       type: LOAD_MORE_COMMENTS_SUCCESS,
-      data: result.data
-    })
-  } catch(e){
+      data: result.data,
+    });
+  } catch (e) {
     console.error(e);
     yield put({
       type: LOAD_COMMENTS_FAILURE,
-      error: e
-    })
+      error: e,
+    });
   }
 }
 
-function* watchLoadComments(){
+function* watchLoadComments() {
   yield takeLatest(LOAD_COMMENTS_REQUEST, loadComments);
 }
 
-
 // -----------------------------------------------------------------------
 
-function loadPlaceDetailAPI(placeId){
-  return Axios.get(`/places/${placeId}/`)
+function loadPlaceDetailAPI(placeId) {
+  return Axios.get(`/places/${placeId}/`);
 }
 
-function* loadPlaceDetail(action){
+function* loadPlaceDetail(action) {
   try {
     const result = yield call(loadPlaceDetailAPI, action.data);
     const comments = yield call(loadCommentsAPI, action.data);
     yield put({
       type: LOAD_PLACE_DETAIL_SUCCESS,
-      data: result.data
-    })
+      data: result.data,
+    });
     yield put({
       type: LOAD_COMMENTS_SUCCESS,
       data: comments.data,
-    })
-  } catch(e){
+    });
+  } catch (e) {
     console.error(e);
     yield put({
       type: LOAD_PLACE_DETAIL_FAILURE,
-      error: e
-    })
+      error: e,
+    });
   }
 }
 
-function* watchLoadPlaceDetail(){
+function* watchLoadPlaceDetail() {
   yield takeLatest(LOAD_PLACE_DETAIL_REQUEST, loadPlaceDetail);
 }
 
-
 // -----------------------------------------------------------------------
 
-function addCommentAPI(data){
+function addCommentAPI(data) {
   return Axios.post(`/places/${data.placeId}/comment`, { text: data.comment });
 }
 
-function* addComment(action){
+function* addComment(action) {
   try {
     const result = yield call(addCommentAPI, action.data);
     yield put({
       type: ADD_COMMENT_SUCCESS,
-      data: result.data
-    })
-  } catch(e){
+      data: result.data,
+    });
+  } catch (e) {
     console.error(e);
     yield put({
       type: ADD_COMMENT_FAILURE,
-      error: e
-    })
+      error: e,
+    });
   }
 }
 
-function* watchAddComment(){
+function* watchAddComment() {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
 
 // -----------------------------------------------------------------------
 
-function toggleLikeAPI(data){
-  return Axios.post(`/places/${data.placeId}/togglelike`, { isLiked: data.isLiked });
+function toggleLikeAPI(data) {
+  return Axios.post(`/places/${data.placeId}/togglelike`, {
+    isLiked: data.isLiked,
+  });
 }
 
-function* toggleLike(action){
+function* toggleLike(action) {
   try {
     const result = yield call(toggleLikeAPI, action.data);
     console.log(result);
     yield put({
       type: TOGGLE_LIKE_SUCCESS,
       data: result.data.likeResult,
-    })
-  } catch(e){
+    });
+  } catch (e) {
     console.error(e);
     yield put({
       type: TOGGLE_LIKE_FAILURE,
-      error: e
-    })
+      error: e,
+    });
   }
 }
 
-function* watchToggleLike(){
+function* watchToggleLike() {
   yield takeLatest(TOGGLE_LIKE_REQUEST, toggleLike);
 }
 
 // -----------------------------------------------------------------------
 
-function searchPlaceAPI(place){
+function searchPlaceAPI(place) {
   return Axios.get(`/search/${place}/`);
 }
 
-function* searchPlace(action){
+function* searchPlace(action) {
   try {
     const result = yield call(searchPlaceAPI, action.data);
     console.log(result);
     yield put({
       type: SEARCH_PLACE_SUCCESS,
-      data: result.data
-    })
-  } catch(e){
+      data: result.data,
+    });
+  } catch (e) {
     console.error(e);
     yield put({
       type: SEARCH_PLACE_FAILURE,
-      error: e
-    })
+      error: e,
+    });
   }
 }
 
-function* watchSearchPlace(){
+function* watchSearchPlace() {
   yield takeLatest(SEARCH_PLACE_REQUEST, searchPlace);
 }
 
 // -----------------------------------------------------------------------
 
-function toggleWishAPI(data){
-  return Axios.post(`/places/${data.placeId}/togglewish/`, { isWished: data.isWished });
+function toggleWishAPI(data) {
+  return Axios.post(`/places/${data.placeId}/togglewish/`, {
+    isWished: data.isWished,
+  });
 }
 
-function* toggleWish(action){
+function* toggleWish(action) {
   try {
     const result = yield call(toggleWishAPI, action.data);
     console.log(result);
     yield put({
       type: TOGGLE_WISH_SUCCESS,
-      data: result.data
-    })
-  } catch(e){
+      data: result.data,
+    });
+  } catch (e) {
     console.error(e);
     yield put({
       type: TOGGLE_WISH_FAILURE,
-      error: e
-    })
+      error: e,
+    });
   }
 }
 
-function* watchToggleWish(){
+function* watchToggleWish() {
   yield takeLatest(TOGGLE_WISH_REQUEST, toggleWish);
+}
+
+// -----------------------------------------------------------------------
+
+function editPlaceAPI(data) {
+  return Axios.post(`/places/${data.placeId}/edit/`, data.formData );
+}
+
+function* editPlace(action) {
+  try {
+    console.log(action.data);
+    const result = yield call(editPlaceAPI, action.data);
+    yield put({
+      type: EDIT_PLACE_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: EDIT_PLACE_SUCCESS,
+      error: e,
+    });
+  }
+}
+
+function* watchEditPlace() {
+  yield takeLatest(EDIT_PLACE_REQUEST, editPlace);
 }
 
 export default function* placeSaga() {
@@ -287,5 +319,6 @@ export default function* placeSaga() {
     fork(watchToggleLike),
     fork(watchToggleWish),
     fork(watchSearchPlace),
+    fork(watchEditPlace),
   ]);
 }

@@ -13,6 +13,7 @@ import { SERVER } from "../Utils/api";
 
 import CommentList from "../Components/Comment/CommentList";
 import Map from "../Components/Map";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -111,6 +112,7 @@ function PlaceDetail(props) {
               </PlaceCard>
               <Map name={placeDetail.name} address={placeDetail.address} />
             </PlaceInfo>
+            <Link to={`${placeDetail._id}/edit`}>수정하기</Link>
             <CommentList />
           </Container>
         </Wrapper>

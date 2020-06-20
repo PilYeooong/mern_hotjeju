@@ -15,6 +15,7 @@ import Profile from "../Pages/Auth/Profile";
 import Login from "../Pages/Auth/Login";
 import Signup from "../Pages/Auth/Signup";
 import Header from "../Components/Header";
+import EditPlace from "../Pages/EditPlace";
 
 const Wrapper = styled.div`
 `;
@@ -38,6 +39,7 @@ function App() {
               path="/place/:placeId"
               component={Auth(PlaceDetail, null)}
             />
+            <Route exact path="/place/:placeId/edit" component={Auth(EditPlace, true)} />
           </Switch>
         </Wrapper>
       </Router>
