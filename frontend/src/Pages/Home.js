@@ -19,6 +19,14 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
+const Order = styled.div`
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 2rem;
+  display:flex;
+  justify-content: flex-end;
+`;
+
 const OrderByRank = styled(Button)``;
 
 function Home() {
@@ -48,7 +56,9 @@ function Home() {
       </Helmet>
       {images && <ImageSlide images={images}/>}
         <Category />
-        <OrderByRank onClick={orderByRank}>평점순</OrderByRank>
+        <Order>
+          <OrderByRank type="link" onClick={orderByRank}>추천순</OrderByRank>
+        </Order>
       <Container>
         {places &&
           places.map((place, idx) => (
