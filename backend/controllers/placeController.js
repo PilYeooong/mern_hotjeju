@@ -6,11 +6,13 @@ import { User } from "../models/User";
 export const addPlace = async (req, res, next) => {
   const {
     body: { category, name, description, address },
-    files
+    files,
   } = req;
-  const placeCategory = await Category.findOne({ name: category })
-  if(!placeCategory){
-    return res.status(400).json({ success: false, message: "존재하지 않는 카테고리입니다. "})
+  const placeCategory = await Category.findOne({ name: category });
+  if (!placeCategory) {
+    return res
+      .status(400)
+      .json({ success: false, message: "존재하지 않는 카테고리입니다. " });
   }
   console.log(placeCategory);
   const place = await new Place({
@@ -43,11 +45,15 @@ export const allPlaces = async (req, res) => {
   let term = req.body.term;
 
   try {
-    if(term){
-      const places = await Place.find({}).select("name images likers likersLength").sort({ likersLength : -1 });
+    if (term) {
+      const places = await Place.find({})
+        .select("name images likers likersLength")
+        .sort({ likersLength: -1 });
       return res.json({ places });
     } else {
-      const places = await Place.find({}).select("name images likers").sort({ _id: -1 }); // 최신순 배치
+      const places = await Place.find({})
+        .select("name images likers")
+        .sort({ _id: -1 }); // 최신순 배치
       return res.json({ places });
     }
   } catch (error) {
@@ -63,14 +69,16 @@ export const placeDetail = async (req, res) => {
   try {
     let isLiked = false;
     let isWished = false;
-    const place = await Place.findById(id).populate("creator", "name"); // creator의 name만 리턴
-    if(!place){
-      return res.status(404).send("존재하지 않는 페이지 입니다.")
+    const place = await Place.findById(id)
+      .populate("creator", "name")
+      .populate("category", "name"); // creator의 name만 리턴
+    if (!place) {
+      return res.status(404).send("존재하지 않는 페이지 입니다.");
     }
-    if(req.user && place.likers.includes(req.user._id)){
+    if (req.user && place.likers.includes(req.user._id)) {
       isLiked = true;
     }
-    if(req.user && req.user.wishList.includes(place._id)){
+    if (req.user && req.user.wishList.includes(place._id)) {
       isWished = true;
     }
     res.status(200).json({ place, isLiked, isWished });
@@ -85,20 +93,29 @@ export const placeDetail = async (req, res) => {
 export const editPlace = async (req, res) => {
   const {
     params: { id },
-    body: { name, description, address },
+    body: { category, name, description, address, images },
   } = req;
   try {
-    const place = await Place.findById(id);
-    if (String(req.user._id) !== String(place.creator)) {
-      return res
-        .status(401)
-        .json({ success: false, message: "권한이 없습니다." });
+    const place = await Place.findByIdAndUpdate(id, {
+      name,
+      description,
+      address,
+      images,
+    });
+    const prevCategory = await Category.findById(place.category);
+    const editCategory = await Category.findOne({ name: category });
+    if (place.category !== editCategory) {
+      place.category = editCategory;
+      editCategory.places.push(place._id);
+      editCategory.save();
+      prevCategory.places.pull(place._id);
+      prevCategory.save();
     }
-    const editedPlace = await Place.updateOne({ name, description, address });
-    return res.status(200).json({ success: true, place: editedPlace });
+    place.save();
+    return res.status(200).send(place);
   } catch (error) {
     console.log(error);
-    res.status(404).json({ success: false, error });
+    res.status(400).json({ success: false, error });
   }
 };
 
@@ -132,23 +149,18 @@ export const categorizedPlace = async (req, res, next) => {
   const {
     params: { category },
   } = req;
-  let term = req.body.term;
   try {
-    if(term){
-      const categorized = await Category.findOne({ name: category }).populate('places', "name images likers");
-      const places = categorized.places.sort(function (one, other) {
-        return other.likers.length - one.likers.length;
-      })
-      return res.status(200).json({ places });
-    }
-    const categorized = await Category.findOne({ name: category }).populate('places', "name images likers");
+    const categorized = await Category.findOne({ name: category }).populate(
+      "places",
+      "name images likers likersLength"
+    );
     const places = categorized.places;
     return res.status(200).json({ places });
-  } catch(e){
+  } catch (e) {
     console.error(e);
     return res.status(404).json({ success: false, e });
   }
-}
+};
 
 export const toggleWish = async (req, res, next) => {
   const {
@@ -157,7 +169,7 @@ export const toggleWish = async (req, res, next) => {
   } = req;
   try {
     const user = await User.findById(req.user._id);
-    if(isWished){
+    if (isWished) {
       user.wishList.remove(placeId);
       user.save();
       return res.status(200).json({ wishResult: false, placeId });
@@ -166,8 +178,8 @@ export const toggleWish = async (req, res, next) => {
       user.save();
       return res.status(200).json({ wishResult: true });
     }
-  } catch(e) {
+  } catch (e) {
     console.error(e);
     return res.status(400).send(e);
   }
-}
+};

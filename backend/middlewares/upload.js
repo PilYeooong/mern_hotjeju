@@ -18,3 +18,4 @@ let storage = multer.diskStorage({
 
 export const uploadPlace = multer({ storage }).array("images"); // 기입한 문자열대로 request륿 받아야함,
                                                                 // single = req.file로 path접근, array = files
+export const updatePlace = multer({ storage }).none();

@@ -9,3 +9,7 @@ export const randomImages = async (req, res, next) => {
     return res.status(400).send(e);
   }
 }
+
+export const addImages = async (req, res, next) => {
+  res.json(req.files.map((v) => v.path));
+}

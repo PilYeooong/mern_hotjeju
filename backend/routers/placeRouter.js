@@ -1,7 +1,7 @@
 import express from "express";
 import routes from "../routes";
 import { isAuthenticated, checkAuth } from "../middlewares/isAuthenticated";
-import { uploadPlace } from "../middlewares/uploadPlace";
+import { uploadPlace, updatePlace } from "../middlewares/upload";
 import {
   addPlace,
   allPlaces,
@@ -20,7 +20,7 @@ const placeRouter = express.Router();
 placeRouter.get(routes.home, allPlaces);
 placeRouter.get(routes.placeDetail(), checkAuth, placeDetail);
 placeRouter.post(routes.addPlace, isAuthenticated, uploadPlace, addPlace);
-placeRouter.post(routes.editPlace(), isAuthenticated, editPlace);
+placeRouter.post(routes.editPlace(), isAuthenticated, updatePlace, editPlace);
 placeRouter.post(routes.deletePlace(), isAuthenticated, deletePlace);
 
 // Category
