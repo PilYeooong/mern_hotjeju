@@ -14,7 +14,6 @@ export const addPlace = async (req, res, next) => {
       .status(400)
       .json({ success: false, message: "존재하지 않는 카테고리입니다. " });
   }
-  console.log(placeCategory);
   const place = await new Place({
     category: placeCategory._id,
     name,
@@ -110,8 +109,8 @@ export const editPlace = async (req, res) => {
       editCategory.save();
       prevCategory.places.pull(place._id);
       prevCategory.save();
+      place.save();
     }
-    place.save();
     return res.status(200).send(place);
   } catch (error) {
     console.log(error);
@@ -136,7 +135,7 @@ export const deletePlace = async (req, res) => {
       category.save();
       req.user.places.pull(place);
       req.user.save();
-      return res.status(200).json({ success: true, message: "삭제 완료 " });
+      return res.status(200).send(place);
     }
   } catch (error) {
     return res
