@@ -32,6 +32,9 @@ import {
   EDIT_PLACE_FAILURE,
   EDIT_PLACE_SUCCESS,
   EDIT_PLACE_REQUEST,
+  REMOVE_PLACE_REQUEST,
+  REMOVE_PLACE_SUCCESS,
+  REMOVE_PLACE_FAILURE,
 } from "../_Actions/types";
 import Axios from "axios";
 
@@ -40,7 +43,7 @@ function loadPlacesAPI() {
   return Axios.get("/places");
 }
 
-function* loadPlaces(action) {
+function* loadPlaces() {
   try {
     const result = yield call(loadPlacesAPI);
     yield put({
@@ -298,7 +301,7 @@ function* editPlace(action) {
   } catch (e) {
     console.error(e);
     yield put({
-      type: EDIT_PLACE_SUCCESS,
+      type: EDIT_PLACE_FAILURE,
       error: e,
     });
   }
@@ -306,6 +309,35 @@ function* editPlace(action) {
 
 function* watchEditPlace() {
   yield takeLatest(EDIT_PLACE_REQUEST, editPlace);
+}
+
+// -----------------------------------------------------------------------
+
+function removePlaceAPI(placeId) {
+  return Axios.post(`/places/${placeId}/delete/`);
+}
+
+function* removePlace(action) {
+  try {
+    if(window.confirm("정말 삭제하시겠습니끼?") === false){
+      return;
+    }
+    const result = yield call(removePlaceAPI, action.data);
+    yield put({
+      type: REMOVE_PLACE_SUCCESS,
+      data: result.data
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: REMOVE_PLACE_FAILURE,
+      error: e,
+    });
+  }
+}
+
+function* watchRemovePlace() {
+  yield takeLatest(REMOVE_PLACE_REQUEST, removePlace);
 }
 
 export default function* placeSaga() {
@@ -320,5 +352,6 @@ export default function* placeSaga() {
     fork(watchToggleWish),
     fork(watchSearchPlace),
     fork(watchEditPlace),
+    fork(watchRemovePlace),
   ]);
 }

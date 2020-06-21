@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 
-import { SERVER } from "../Utils/api";
+import { SERVER } from "../../Utils/api";
 
 import styled from "styled-components";
 import { CloseOutlined } from "@ant-design/icons";
-import { TOGGLE_WISH_REQUEST } from "../_Actions/types";
+import { TOGGLE_WISH_REQUEST } from "../../_Actions/types";
 
 const Container = styled.div`
   width: 30%;

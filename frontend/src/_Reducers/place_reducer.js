@@ -35,6 +35,7 @@ import {
   EDIT_PLACE_REQUEST,
   EDIT_PLACE_SUCCESS,
   EDIT_PLACE_FAILURE,
+
   REMOVE_IMAGE,
 } from "../_Actions/types";
 
@@ -216,6 +217,7 @@ export default function (state = initialState, action) {
       case EDIT_PLACE_FAILURE: {
         break;
       }
+
       case REMOVE_IMAGE: {
         const index = draft.placeDetail.images.findIndex((v, i) => i==action.index);
         draft.placeDetail.images.splice(index, 1);
