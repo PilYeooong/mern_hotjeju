@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("dev"));
-app.use('/media', express.static('media'));
+app.use("/media", express.static("media"));
 
 app.use(routes.users, userRouter);
 app.use(routes.places, placeRouter);

@@ -110,8 +110,8 @@ const routes = {
       return TOGGLE_LIKE;
     }
   },
-  toggleWish: id => {
-    if(id) {
+  toggleWish: (id) => {
+    if (id) {
       return `/${placeId}/togglewish`;
     } else {
       return TOGGLE_WISH;
