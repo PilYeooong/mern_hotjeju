@@ -28,12 +28,16 @@ export const newComment = async (req, res) => {
     params: { id },
     body: { text },
   } = req;
-  const comment = await new Comment({ creator: req.user._id, placeId: id, text });
-  comment.save( async (err, comment) => {
+  const comment = await new Comment({
+    creator: req.user._id,
+    placeId: id,
+    text,
+  });
+  comment.save(async (err, comment) => {
     if (err) {
       return res.status(400).json({ success: false, err });
     }
-    comment = await comment.populate('creator', "nickname").execPopulate();
+    comment = await comment.populate("creator", "nickname").execPopulate();
     return res.status(200).send(comment);
   });
 };

@@ -4,16 +4,16 @@ const likeSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "User"
+    ref: "User",
   },
   placeId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Place"
+    ref: "Place",
   },
   commentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Comment"
-  }
-})
+    ref: "Comment",
+  },
+});
 
 export const Like = mongoose.model("Like", likeSchema);

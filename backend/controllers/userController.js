@@ -1,12 +1,13 @@
-
 import { User } from "../models/User";
 
 export const signUp = async (req, res) => {
   await User.findOne({ email: req.body.email }).exec((err, userExist) => {
-    if(err){
+    if (err) {
       return res.status(400).json({ err });
-    } else if(userExist){
-      return res.status(409).json({ success: false, message: "이미 사용중인 이메일입니다." })
+    } else if (userExist) {
+      return res
+        .status(409)
+        .json({ success: false, message: "이미 사용중인 이메일입니다." });
     } else {
       const user = new User(req.body);
       user.save((err, userInfo) => {
@@ -17,7 +18,7 @@ export const signUp = async (req, res) => {
         });
       });
     }
-  })
+  });
 };
 
 export const login = async (req, res) => {
@@ -43,7 +44,7 @@ export const login = async (req, res) => {
         res
           .cookie("x_auth", user.token)
           .status(200)
-          .json({ loginSuccess: true, userId: user._id, user, });
+          .json({ loginSuccess: true, userId: user._id, user });
       });
     });
   });
@@ -51,13 +52,13 @@ export const login = async (req, res) => {
 
 export const logOut = (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
-    if(err){
+    if (err) {
       return res.json({ success: false, err });
     }
     res.cookie("x_auth", "");
     return res.status(200).json({
       logoutSuccess: true,
-      isAuth: false
+      isAuth: false,
     });
   });
 };
@@ -72,14 +73,19 @@ export const authenticate = (req, res) => {
 };
 
 export const loadUser = async (req, res, next) => {
-  const { params: { id } } = req;
+  const {
+    params: { id },
+  } = req;
   try {
-    const user = await User.findById(id).select("places wishList email nickname").populate("places", "name images likers").populate("wishList", "name images likers");
-    if(!user){
-      res.status(400).json({ message: "존재하지 않는 사용자입니다. "});
+    const user = await User.findById(id)
+      .select("places wishList email nickname")
+      .populate("places", "name images likers")
+      .populate("wishList", "name images likers");
+    if (!user) {
+      res.status(400).json({ message: "존재하지 않는 사용자입니다. " });
     }
     res.status(200).send(user);
   } catch (e) {
     console.error(e);
   }
-}
+};

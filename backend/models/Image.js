@@ -7,7 +7,7 @@ const imageSchema = new mongoose.Schema({
   },
   placeId: {
     type: String,
-  }
-})
+  },
+});
 
 export const Image = mongoose.model("Image", imageSchema);

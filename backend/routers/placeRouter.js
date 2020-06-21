@@ -11,10 +11,9 @@ import {
   categorizedPlace,
   toggleWish,
 } from "../controllers/placeController";
-import {
-  newComment, getComments
-} from "../controllers/commentController";
+import { newComment, getComments } from "../controllers/commentController";
 import { toggleLike, getLikes } from "../controllers/likeController";
+
 const placeRouter = express.Router();
 
 placeRouter.get(routes.home, allPlaces);

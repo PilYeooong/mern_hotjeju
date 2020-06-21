@@ -28,15 +28,15 @@ const userSchema = new mongoose.Schema({
   places: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Place"
+      ref: "Place",
     },
   ],
   wishList: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Place"
-    }
-  ]
+      ref: "Place",
+    },
+  ],
 });
 
 userSchema.pre("save", function (next) {
