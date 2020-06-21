@@ -24,8 +24,7 @@ const PlaceBox = styled.div`
   height: 70%;
 `;
 
-const PlaceLink = styled(Link)`
-`;
+const PlaceLink = styled(Link)``;
 
 const Image = styled.img`
   width: 100%;
@@ -48,7 +47,6 @@ const Name = styled.div`
 `;
 
 function WishList({ id, name, image }) {
-
   const dispatch = useDispatch();
   const removeWish = () => {
     dispatch({
@@ -56,9 +54,9 @@ function WishList({ id, name, image }) {
       data: {
         placeId: id,
         isWished: true,
-      }
-    })
-  }
+      },
+    });
+  };
   return (
     <Container>
       <PlaceBox>

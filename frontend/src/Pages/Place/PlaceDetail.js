@@ -6,13 +6,18 @@ import {
   LOAD_PLACE_DETAIL_REQUEST,
   TOGGLE_LIKE_REQUEST,
   TOGGLE_WISH_REQUEST,
-} from "../_Actions/types";
+} from "../../_Actions/types";
 import { Card } from "antd";
-import { LikeOutlined, LikeFilled, HeartOutlined, HeartTwoTone } from "@ant-design/icons";
-import { SERVER } from "../Utils/api";
+import {
+  LikeOutlined,
+  LikeFilled,
+  HeartOutlined,
+  HeartTwoTone,
+} from "@ant-design/icons";
+import { SERVER } from "../../Utils/api";
 
-import CommentList from "../Components/Comment/CommentList";
-import Map from "../Components/Map";
+import CommentList from "../../Components/Comment/CommentList";
+import Map from "../../Components/Map";
 import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -29,7 +34,7 @@ const Container = styled.div`
 const PlaceInfo = styled.div`
   display: flex;
   justify-content: space-around;
- `;
+`;
 const PlaceCard = styled(Card)`
   width: 45%;
 `;
@@ -74,9 +79,9 @@ function PlaceDetail(props) {
       data: {
         placeId: placeId,
         isWished: placeDetail.isWished,
-      }
-    })
-  }
+      },
+    });
+  };
 
   return (
     <>
@@ -97,11 +102,15 @@ function PlaceDetail(props) {
                   ) : (
                     <LikeOutlined key="like" onClick={toggleLike} />
                   ),
-                  placeDetail.isWished ? ( 
-                    <HeartTwoTone key="unwish" twoToneColor="#eb2f96" onClick={toggleWish}/> 
-                    ) : (
-                      <HeartOutlined key="wish" onClick={toggleWish} />
-                    ),
+                  placeDetail.isWished ? (
+                    <HeartTwoTone
+                      key="unwish"
+                      twoToneColor="#eb2f96"
+                      onClick={toggleWish}
+                    />
+                  ) : (
+                    <HeartOutlined key="wish" onClick={toggleWish} />
+                  ),
                 ]}
               >
                 <Card.Meta

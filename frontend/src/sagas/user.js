@@ -1,34 +1,35 @@
 import { all, fork, takeLatest, call, put } from "redux-saga/effects";
-import { LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE } from "../_Actions/types";
+import {
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
+} from "../_Actions/types";
 import Axios from "axios";
 
-
-function loadUserAPI(userId){
+function loadUserAPI(userId) {
   return Axios.get(`/users/${userId}`);
 }
 
-function* loadUser(action){
+function* loadUser(action) {
   try {
     const result = yield call(loadUserAPI, action.data);
     yield put({
       type: LOAD_USER_SUCCESS,
-      data: result.data
-    })
-  } catch(e) {
+      data: result.data,
+    });
+  } catch (e) {
     console.error(e);
     yield put({
       type: LOAD_USER_FAILURE,
-      error: e
-    })
+      error: e,
+    });
   }
 }
 
-function* watchLoadUser(){
+function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 
 export default function* userSaga() {
-  yield all([
-    fork(watchLoadUser),
-  ])
+  yield all([fork(watchLoadUser)]);
 }

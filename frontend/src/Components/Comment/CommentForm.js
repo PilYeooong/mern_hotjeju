@@ -24,7 +24,6 @@ const CommentForm = ({ placeId }) => {
   const dispatch = useDispatch();
   const [comment, setComment] = useState("");
 
-
   const onChangeComment = useCallback((e) => {
     setComment(e.target.value);
   }, []);
@@ -42,7 +41,11 @@ const CommentForm = ({ placeId }) => {
 
   return (
     <>
-      <InputArea placeholder="Write your comment"value={comment} onChange={onChangeComment} />
+      <InputArea
+        placeholder="Write your comment"
+        value={comment}
+        onChange={onChangeComment}
+      />
       <ButtonBox>
         <SubmitButton type="primary" onClick={onSubmitComment}>
           댓글 작성
@@ -54,6 +57,6 @@ const CommentForm = ({ placeId }) => {
 
 CommentForm.propTypes = {
   placeId: PropTypes.string.isRequired,
-}
+};
 
 export default CommentForm;

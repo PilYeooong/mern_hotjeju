@@ -35,7 +35,6 @@ import {
   EDIT_PLACE_REQUEST,
   EDIT_PLACE_SUCCESS,
   EDIT_PLACE_FAILURE,
-
   REMOVE_IMAGE,
 } from "../_Actions/types";
 
@@ -102,7 +101,11 @@ export default function (state = initialState, action) {
       case LOAD_PLACE_DETAIL_SUCCESS: {
         return {
           ...state,
-          placeDetail: { ...action.data.place, isLiked: action.data.isLiked, isWished: action.data.isWished },
+          placeDetail: {
+            ...action.data.place,
+            isLiked: action.data.isLiked,
+            isWished: action.data.isWished,
+          },
         };
       }
       case LOAD_PLACE_DETAIL_FAILURE: {
@@ -199,9 +202,9 @@ export default function (state = initialState, action) {
         break;
       }
       case UPLOAD_IMAGES_SUCCESS: {
-        action.data.forEach(p => {
+        action.data.forEach((p) => {
           draft.placeDetail.images.push(p);
-        })
+        });
         break;
       }
       case UPLOAD_IMAGES_FAILURE: {
@@ -219,7 +222,9 @@ export default function (state = initialState, action) {
       }
 
       case REMOVE_IMAGE: {
-        const index = draft.placeDetail.images.findIndex((v, i) => i==action.index);
+        const index = draft.placeDetail.images.findIndex(
+          (v, i) => i == action.index
+        );
         draft.placeDetail.images.splice(index, 1);
         break;
       }

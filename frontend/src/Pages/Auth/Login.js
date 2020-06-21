@@ -21,9 +21,8 @@ const LoginForm = styled(Form)`
 `;
 const SignupBox = styled.div`
   width: 75%;
-  display:flex;
+  display: flex;
   justify-content: flex-end;
-
 `;
 
 const Signup = styled.h5``;
@@ -38,22 +37,22 @@ function Login(props) {
     const { email, password } = values;
     const data = { email, password };
 
-    await dispatch(loginUser(data)).then(response => {
-      if(response.payload.loginSuccess){
+    await dispatch(loginUser(data)).then((response) => {
+      if (response.payload.loginSuccess) {
         notification.open({
           message: "로그인 성공",
-          icon: <SmileOutlined style={{ color: "#108ee9" }} />
-        })
-        props.history.push('/');
+          icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+        });
+        props.history.push("/");
       } else {
         notification.open({
           message: "로그인 실패",
           description: "이메일/암호를 확인해주세요.",
-          icon: <FrownOutlined style={{ color: "#ff3333" }} />
-        })
+          icon: <FrownOutlined style={{ color: "#ff3333" }} />,
+        });
       }
-    })
-  }
+    });
+  };
   return (
     <Wrapper>
       <Helmet>
@@ -74,13 +73,10 @@ function Login(props) {
         <Form.Item
           label="비밀번호"
           name="password"
-          rules={[
-            { required: true, message: "비밀번호를 작성하여 주세요." },
-          ]}
+          rules={[{ required: true, message: "비밀번호를 작성하여 주세요." }]}
         >
           <Input.Password />
         </Form.Item>
-       
 
         <Form.Item {...tailLayout} style={{ paddingLeft: "2rem" }}>
           <Button type="primary" htmlType="submit">
@@ -88,7 +84,9 @@ function Login(props) {
           </Button>
         </Form.Item>
         <SignupBox>
-          <Signup>아이디가 없으신가요? <SignupLink to="/signup">회원가입</SignupLink></Signup>
+          <Signup>
+            아이디가 없으신가요? <SignupLink to="/signup">회원가입</SignupLink>
+          </Signup>
         </SignupBox>
       </LoginForm>
     </Wrapper>

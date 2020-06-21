@@ -1,5 +1,5 @@
 import React from 'react'
-import AddPlaceForm from "../Components/AddPlaceForm";
+import AddPlaceForm from "../../Components/Place/AddPlaceForm";
 
 function AddPlace() {
   return (

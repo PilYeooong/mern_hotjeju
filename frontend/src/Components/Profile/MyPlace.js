@@ -79,8 +79,8 @@ function MyPlace({ id, name, image, likeCount }) {
     dispatch({
       type: REMOVE_PLACE_REQUEST,
       data: id,
-    })
-  }
+    });
+  };
 
   return (
     <Container>
@@ -97,8 +97,10 @@ function MyPlace({ id, name, image, likeCount }) {
             </Grade>
           </PlaceInfo>
           <ButtonBox>
-            <DeleteBtn onClick={onRemovePlace}/>
-            <Link to={`/place/${id}/edit`}><EditBtn /></Link>
+            <DeleteBtn onClick={onRemovePlace} />
+            <Link to={`/place/${id}/edit`}>
+              <EditBtn />
+            </Link>
           </ButtonBox>
         </Description>
       </PlaceBox>

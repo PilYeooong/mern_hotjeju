@@ -71,9 +71,15 @@ const Category = () => {
       <Cafe type="link" onClick={onClickCategory("cafe")}>
         카페
       </Cafe>
-      <Ocean type="link" onClick={onClickCategory("ocean")}>해변</Ocean>
-      <Restaurant type="link" onClick={onClickCategory("restaurant")}>식당</Restaurant>
-      <Museum type="link" onClick={onClickCategory("museum")}>박물관</Museum>
+      <Ocean type="link" onClick={onClickCategory("ocean")}>
+        해변
+      </Ocean>
+      <Restaurant type="link" onClick={onClickCategory("restaurant")}>
+        식당
+      </Restaurant>
+      <Museum type="link" onClick={onClickCategory("museum")}>
+        박물관
+      </Museum>
     </MenuBar>
   );
 };

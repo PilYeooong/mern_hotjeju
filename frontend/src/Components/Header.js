@@ -63,7 +63,7 @@ const PlaceNewLink = styled(Link)`
 `;
 
 const LoggedInMenu = styled.div`
-   display: flex;
+  display: flex;
 `;
 
 const LoggedOutMenu = styled.div`

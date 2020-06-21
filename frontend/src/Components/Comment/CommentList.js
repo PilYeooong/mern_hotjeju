@@ -18,7 +18,6 @@ const MoreButton = styled(Button)`
   margin-bottom: 1rem;
 `;
 
-
 const CommentList = () => {
   const dispatch = useDispatch();
   const { placeDetail } = useSelector((state) => state.place);

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
-import { getBase64FromFile } from "../Utils/base64";
+import { getBase64FromFile } from "../../Utils/base64";
 import { useHistory } from "react-router-dom";
 
 import { Form, Input, Button, Upload, Modal, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import { ADD_PLACE_REQUEST } from "../_Actions/types";
+import { ADD_PLACE_REQUEST } from "../../_Actions/types";
 
 const Wrapper = styled.div`
   height: 80vh;

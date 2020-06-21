@@ -287,7 +287,7 @@ function* watchToggleWish() {
 // -----------------------------------------------------------------------
 
 function editPlaceAPI(data) {
-  return Axios.post(`/places/${data.placeId}/edit/`, data.formData );
+  return Axios.post(`/places/${data.placeId}/edit/`, data.formData);
 }
 
 function* editPlace(action) {
@@ -319,13 +319,13 @@ function removePlaceAPI(placeId) {
 
 function* removePlace(action) {
   try {
-    if(window.confirm("정말 삭제하시겠습니끼?") === false){
+    if (window.confirm("정말 삭제하시겠습니끼?") === false) {
       return;
     }
     const result = yield call(removePlaceAPI, action.data);
     yield put({
       type: REMOVE_PLACE_SUCCESS,
-      data: result.data
+      data: result.data,
     });
   } catch (e) {
     console.error(e);

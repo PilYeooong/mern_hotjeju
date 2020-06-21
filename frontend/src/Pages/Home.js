@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_MAIN_PLACES_REQUEST, LOAD_IMAGES_REQUEST, SORT_BY_LIKES } from "../_Actions/types";
+import {
+  LOAD_MAIN_PLACES_REQUEST,
+  LOAD_IMAGES_REQUEST,
+  SORT_BY_LIKES,
+} from "../_Actions/types";
 
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import { Button } from "antd";
 
-import Place from "../Components/Place";
+import Place from "../Components/Place/Place";
 import ImageSlide from "../Components/ImageSlide";
 import Category from "../Components/Category";
 
@@ -23,7 +27,7 @@ const Order = styled.div`
   width: 70%;
   margin: 0 auto;
   margin-top: 2rem;
-  display:flex;
+  display: flex;
   justify-content: flex-end;
 `;
 
@@ -31,34 +35,36 @@ const OrderByRank = styled(Button)``;
 
 function Home() {
   const dispatch = useDispatch();
-  const { places } = useSelector(state => state.place);
-  const { images } = useSelector(state => state.image);
+  const { places } = useSelector((state) => state.place);
+  const { images } = useSelector((state) => state.image);
 
   useEffect(() => {
     dispatch({
       type: LOAD_MAIN_PLACES_REQUEST,
-    })
+    });
     dispatch({
-      type: LOAD_IMAGES_REQUEST
-    })
+      type: LOAD_IMAGES_REQUEST,
+    });
   }, []);
 
   const orderByRank = () => {
     dispatch({
       type: SORT_BY_LIKES,
-    })
-  }
+    });
+  };
 
   return (
     <div>
       <Helmet>
         <title>핫 제주 | Hot Jeju</title>
       </Helmet>
-      {images && <ImageSlide images={images}/>}
-        <Category />
-        <Order>
-          <OrderByRank type="link" onClick={orderByRank}>추천순</OrderByRank>
-        </Order>
+      {images && <ImageSlide images={images} />}
+      <Category />
+      <Order>
+        <OrderByRank type="link" onClick={orderByRank}>
+          추천순
+        </OrderByRank>
+      </Order>
       <Container>
         {places &&
           places.map((place, idx) => (

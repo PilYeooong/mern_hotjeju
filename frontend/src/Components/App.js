@@ -9,16 +9,15 @@ import Auth from "../hoc/Auth";
 
 import Home from "../Pages/Home";
 import Search from "../Pages/Search";
-import AddPlace from "../Pages/AddPlace";
-import PlaceDetail from "../Pages/PlaceDetail";
+import AddPlace from "../Pages/Place/AddPlace";
+import PlaceDetail from "../Pages/Place/PlaceDetail";
 import Profile from "../Pages/Auth/Profile";
 import Login from "../Pages/Auth/Login";
 import Signup from "../Pages/Auth/Signup";
 import Header from "../Components/Header";
-import EditPlace from "../Pages/EditPlace";
+import EditPlace from "../Pages/Place/EditPlace";
 
-const Wrapper = styled.div`
-`;
+const Wrapper = styled.div``;
 
 function App() {
   return (
@@ -39,7 +38,11 @@ function App() {
               path="/place/:placeId"
               component={Auth(PlaceDetail, null)}
             />
-            <Route exact path="/place/:placeId/edit" component={Auth(EditPlace, true)} />
+            <Route
+              exact
+              path="/place/:placeId/edit"
+              component={Auth(EditPlace, true)}
+            />
           </Switch>
         </Wrapper>
       </Router>

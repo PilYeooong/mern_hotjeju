@@ -53,14 +53,25 @@ function Profile() {
       <PlaceList>
         {userInfo &&
           userInfo.wishList.map((place) => (
-            <WishList key={place._id} id={place._id} name={place.name} image={place.images[0]}/>
+            <WishList
+              key={place._id}
+              id={place._id}
+              name={place.name}
+              image={place.images[0]}
+            />
           ))}
       </PlaceList>
       <h4>업로드한 핫플</h4>
       <PlaceList>
         {userInfo &&
           userInfo.places.map((place) => (
-            <MyPlace key={place._id} id={place._id} name={place.name} image={place.images[0]} likeCount={place.likers.length} />
+            <MyPlace
+              key={place._id}
+              id={place._id}
+              name={place.name}
+              image={place.images[0]}
+              likeCount={place.likers.length}
+            />
           ))}
       </PlaceList>
     </Container>

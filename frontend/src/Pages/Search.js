@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 
-import Place from "../Components/Place";
+import Place from "../Components/Place/Place";
 import { useSelector } from "react-redux";
 
 const Container = styled.div`

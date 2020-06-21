@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import { SERVER } from "../Utils/api";
+import { SERVER } from "../../Utils/api";
 
 import styled from "styled-components";
 import { StarTwoTone } from "@ant-design/icons";
@@ -21,8 +21,7 @@ const PlaceBox = styled.div`
   height: 70%;
 `;
 
-const PlaceLink = styled(Link)`
-`;
+const PlaceLink = styled(Link)``;
 
 const Image = styled.img`
   width: 100%;

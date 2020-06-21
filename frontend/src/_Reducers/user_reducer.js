@@ -45,7 +45,9 @@ export default function (state = {}, action) {
         break;
       }
       case REMOVE_PLACE_SUCCESS: {
-        const index = draft.userInfo.places.findIndex((v, i) => v._id === action.data._id)
+        const index = draft.userInfo.places.findIndex(
+          (v, i) => v._id === action.data._id
+        );
         draft.userInfo.places.splice(index, 1);
         break;
       }
@@ -53,8 +55,10 @@ export default function (state = {}, action) {
         break;
       }
       case TOGGLE_WISH_SUCCESS: {
-        if (action.data.placeId){
-          const index = draft.userInfo.wishList.findIndex(v => v._id === action.data.placeId);
+        if (action.data.placeId) {
+          const index = draft.userInfo.wishList.findIndex(
+            (v) => v._id === action.data.placeId
+          );
           draft.userInfo.wishList.splice(index, 1);
           break;
         }
@@ -62,7 +66,7 @@ export default function (state = {}, action) {
       default:
         return {
           ...state,
-        }
+        };
     }
-  })
+  });
 }

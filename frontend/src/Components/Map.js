@@ -12,7 +12,7 @@ const Map = ({ name, address }) => {
     script.async = true;
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP}&libraries=services,clusterer&autoload=false`;
     document.head.appendChild(script);
-    
+
     script.onload = () => {
       const { kakao } = window;
       kakao.maps.load(() => {

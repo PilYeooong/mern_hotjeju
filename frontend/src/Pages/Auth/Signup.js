@@ -22,9 +22,8 @@ const SignupForm = styled(Form)`
 
 const HaveAccountBox = styled.div`
   width: 75%;
-  display:flex;
+  display: flex;
   justify-content: flex-end;
-
 `;
 
 const HaveAccount = styled.h5``;
