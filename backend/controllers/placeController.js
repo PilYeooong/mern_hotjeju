@@ -95,26 +95,33 @@ export const editPlace = async (req, res) => {
     body: { category, name, description, address, images },
   } = req;
   try {
-    const place = await Place.findByIdAndUpdate(id, {
-      name,
-      description,
-      address,
-      images,
-    });
+    const place = await Place.findById(id);
+    console.log(place.creator);
+    console.log(req.user._id);
+    if (!place) {
+      return res.status(404).send("핫플이 존재하지 않습니다.");
+    }
+    if (String(req.user._id) !== String(place.creator)) {
+      return res.status(401).send("권한이 없습니다.");
+    }
+    place.name = name;
+    place.description = description;
+    place.address = address;
+    place.images = images;
     const prevCategory = await Category.findById(place.category);
     const editCategory = await Category.findOne({ name: category });
-    if (place.category !== editCategory) {
+    if (String(place.category) !== String(editCategory)) {
       place.category = editCategory;
       editCategory.places.push(place._id);
       editCategory.save();
       prevCategory.places.pull(place._id);
       prevCategory.save();
-      place.save();
-    }
+    } 
+    place.save();
     return res.status(200).send(place);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ success: false, error });
+    res.status(400).send(error);
   }
 };
 
@@ -126,9 +133,8 @@ export const deletePlace = async (req, res) => {
     const place = await Place.findById(id);
     const category = await Category.findById(place.category);
     if (String(req.user._id) !== String(place.creator)) {
-      return res
-        .status(401)
-        .json({ success: false, message: "권한이 없습니다. " });
+      const message = "권한이 없습니다.";
+      return res.status(401).send(message);
     } else {
       await Place.findOneAndRemove({ _id: id });
       category.places.pull(place);

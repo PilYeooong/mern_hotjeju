@@ -35,4 +35,5 @@ placeRouter.post(routes.toggleLike(), isAuthenticated, toggleLike);
 
 //Wish
 placeRouter.post(routes.toggleWish(), isAuthenticated, toggleWish);
+
 export default placeRouter;
