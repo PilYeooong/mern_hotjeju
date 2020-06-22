@@ -8,6 +8,9 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
+  EDIT_NICKNAME_REQUEST,
+  EDIT_NICKNAME_SUCCESS,
+  EDIT_NICKNAME_FAILURE,
   TOGGLE_WISH_SUCCESS,
   REMOVE_PLACE_REQUEST,
   REMOVE_PLACE_SUCCESS,
@@ -40,6 +43,16 @@ export default function (state = {}, action) {
         return {
           ...state,
         };
+      }
+      case EDIT_NICKNAME_REQUEST: {
+        break;
+      }
+      case EDIT_NICKNAME_SUCCESS: {
+        draft.userInfo.nickname = action.data;
+        break;
+      }
+      case EDIT_NICKNAME_FAILURE: {
+        break;
       }
       case REMOVE_PLACE_REQUEST: {
         break;
