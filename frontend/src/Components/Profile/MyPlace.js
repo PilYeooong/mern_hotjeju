@@ -42,15 +42,10 @@ const PlaceInfo = styled.div`
 `;
 
 const Name = styled.div`
-  width: 60%;
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
-`;
-
-const Grade = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 40%;
+  justify-content: center;
+  overflow: hidden;
 `;
 
 const ButtonBox = styled.div`
@@ -91,10 +86,6 @@ function MyPlace({ id, name, image, likeCount }) {
         <Description>
           <PlaceInfo>
             <Name>{name}</Name>
-            <Grade>
-              <Star twoToneColor="#eb2f96" />
-              <LikeCount>{likeCount}</LikeCount>
-            </Grade>
           </PlaceInfo>
           <ButtonBox>
             <DeleteBtn onClick={onRemovePlace} />

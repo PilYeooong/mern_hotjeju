@@ -48,6 +48,12 @@ export default function (state = {}, action) {
         const index = draft.userInfo.places.findIndex(
           (v, i) => v._id === action.data._id
         );
+        const wishListIndex = draft.userInfo.wishList.findIndex(
+          (v, i) => v._id === action.data._id
+        );
+        if(wishListIndex !== -1){
+          draft.userInfo.wishList.splice(wishListIndex, 1);
+        }
         draft.userInfo.places.splice(index, 1);
         break;
       }

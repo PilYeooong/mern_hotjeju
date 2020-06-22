@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_USER_REQUEST } from "../../_Actions/types";
@@ -8,6 +7,7 @@ import styled from "styled-components";
 
 import MyPlace from "../../Components/Profile/MyPlace";
 import WishList from "../../Components/Profile/WishList";
+import EditNickName from "../../Components/Profile/EditNickName";
 
 const Container = styled.div`
   width: 80%;
@@ -23,6 +23,17 @@ const UserInfo = styled.div`
 const PlaceList = styled.div`
   display: flex;
   flex-wrap: wrap;
+  padding-top: 1rem;
+`;
+
+const WishedPlaces = styled.h4`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const UploadedPlaces = styled.h4`
+  font-size: 20px;
+  font-weight: bold;
   padding-top: 1rem;
 `;
 
@@ -42,14 +53,13 @@ function Profile() {
   return (
     <Container>
       <UserInfo>
-        {userInfo && (
+        {userInfo && userInfo.nickname && (
           <>
-            <h3>{userInfo.nickname}</h3>
-            <h3>{userInfo.email}</h3>
+            <EditNickName userInfo={userInfo} />
           </>
         )}
       </UserInfo>
-      <h4>찜한 핫플</h4>
+      <WishedPlaces>찜한 핫플</WishedPlaces>
       <PlaceList>
         {userInfo &&
           userInfo.wishList.map((place) => (
@@ -61,7 +71,7 @@ function Profile() {
             />
           ))}
       </PlaceList>
-      <h4>업로드한 핫플</h4>
+      <UploadedPlaces>업로드한 핫플</UploadedPlaces>
       <PlaceList>
         {userInfo &&
           userInfo.places.map((place) => (
@@ -78,8 +88,5 @@ function Profile() {
   );
 }
 
-Profile.propTypes = {
-  userId: PropTypes.string.isRequired,
-};
 
 export default Profile;

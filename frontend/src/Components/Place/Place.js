@@ -35,15 +35,17 @@ const Description = styled.div`
 `;
 
 const Name = styled.div`
-  width: 60%;
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  overflow: hidden;
 `;
 
 const Grade = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
-  width: 40%;
+  justify-content: center;
+  font-size: 20px;
 `;
 
 const Star = styled(StarTwoTone)`
@@ -60,11 +62,11 @@ function Place({ id, name, image, likeCount }) {
         </PlaceLink>
         <Description>
           <Name>{name}</Name>
-          <Grade>
+        </Description>
+        <Grade>
             <Star twoToneColor="#eb2f96" />
             <LikeCount>{likeCount}</LikeCount>
           </Grade>
-        </Description>
       </PlaceBox>
     </Container>
   );

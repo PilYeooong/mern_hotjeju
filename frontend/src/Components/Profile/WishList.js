@@ -40,10 +40,11 @@ const Description = styled.div`
 `;
 
 const Name = styled.div`
-  width: 60%;
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   margin-bottom: 1rem;
+  overflow: hidden;
 `;
 
 function WishList({ id, name, image }) {
