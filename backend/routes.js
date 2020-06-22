@@ -13,6 +13,7 @@ const LOGIN = "/login";
 const LOGOUT = "/logout";
 const AUTHENTICATE = "/authenticate";
 const LOAD_USER = "/:id";
+const EDIT_NICKNAME = "/:id/nickname";
 
 // Places
 
@@ -54,6 +55,13 @@ const routes = {
       return `/${id}`;
     } else {
       return LOAD_USER;
+    }
+  },
+  editNickName: (id) => {
+    if (id) {
+      return `/${id}/nickname`;
+    } else {
+      return EDIT_NICKNAME;
     }
   },
   images: IMAGES,

@@ -89,3 +89,22 @@ export const loadUser = async (req, res, next) => {
     console.error(e);
   }
 };
+
+export const editNickName = async (req, res, next) => {
+  const {
+    params: { id },
+    body: { nickname },
+  } = req;
+  try {
+    const user = await User.findByIdAndUpdate(id, { nickname });
+    if(!user) {
+      res.status(400).send("잘못된 접근입니다.")
+    }
+    user.save();
+    // user send 할 경우 이전 유저 데이터가 response 됨
+    res.status(200).send(req.body.nickname);
+  } catch(e){
+    console.error(e);
+    next(e);
+  }
+}
