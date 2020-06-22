@@ -24,12 +24,6 @@ const SearchResult = styled.div`
 function Search() {
   const { places } = useSelector((state) => state.place);
 
-  useEffect(() => {
-    if (places) {
-      console.log(places.length);
-    }
-  }, [places]);
-
   return (
     <div>
       <Helmet>
@@ -43,6 +37,7 @@ function Search() {
               id={place._id}
               name={place.name}
               image={place.images[0]}
+              likeCount={place.likersLength}
             />
           ))
         ) : (

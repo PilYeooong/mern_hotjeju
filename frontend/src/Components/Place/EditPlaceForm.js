@@ -22,9 +22,25 @@ const PlaceForm = styled(Form)`
   width: 100%;
 `;
 
+const ImageForm = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const ImageUpload = styled.div`
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content:flex-end;
+`;
+
 const ImageContainer = styled.div`
   width: 100px;
   height: 100px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
   margin-bottom: 3rem;
 `;
 
@@ -36,7 +52,6 @@ const Image = styled.img`
 const { Option } = Select;
 
 const EditPlaceForm = ({ place }) => {
-  const imageInput = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -51,10 +66,12 @@ const EditPlaceForm = ({ place }) => {
     });
   };
 
-  // const onClickImageUpload = useCallback(() => {
-  //   // 이 function이 실행될때 imageInput이 클릭되도록
-  //   imageInput.current.click();
-  // }, [imageInput.current]);
+  const imageInput = useRef();
+
+  const onClickImageUpload = useCallback(() => {
+    // 이 function이 실행될때 imageInput이 클릭되도록
+    imageInput.current.click();
+  }, [imageInput.current]);
 
   const onRemoveImage = useCallback(
     (index) => () => {
@@ -77,6 +94,10 @@ const EditPlaceForm = ({ place }) => {
       formData.append("images", i);
     });
     try {
+      if(place.images.length === 0){
+        alert("최소 하나의 사진은 있어야합니다.");
+        return;
+      }
       dispatch({
         type: EDIT_PLACE_REQUEST,
         data: {
@@ -127,6 +148,27 @@ const EditPlaceForm = ({ place }) => {
           >
             <Input />
           </Form.Item>
+          <ImageForm>
+            {place.images &&
+              place.images.map((image, i) => (
+                <ImageContainer>
+                  <Image src={`http://localhost:5000/${image}`} alt="" />
+                  <Button type="danger"onClick={onRemoveImage(i)}>삭제</Button>
+                </ImageContainer>
+              ))}
+          </ImageForm>
+          <ImageUpload>
+            <Button type="primary" onClick={onClickImageUpload}>이미지 업로드</Button>
+          </ImageUpload>
+          <Form.Item rules={[ { required: true } ]}>
+            <input
+              type="file"
+              multiple
+              ref={imageInput}
+              hidden
+              onChange={onChangeImage}
+            />
+          </Form.Item>
 
           <Form.Item
             label="Description"
@@ -146,21 +188,6 @@ const EditPlaceForm = ({ place }) => {
             initialValue={place.address}
           >
             <Input />
-          </Form.Item>
-          {place.images &&
-            place.images.map((image, i) => (
-              <ImageContainer>
-                <Image src={`http://localhost:5000/${image}`} alt="" />
-                <Button onClick={onRemoveImage(i)}>삭제</Button>
-              </ImageContainer>
-            ))}
-          <Form.Item>
-            <Input
-              type="file"
-              multiple
-              ref={imageInput}
-              onChange={onChangeImage}
-            />
           </Form.Item>
 
           <Form.Item {...tailLayout}>

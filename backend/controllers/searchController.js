@@ -7,7 +7,7 @@ export const searchPlace = async (req, res, next) => {
   try {
     const result = await Place.find(
       { name: { $regex: decodeURIComponent(place) } },
-      { name: true, images: true }
+      { name: true, images: true, likers: true, likersLength: true }
     );
     return res.status(200).send(result);
   } catch (e) {
