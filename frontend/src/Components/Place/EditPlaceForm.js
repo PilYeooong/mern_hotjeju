@@ -158,6 +158,7 @@ const EditPlaceForm = ({ place }) => {
               ))}
           </ImageForm>
           <ImageUpload>
+            {place.images.length === 0 && <div>사진은 필수 항목 입니다.</div>}
             <Button type="primary" onClick={onClickImageUpload}>이미지 업로드</Button>
           </ImageUpload>
           <Form.Item rules={[ { required: true } ]}>
