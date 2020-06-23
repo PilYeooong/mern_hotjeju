@@ -25,7 +25,9 @@ export const addPlace = async (req, res, next) => {
   req.user.save();
   files.map(async (file) => {
     place.images.push(file.path);
+    // place.images.push(file.location); // S3
     await new Image({ src: file.path, placeId: place.id }).save();
+    // await new Image({ src: file.location, placeId: place.id }).save();
   });
   place.save((err, placeInfo) => {
     if (err) {

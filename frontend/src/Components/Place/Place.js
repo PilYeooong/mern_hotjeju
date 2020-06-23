@@ -59,6 +59,7 @@ function Place({ id, name, image, likeCount }) {
       <PlaceBox>
         <PlaceLink to={`/place/${id}`} params={{ placeId: 1 }}>
           <Image src={`${SERVER}/${image}`} />
+          {/* <Image src={`${image}`} />  */}
         </PlaceLink>
         <Description>
           <Name>{name}</Name>

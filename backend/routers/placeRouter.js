@@ -1,7 +1,7 @@
 import express from "express";
 import routes from "../routes";
 import { isAuthenticated, checkAuth } from "../middlewares/isAuthenticated";
-import { uploadPlace, updatePlace } from "../middlewares/upload";
+import { uploadPlace, updatePlace, uploadS3 } from "../middlewares/upload";
 import {
   addPlace,
   allPlaces,
@@ -19,6 +19,7 @@ const placeRouter = express.Router();
 placeRouter.get(routes.home, allPlaces);
 placeRouter.get(routes.placeDetail(), checkAuth, placeDetail);
 placeRouter.post(routes.addPlace, isAuthenticated, uploadPlace, addPlace);
+// placeRouter.post(routes.addPlace, isAuthenticated, uploadS3.array("images"), addPlace);
 placeRouter.post(routes.editPlace(), isAuthenticated, updatePlace, editPlace);
 placeRouter.post(routes.deletePlace(), isAuthenticated, deletePlace);
 
