@@ -48,7 +48,7 @@ function* loadPlaces() {
     const result = yield call(loadPlacesAPI);
     yield put({
       type: LOAD_MAIN_PLACES_SUCCESS,
-      data: result.data.places,
+      data: result.data,
     });
   } catch (e) {
     console.error(e);
@@ -74,7 +74,7 @@ function* categorizedPlace(action) {
     const result = yield call(categorizedPlaceAPI, action.data);
     yield put({
       type: LOAD_CATEGORIZED_PLACES_SUCCESS,
-      data: result.data.places,
+      data: result.data
     });
   } catch (e) {
     console.error(e);
@@ -99,7 +99,7 @@ function* addPlace(action) {
     const result = yield call(addPlaceAPI, action.data);
     yield put({
       type: ADD_PLACE_SUCCESS,
-      data: result.data.placeInfo,
+      data: result.data
     });
   } catch (e) {
     console.error(e);
@@ -210,7 +210,6 @@ function toggleLikeAPI(data) {
 function* toggleLike(action) {
   try {
     const result = yield call(toggleLikeAPI, action.data);
-    console.log(result);
     yield put({
       type: TOGGLE_LIKE_SUCCESS,
       data: result.data.likeResult,
