@@ -61,13 +61,7 @@ const EditBtn = styled(EditOutlined)`
   cursor: pointer;
 `;
 
-const Star = styled(StarTwoTone)`
-  margin-right: 0.5rem;
-`;
-
-const LikeCount = styled.div``;
-
-function MyPlace({ id, name, image, likeCount }) {
+function MyPlace({ id, name, image }) {
   const dispatch = useDispatch();
 
   const onRemovePlace = () => {
@@ -76,7 +70,6 @@ function MyPlace({ id, name, image, likeCount }) {
       data: id,
     });
   };
-
   return (
     <Container>
       <PlaceBox>
@@ -103,7 +96,6 @@ MyPlace.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  likeCount: PropTypes.number.isRequired,
 };
 
 export default MyPlace;

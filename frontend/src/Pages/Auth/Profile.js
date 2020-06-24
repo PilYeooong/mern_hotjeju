@@ -80,7 +80,7 @@ function Profile() {
               id={place._id}
               name={place.name}
               image={place.images[0]}
-              likeCount={place.likers.length}
+              creator={userInfo._id}
             />
           ))}
       </PlaceList>

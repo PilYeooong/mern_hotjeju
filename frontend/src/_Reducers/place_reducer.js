@@ -103,6 +103,7 @@ export default function (state = initialState, action) {
           ...state,
           placeDetail: {
             ...action.data.place,
+            creator: action.data.place.creator._id,
             isLiked: action.data.isLiked,
             isWished: action.data.isWished,
           },
