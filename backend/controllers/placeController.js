@@ -10,9 +10,7 @@ export const addPlace = async (req, res, next) => {
   } = req;
   const placeCategory = await Category.findOne({ name: category });
   if (!placeCategory) {
-    return res
-      .status(400)
-      .json({ success: false, message: "존재하지 않는 카테고리입니다. " });
+    return res.status(404).send("존재하지 않는 카테고리입니다.");
   }
   const place = await new Place({
     category: placeCategory._id,
@@ -31,12 +29,9 @@ export const addPlace = async (req, res, next) => {
   });
   place.save((err, placeInfo) => {
     if (err) {
-      return res.json({ success: false, err });
+      return res.status(400).send("잘못된 요청입니다.");
     }
-    return res.status(200).json({
-      success: true,
-      placeInfo,
-    });
+    return res.status(200).send(placeInfo);
   });
   placeCategory.places.push(place.id);
   placeCategory.save();
@@ -50,16 +45,16 @@ export const allPlaces = async (req, res) => {
       const places = await Place.find({})
         .select("name images likers likersLength")
         .sort({ likersLength: -1 });
-      return res.json({ places });
+      return res.status(200).send(places);
     } else {
       const places = await Place.find({})
         .select("name images likers")
         .sort({ _id: -1 }); // 최신순 배치
-      return res.json({ places });
+      return res.status(200).send(places);
     }
   } catch (error) {
     console.error(error);
-    return res.json({ success: false, error });
+    return res.status(400).send("잘못된 요청입니다.");
   }
 };
 
@@ -85,9 +80,7 @@ export const placeDetail = async (req, res) => {
     res.status(200).json({ place, isLiked, isWished });
   } catch (error) {
     console.log(error);
-    return res
-      .status(404)
-      .json({ success: false, message: "유효하지 않은 접근입니다.", error });
+    return res.status(400).send("잚못된 요청입니다.");
   }
 };
 
@@ -98,8 +91,6 @@ export const editPlace = async (req, res) => {
   } = req;
   try {
     const place = await Place.findById(id);
-    console.log(place.creator);
-    console.log(req.user._id);
     if (!place) {
       return res.status(404).send("핫플이 존재하지 않습니다.");
     }
@@ -118,12 +109,12 @@ export const editPlace = async (req, res) => {
       editCategory.save();
       prevCategory.places.pull(place._id);
       prevCategory.save();
-    } 
+    }
     place.save();
     return res.status(200).send(place);
   } catch (error) {
     console.log(error);
-    res.status(400).send(error);
+    res.status(400).send("잘못된 요청입니다.");
   }
 };
 
@@ -133,10 +124,12 @@ export const deletePlace = async (req, res) => {
   } = req;
   try {
     const place = await Place.findById(id);
+    if (!place) {
+      return res.status(404).send("요청에 해당하는 장소가 없습니다.");
+    }
     const category = await Category.findById(place.category);
     if (String(req.user._id) !== String(place.creator)) {
-      const message = "권한이 없습니다.";
-      return res.status(401).send(message);
+      return res.status(401).send("삭제 권한이 없습니다.");
     } else {
       await Place.findOneAndRemove({ _id: id });
       category.places.pull(place);
@@ -146,9 +139,7 @@ export const deletePlace = async (req, res) => {
       return res.status(200).send(place);
     }
   } catch (error) {
-    return res
-      .status(404)
-      .json({ success: false, message: "유효한 주소가 아닙니다." });
+    return res.status(400).send("잘못된 요청입니다.");
   }
 };
 
@@ -162,10 +153,10 @@ export const categorizedPlace = async (req, res, next) => {
       "name images likers likersLength"
     );
     const places = categorized.places;
-    return res.status(200).json({ places });
+    return res.status(200).send(places);
   } catch (e) {
     console.error(e);
-    return res.status(404).json({ success: false, e });
+    return res.status(400).send("잘못된 요청입니다.");
   }
 };
 
@@ -187,6 +178,6 @@ export const toggleWish = async (req, res, next) => {
     }
   } catch (e) {
     console.error(e);
-    return res.status(400).send(e);
+    return res.status(400).send("잘못된 요청입니다.");
   }
 };

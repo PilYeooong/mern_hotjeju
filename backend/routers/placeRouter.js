@@ -31,7 +31,6 @@ placeRouter.post(routes.newComment(), isAuthenticated, newComment);
 placeRouter.get(routes.commentList(), getComments);
 
 // Like
-placeRouter.post(routes.likes(), checkAuth, getLikes);
 placeRouter.post(routes.toggleLike(), isAuthenticated, toggleLike);
 
 //Wish

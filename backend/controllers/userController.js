@@ -87,6 +87,7 @@ export const loadUser = async (req, res, next) => {
     res.status(200).send(user);
   } catch (e) {
     console.error(e);
+    return res.status(400).send("잘못된 요청입니다.");
   }
 };
 
@@ -105,6 +106,6 @@ export const editNickName = async (req, res, next) => {
     res.status(200).send(req.body.nickname);
   } catch(e){
     console.error(e);
-    next(e);
+    return res.status(400).send("잘못된 요청입니다.");
   }
 }
