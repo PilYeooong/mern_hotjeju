@@ -12,7 +12,7 @@ import {
   toggleWish,
 } from "../controllers/placeController";
 import { newComment, getComments } from "../controllers/commentController";
-import { toggleLike, getLikes } from "../controllers/likeController";
+import { toggleLike } from "../controllers/likeController";
 
 const placeRouter = express.Router();
 

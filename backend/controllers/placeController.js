@@ -2,6 +2,7 @@ import { Place } from "../models/Place";
 import { Category } from "../models/Category";
 import { Image } from "../models/Image";
 import { User } from "../models/User";
+import { Hashtag } from "../models/Hashtag";
 
 export const addPlace = async (req, res, next) => {
   const {
@@ -27,14 +28,45 @@ export const addPlace = async (req, res, next) => {
     await new Image({ src: file.path, placeId: place.id }).save();
     // await new Image({ src: file.location, placeId: place.id }).save();
   });
-  place.save((err, placeInfo) => {
-    if (err) {
-      return res.status(400).send("잘못된 요청입니다.");
-    }
-    return res.status(200).send(placeInfo);
-  });
+
   placeCategory.places.push(place.id);
   placeCategory.save();
+
+  const hashtags = description.match(/#[^\s]+/g);
+  if (hashtags) {
+    hashtags.map(async (tag) => {
+      await Hashtag.find({ name: tag.slice(1).toLowerCase() }).exec(
+        async (err, hashtag) => {
+          if (err) {
+            console.error(err);
+            return res.status(400).send("잘못된 요청입니다.");
+          }
+          if (hashtag.length === 0) {
+            try {
+              const newHashtag = await new Hashtag({
+                name: tag.slice(1).toLowerCase(),
+                places: place._id,
+              }).save();
+            } catch (e) {
+              console.error(e);
+            }
+          } else {
+            hashtag[0].places.push(place._id);
+            hashtag[0].save();
+          }
+        }
+      );
+    });
+    place.save();
+    return res.status(200).send(place);
+  } else {
+    place.save((err, place) => {
+      if (err) {
+        return res.status(400).send("잘못된 요청입니다.");
+      }
+      return res.status(200).send(place);
+    });
+  }
 };
 
 export const allPlaces = async (req, res) => {
