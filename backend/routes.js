@@ -26,6 +26,10 @@ const PLACE_DELETE = "/:id/delete";
 const SEARCH = `${API}/search`;
 const SEARCH_PLACE = "/:place";
 
+// Hashtag
+const HASHTAG = `${API}/hashtag/`;
+const SEARCH_HASHTAG = "/:tag";
+
 const CATEGORY = `${API}/category`;
 const CATEGORIZED_PLACE = "/:category";
 
@@ -133,6 +137,14 @@ const routes = {
       return SEARCH_PLACE;
     }
   },
+  hashtag: HASHTAG,
+  searchHashtag: (tag) => {
+    if(tag){
+      return `/${tag}`;
+    } else {
+      return SEARCH_HASHTAG;
+    }
+  }
 };
 
 export default routes;

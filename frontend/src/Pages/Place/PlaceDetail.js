@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
+import styled from "styled-components";
 import {
   LOAD_PLACE_DETAIL_REQUEST,
   TOGGLE_LIKE_REQUEST,
   TOGGLE_WISH_REQUEST,
+  SEARCH_HASHTAG_REQUEST,
 } from "../../_Actions/types";
 import { Card } from "antd";
 import {
@@ -82,6 +85,14 @@ function PlaceDetail(props) {
     });
   };
 
+const onClickHashtag = (tag) => () => {
+    dispatch({
+      type: SEARCH_HASHTAG_REQUEST,
+      data: encodeURIComponent(tag.slice(1)),
+    })
+    props.history.push(`/search/${tag.slice(1)}`);
+  }
+
   return (
     <>
       <Helmet>
@@ -114,7 +125,16 @@ function PlaceDetail(props) {
               >
                 <Card.Meta
                   title={placeDetail.name}
-                  description={placeDetail.description}
+                  description={placeDetail.description.split(/(#[^\s]+)/g).map((tag) => {
+                    if (tag.match(/#[^\s]+/g)) {
+                      return (
+                        <Link onClick={onClickHashtag(tag)}>
+                          <a>{tag}</a>
+                        </Link>
+                      );
+                    }
+                    return tag;
+                  })}
                 />
                 <PlaceAddress>주소 - {placeDetail.address}</PlaceAddress>
               </PlaceCard>

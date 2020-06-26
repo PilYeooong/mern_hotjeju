@@ -16,6 +16,7 @@ import Login from "../Pages/Auth/Login";
 import Signup from "../Pages/Auth/Signup";
 import Header from "../Components/Header";
 import EditPlace from "../Pages/Place/EditPlace";
+import Hashtag from "../Pages/Hashtag";
 
 const Wrapper = styled.div``;
 
@@ -29,6 +30,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Auth(Home, null)} />
             <Route exact path="/search/:place" component={Auth(Search, null)} />
+            <Route exact path="/hashtag/:tag" component={Auth(Hashtag, null)} />
             <Route exact path="/profile" component={Auth(Profile, null)} />
             <Route exact path="/accounts/login" component={Login} />
             <Route exact path="/accounts/signup" component={Signup} />

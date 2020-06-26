@@ -21,7 +21,7 @@ const SearchResult = styled.div`
   text-align: center;
 `;
 
-function Search() {
+const Hashtag = () => {
   const { places } = useSelector((state) => state.place);
 
   return (
@@ -48,4 +48,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default Hashtag

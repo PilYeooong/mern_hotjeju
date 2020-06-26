@@ -36,6 +36,9 @@ import {
   EDIT_PLACE_SUCCESS,
   EDIT_PLACE_FAILURE,
   REMOVE_IMAGE,
+  SEARCH_HASHTAG_REQUEST,
+  SEARCH_HASHTAG_SUCCESS,
+  SEARCH_HASHTAG_FAILURE,
 } from "../_Actions/types";
 
 const initialState = {
@@ -124,6 +127,17 @@ export default function (state = initialState, action) {
         break;
       }
       case SEARCH_PLACE_FAILURE: {
+        break;
+      }
+      case SEARCH_HASHTAG_REQUEST: {
+        break;
+      }
+      case SEARCH_HASHTAG_SUCCESS: {
+        draft.places = action.data;
+        draft.placeDetail = null;
+        break;
+      }
+      case SEARCH_HASHTAG_FAILURE: {
         break;
       }
       case ADD_COMMENT_REQUEST: {
@@ -221,7 +235,6 @@ export default function (state = initialState, action) {
       case EDIT_PLACE_FAILURE: {
         break;
       }
-
       case REMOVE_IMAGE: {
         const index = draft.placeDetail.images.findIndex(
           (v, i) => i == action.index

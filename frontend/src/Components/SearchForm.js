@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 
 import { useDispatch } from "react-redux";
-import { SEARCH_PLACE_REQUEST } from "../_Actions/types";
+import { SEARCH_PLACE_REQUEST, SEARCH_HASHTAG_REQUEST } from "../_Actions/types";
 
 import styled from "styled-components";
 import { Input } from "antd";
@@ -28,11 +28,20 @@ const SearchForm = ({ history }) => {
   const onSubmitSearch = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch({
-        type: SEARCH_PLACE_REQUEST,
-        data: encodeURIComponent(searchValue),
-      });
-      history.push(`/search/${searchValue}`);
+      const isHashtag = searchValue.match(/#[^\s]+/g);
+      if (isHashtag) {
+        dispatch({
+          type: SEARCH_HASHTAG_REQUEST,
+          data: encodeURIComponent(searchValue.slice(1)),
+        });
+        history.push(`/search/${searchValue.slice(1)}`);
+      } else {
+        dispatch({
+          type: SEARCH_PLACE_REQUEST,
+          data: encodeURIComponent(searchValue),
+        });
+        history.push(`/search/${searchValue}`);
+      }
       SetSearchValue("");
     },
     [searchValue]

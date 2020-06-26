@@ -35,6 +35,9 @@ import {
   REMOVE_PLACE_REQUEST,
   REMOVE_PLACE_SUCCESS,
   REMOVE_PLACE_FAILURE,
+  SEARCH_HASHTAG_REQUEST,
+  SEARCH_HASHTAG_SUCCESS,
+  SEARCH_HASHTAG_FAILURE,
 } from "../_Actions/types";
 import Axios from "axios";
 
@@ -74,7 +77,7 @@ function* categorizedPlace(action) {
     const result = yield call(categorizedPlaceAPI, action.data);
     yield put({
       type: LOAD_CATEGORIZED_PLACES_SUCCESS,
-      data: result.data
+      data: result.data,
     });
   } catch (e) {
     console.error(e);
@@ -99,7 +102,7 @@ function* addPlace(action) {
     const result = yield call(addPlaceAPI, action.data);
     yield put({
       type: ADD_PLACE_SUCCESS,
-      data: result.data
+      data: result.data,
     });
   } catch (e) {
     console.error(e);
@@ -256,6 +259,33 @@ function* watchSearchPlace() {
 
 // -----------------------------------------------------------------------
 
+function searchHashtagAPI(tag) {
+  return Axios.get(`/hashtag/${tag}/`);
+}
+
+function* searchHashtag(action) {
+  try {
+    const result = yield call(searchHashtagAPI, action.data);
+    console.log(result.data);
+    yield put({
+      type: SEARCH_HASHTAG_SUCCESS,
+      data: result.data.length !== 0 ? result.data[0].places : []
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: SEARCH_HASHTAG_FAILURE,
+      error: e,
+    });
+  }
+}
+
+function* watchSearchHashtag() {
+  yield takeLatest(SEARCH_HASHTAG_REQUEST, searchHashtag);
+}
+
+// -----------------------------------------------------------------------
+
 function toggleWishAPI(data) {
   return Axios.post(`/places/${data.placeId}/togglewish/`, {
     isWished: data.isWished,
@@ -350,6 +380,7 @@ export default function* placeSaga() {
     fork(watchToggleLike),
     fork(watchToggleWish),
     fork(watchSearchPlace),
+    fork(watchSearchHashtag),
     fork(watchEditPlace),
     fork(watchRemovePlace),
   ]);
