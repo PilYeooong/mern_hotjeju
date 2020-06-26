@@ -133,6 +133,32 @@ export const editPlace = async (req, res) => {
     place.description = description;
     place.address = address;
     place.images = images;
+    const hashtags = description.match(/#[^\s]+/g);
+    if (hashtags) {
+      hashtags.map(async (tag) => {
+        await Hashtag.find({ name: tag.slice(1).toLowerCase() }).exec(
+          async (err, hashtag) => {
+            if (err) {
+              console.error(err);
+              return res.status(400).send("잘못된 요청입니다.");
+            }
+            if (hashtag.length === 0) {
+              try {
+                const newHashtag = await new Hashtag({
+                  name: tag.slice(1).toLowerCase(),
+                  places: place._id,
+                }).save();
+              } catch (e) {
+                console.error(e);
+              }
+            } else {
+              hashtag[0].places.push(place._id);
+              hashtag[0].save();
+            }
+          }
+        );
+      });
+    }
     const prevCategory = await Category.findById(place.category);
     const editCategory = await Category.findOne({ name: category });
     if (String(place.category) !== String(editCategory)) {
