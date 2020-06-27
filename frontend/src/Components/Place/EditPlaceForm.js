@@ -3,8 +3,10 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
-import { Form, Input, Button, Select } from "antd";
-import { useDispatch } from "react-redux";
+import { Form, Input, Button, Select, notification } from "antd";
+import { SmileOutlined } from "@ant-design/icons";
+
+import { useDispatch, useSelector } from "react-redux";
 import {
   UPLOAD_IMAGES_REQUEST,
   EDIT_PLACE_REQUEST,
@@ -54,6 +56,7 @@ const { Option } = Select;
 const EditPlaceForm = ({ place }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { isEditingPost } = useSelector(state => state.place);
 
   const onChangeImage = (e) => {
     const imageFormData = new FormData();
@@ -105,7 +108,13 @@ const EditPlaceForm = ({ place }) => {
           formData: formData,
         },
       });
-      history.push(`/place/${place._id}`);
+      setTimeout(() => {
+        history.push(`/place/${place._id}`);
+        notification.open({
+          message: "수정 완료",
+          icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+        })
+      }, 1500);
     } catch (e) {
       console.error(e);
     }
@@ -192,8 +201,8 @@ const EditPlaceForm = ({ place }) => {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button type="primary" htmlType="submit" loading={isEditingPost}>
+              수정하기
             </Button>
           </Form.Item>
         </PlaceForm>

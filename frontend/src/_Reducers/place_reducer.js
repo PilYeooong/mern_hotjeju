@@ -44,6 +44,7 @@ import {
 const initialState = {
   places: [],
   isAddingPost: false,
+  isEditingPost: false,
   placeDetail: {
     Comments: [],
     hasMoreComments: false,
@@ -226,13 +227,16 @@ export default function (state = initialState, action) {
         break;
       }
       case EDIT_PLACE_REQUEST: {
+        draft.isEditingPost = true;
         break;
       }
       case EDIT_PLACE_SUCCESS: {
         draft.placeDetail = action.data;
+        draft.isEditingPost = false;
         break;
       }
       case EDIT_PLACE_FAILURE: {
+        draft.isEditingPost = false;
         break;
       }
       case REMOVE_IMAGE: {
