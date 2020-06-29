@@ -143,7 +143,7 @@ export const editPlace = async (req, res) => {
             }
             if (hashtag.length === 0) {
               try {
-                const newHashtag = await new Hashtag({
+                await new Hashtag({
                   name: tag.slice(1).toLowerCase(),
                   places: place._id,
                 }).save();
@@ -151,8 +151,10 @@ export const editPlace = async (req, res) => {
                 console.error(e);
               }
             } else {
-              hashtag[0].places.push(place._id);
-              hashtag[0].save();
+              if (!hashtag[0].places.includes(place._id)) {
+                hashtag[0].places.push(place._id);
+                hashtag[0].save();
+              }
             }
           }
         );
