@@ -190,6 +190,7 @@ export const deletePlace = async (req, res) => {
       return res.status(401).send("삭제 권한이 없습니다.");
     } else {
       await Place.findOneAndRemove({ _id: id });
+      await Image.deleteMany({ placeId: id });
       category.places.pull(place);
       category.save();
       req.user.places.pull(place);
