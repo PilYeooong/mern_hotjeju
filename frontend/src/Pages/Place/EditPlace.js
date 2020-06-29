@@ -23,7 +23,8 @@ const EditPlace = (props) => {
       if(userData._id !== placeDetail.creator){
         notification.open({
           message: "접근 권한이 없습니다.",
-          icon: <FrownOutlined />
+          icon: <FrownOutlined />,
+          placement: 'bottomRight',
         })
         props.history.push('/');
       }

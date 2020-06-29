@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { getBase64FromFile } from "../../Utils/base64";
 import { useHistory } from "react-router-dom";
 
-import { Form, Input, Button, Upload, Modal, Select } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Upload, Modal, Select, notification } from "antd";
+import { PlusOutlined, SmileOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { ADD_PLACE_REQUEST } from "../../_Actions/types";
 
@@ -66,6 +66,11 @@ function AddPlaceForm() {
       dispatch({
         type: ADD_PLACE_REQUEST,
         data: formData,
+      });
+      notification.open({
+        message: "핫플 추가 완료 !",
+        icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+        placement: 'bottomRight',
       });
       history.push("/");
     } catch (error) {

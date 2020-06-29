@@ -1,24 +1,25 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
-import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import {
   LOAD_PLACE_DETAIL_REQUEST,
   TOGGLE_LIKE_REQUEST,
   TOGGLE_WISH_REQUEST,
   SEARCH_HASHTAG_REQUEST,
 } from "../../_Actions/types";
-import { Card } from "antd";
+
+import { Card, notification } from "antd";
 import {
+  SmileOutlined,
   LikeOutlined,
   LikeFilled,
   HeartOutlined,
   HeartTwoTone,
 } from "@ant-design/icons";
-import { SERVER } from "../../Utils/api";
+import styled from "styled-components";
 
+import { SERVER } from "../../Utils/api";
 import CommentList from "../../Components/Comment/CommentList";
 import Map from "../../Components/Map";
 
@@ -57,6 +58,7 @@ function PlaceDetail(props) {
     },
   } = props;
   const dispatch = useDispatch();
+  const { userData } = useSelector((state) => state.user);
   const { placeDetail } = useSelector((state) => state.place);
   useEffect(() => {
     dispatch({
@@ -66,6 +68,14 @@ function PlaceDetail(props) {
   }, []);
 
   const toggleLike = () => {
+    if (userData && !userData.isAuth) {
+      notification.open({
+        message: "로그인이 필요합니다",
+        icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+        placement: 'bottomRight',
+      });
+      return ;
+    }
     dispatch({
       type: TOGGLE_LIKE_REQUEST,
       data: {
@@ -76,6 +86,14 @@ function PlaceDetail(props) {
   };
 
   const toggleWish = () => {
+    if (userData && !userData.isAuth) {
+      notification.open({
+        message: "로그인이 필요합니다",
+        icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+        placement: 'bottomRight',
+      });
+      return ;
+    }
     dispatch({
       type: TOGGLE_WISH_REQUEST,
       data: {
@@ -85,13 +103,13 @@ function PlaceDetail(props) {
     });
   };
 
-const onClickHashtag = (tag) => () => {
+  const onClickHashtag = (tag) => () => {
     dispatch({
       type: SEARCH_HASHTAG_REQUEST,
       data: encodeURIComponent(tag.slice(1)),
-    })
+    });
     props.history.push(`/search/${tag.slice(1)}`);
-  }
+  };
 
   return (
     <>
@@ -125,16 +143,18 @@ const onClickHashtag = (tag) => () => {
               >
                 <Card.Meta
                   title={placeDetail.name}
-                  description={placeDetail.description.split(/(#[^\s]+)/g).map((tag) => {
-                    if (tag.match(/#[^\s]+/g)) {
-                      return (
-                        <Link onClick={onClickHashtag(tag)}>
-                          <a>{tag}</a>
-                        </Link>
-                      );
-                    }
-                    return tag;
-                  })}
+                  description={placeDetail.description
+                    .split(/(#[^\s]+)/g)
+                    .map((tag) => {
+                      if (tag.match(/#[^\s]+/g)) {
+                        return (
+                          <Link onClick={onClickHashtag(tag)}>
+                            <a>{tag}</a>
+                          </Link>
+                        );
+                      }
+                      return tag;
+                    })}
                 />
                 <PlaceAddress>주소 - {placeDetail.address}</PlaceAddress>
               </PlaceCard>

@@ -44,6 +44,7 @@ function Signup(props) {
           message: "회원가입 성공",
           description: "로그인 페이지로 이동합니다.",
           icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+          placement: 'bottomRight',
         });
         props.history.push("/accounts/login");
       } else if (response.payload.message) {
@@ -52,12 +53,14 @@ function Signup(props) {
           message: "회원가입 실패",
           description: `${error}`,
           icon: <FrownOutlined style={{ color: "#ff3333" }} />,
+          placement: 'bottomRight',
         });
       } else {
         notification.open({
           message: "회원가입 실패",
           description: "이메일/암호를 확인해주세요.",
           icon: <FrownOutlined style={{ color: "#ff3333" }} />,
+          placement: 'bottomRight',
         });
       }
     });

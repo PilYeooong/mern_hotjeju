@@ -18,6 +18,13 @@ const MoreButton = styled(Button)`
   margin-bottom: 1rem;
 `;
 
+const Warning = styled.div`
+  color: red;
+  font-weight: bold;
+  margin-top: 2rem;
+  padding: 2rem 0;
+`;
+
 const CommentList = () => {
   const dispatch = useDispatch();
   const { placeDetail } = useSelector((state) => state.place);
@@ -41,7 +48,11 @@ const CommentList = () => {
           더 보기
         </MoreButton>
       )}
-      {userData && userData.isAuth && <CommentForm placeId={placeDetail._id} />}
+      {userData && userData.isAuth ? (
+        <CommentForm placeId={placeDetail._id} />
+      ) : (
+        <Warning>댓글 작성은 로그인이 필요합니다. </Warning>
+      )}
     </CommentBox>
   );
 };

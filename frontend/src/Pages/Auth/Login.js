@@ -42,6 +42,7 @@ function Login(props) {
         notification.open({
           message: "로그인 성공",
           icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+          placement: 'bottomRight',
         });
         props.history.push("/");
       } else {
@@ -49,6 +50,7 @@ function Login(props) {
           message: "로그인 실패",
           description: "이메일/암호를 확인해주세요.",
           icon: <FrownOutlined style={{ color: "#ff3333" }} />,
+          placement: 'bottomRight',
         });
       }
     });

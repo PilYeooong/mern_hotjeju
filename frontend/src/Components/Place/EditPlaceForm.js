@@ -113,6 +113,7 @@ const EditPlaceForm = ({ place }) => {
         notification.open({
           message: "수정 완료",
           icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+          placement: 'bottomRight',
         })
       }, 1500);
     } catch (e) {

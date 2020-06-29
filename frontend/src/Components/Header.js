@@ -82,6 +82,7 @@ export default withRouter((props) => {
         notification.open({
           message: "로그아웃 완료",
           icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+          placement: 'bottomRight',
         });
       }
     });
