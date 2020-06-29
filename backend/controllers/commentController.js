@@ -1,4 +1,3 @@
-import { Place } from "../models/Place";
 import { Comment } from "../models/Comment";
 
 export const getComments = (req, res) => {
@@ -14,12 +13,13 @@ export const getComments = (req, res) => {
       .sort({ _id: -1 })
       .exec((err, comments) => {
         if (err) {
-          return res.status(400).json({ success: false, err });
+          return res.status(400).send(err);
         }
         return res.status(200).send(comments);
       });
   } catch (error) {
-    return res.status(400).json({ success: false, error });
+    console.error(error);
+    return res.status(500).send(error);
   }
 };
 
@@ -38,6 +38,6 @@ export const newComment = async (req, res) => {
       return res.status(400).json({ success: false, err });
     }
     comment = await comment.populate("creator", "nickname").execPopulate();
-    return res.status(200).send(comment);
+    return res.status(201).send(comment);
   });
 };

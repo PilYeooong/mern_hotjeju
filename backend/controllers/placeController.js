@@ -43,7 +43,7 @@ export const addPlace = async (req, res, next) => {
           }
           if (hashtag.length === 0) {
             try {
-              const newHashtag = await new Hashtag({
+              await new Hashtag({
                 name: tag.slice(1).toLowerCase(),
                 places: place._id,
               }).save();
@@ -58,20 +58,19 @@ export const addPlace = async (req, res, next) => {
       );
     });
     place.save();
-    return res.status(200).send(place);
+    return res.status(201).send(place);
   } else {
     place.save((err, place) => {
       if (err) {
         return res.status(400).send("잘못된 요청입니다.");
       }
-      return res.status(200).send(place);
+      return res.status(201).send(place);
     });
   }
 };
 
 export const allPlaces = async (req, res) => {
   let term = req.body.term;
-
   try {
     if (term) {
       const places = await Place.find({})
@@ -86,7 +85,7 @@ export const allPlaces = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(400).send("잘못된 요청입니다.");
+    return res.status(500).send(error);
   }
 };
 
@@ -112,7 +111,7 @@ export const placeDetail = async (req, res) => {
     res.status(200).json({ place, isLiked, isWished });
   } catch (error) {
     console.log(error);
-    return res.status(400).send("잚못된 요청입니다.");
+    return res.status(500).send(error);
   }
 };
 
@@ -127,7 +126,7 @@ export const editPlace = async (req, res) => {
       return res.status(404).send("핫플이 존재하지 않습니다.");
     }
     if (String(req.user._id) !== String(place.creator)) {
-      return res.status(401).send("권한이 없습니다.");
+      return res.status(403).send("권한이 없습니다.");
     }
     place.name = name;
     place.description = description;
@@ -172,7 +171,7 @@ export const editPlace = async (req, res) => {
     return res.status(200).send(place);
   } catch (error) {
     console.log(error);
-    res.status(400).send("잘못된 요청입니다.");
+    res.status(500).send(error);
   }
 };
 
@@ -198,7 +197,7 @@ export const deletePlace = async (req, res) => {
       return res.status(200).send(place);
     }
   } catch (error) {
-    return res.status(400).send("잘못된 요청입니다.");
+    return res.status(500).send(error);
   }
 };
 
@@ -215,7 +214,7 @@ export const categorizedPlace = async (req, res, next) => {
     return res.status(200).send(places);
   } catch (e) {
     console.error(e);
-    return res.status(400).send("잘못된 요청입니다.");
+    return res.status(500).send(error);
   }
 };
 
@@ -237,6 +236,6 @@ export const toggleWish = async (req, res, next) => {
     }
   } catch (e) {
     console.error(e);
-    return res.status(400).send("잘못된 요청입니다.");
+    return res.status(500).send(error);
   }
 };

@@ -6,13 +6,13 @@ export const signUp = async (req, res) => {
       return res.status(400).json({ err });
     } else if (userExist) {
       return res
-        .status(409)
+        .status(409) // Conflict
         .json({ success: false, message: "이미 사용중인 이메일입니다." });
     } else {
       const user = new User(req.body);
       user.save((err, userInfo) => {
         if (err) return res.json({ success: false, err });
-        return res.status(200).json({
+        return res.status(201).json({
           success: true,
           userInfo,
         });
@@ -87,7 +87,7 @@ export const loadUser = async (req, res, next) => {
     res.status(200).send(user);
   } catch (e) {
     console.error(e);
-    return res.status(400).send("잘못된 요청입니다.");
+    return res.status(500).send(e);
   }
 };
 
@@ -106,6 +106,6 @@ export const editNickName = async (req, res, next) => {
     res.status(200).send(req.body.nickname);
   } catch(e){
     console.error(e);
-    return res.status(400).send("잘못된 요청입니다.");
+    return res.status(500).send(e);
   }
 }

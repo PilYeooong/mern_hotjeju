@@ -12,6 +12,6 @@ export const searchPlace = async (req, res, next) => {
     return res.status(200).send(result);
   } catch (e) {
     console.error(e);
-    return res.status(400).send("잘못된 요청입니다.");
+    return res.status(500).send(e);
   }
 };
